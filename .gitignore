@@ -70,3 +70,6 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+Unity/GamePrototype/ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json
+Unity/GamePrototype/.vscode/settings.json
+Unity/GamePrototype/ProjectSettings/ShaderGraphSettings.asset
