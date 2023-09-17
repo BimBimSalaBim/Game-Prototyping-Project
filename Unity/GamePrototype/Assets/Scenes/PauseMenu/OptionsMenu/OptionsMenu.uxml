@@ -1,0 +1,23 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Scenes/PauseMenu/OptionsMenu/OptionsMenu.uss?fileID=7433441132597879392&amp;guid=f586f160e0cea9c46a2004439cfb6400&amp;type=3#OptionsMenu" />
+    <ui:VisualElement class="MainContainer" style="height: 1051px; justify-content: center; align-items: center;">
+        <ui:VisualElement class="TopBar" style="height: 112px; width: 1600px; align-items: center; justify-content: space-around;">
+            <ui:Button text="&lt;" display-tooltip-when-elided="true" name="Back" class="NavButton" style="margin-right: 214px;" />
+            <ui:VisualElement style="flex-direction: row; justify-content: center; width: 1124px; background-color: rgb(26, 29, 43); height: 63px; -unity-background-image-tint-color: rgb(130, 130, 130);">
+                <ui:Button text="AUDIO" display-tooltip-when-elided="true" class="NavButton" />
+                <ui:Button text="VIDEO" display-tooltip-when-elided="true" class="NavButton" />
+                <ui:Button text="CONTROL" display-tooltip-when-elided="true" class="NavButton" />
+                <ui:Button text="GAMEPLAY" display-tooltip-when-elided="true" class="NavButton" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement class="ContentContainer" style="height: 788px; width: 1647px; justify-content: center; align-items: flex-start;">
+            <ui:VisualElement class="SideContainer" style="height: 299px; width: 364px;">
+                <ui:Button text="GENERAL" display-tooltip-when-elided="true" class="NavButton SideButtons" />
+                <ui:Button text="INTERFACE" display-tooltip-when-elided="true" class="NavButton SideButtons" />
+            </ui:VisualElement>
+            <ui:VisualElement class="OptionsContainer" style="height: 782px; width: 1101px; justify-content: space-around;">
+                <ui:ScrollView style="height: 782px; width: 1112px; margin-left: 20px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

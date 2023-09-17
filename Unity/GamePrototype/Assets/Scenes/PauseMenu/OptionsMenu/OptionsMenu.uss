@@ -1,0 +1,100 @@
+.OptionsContainer {
+    background-color: rgba(32, 32, 32, 0);
+    align-items: center;
+    margin-left: 35px;
+}
+
+.SideContainer {
+    background-color: rgba(56, 56, 56, 0);
+}
+
+.TopBar {
+    background-color: rgba(56, 56, 56, 0);
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+}
+
+.MainContainer {
+    align-items: center;
+    background-color: rgba(56, 56, 56, 0);
+    justify-content: flex-end;
+}
+
+.ContentContainer {
+    background-color: rgba(56, 56, 56, 0);
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.NavButton {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 25px;
+    -unity-background-image-tint-color: rgb(56, 56, 56);
+    background-color: rgb(26, 29, 43);
+    -unity-font-style: bold;
+    -unity-font: none;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    color: rgba(255, 255, 255, 255);
+}
+
+.NavButton:hover {
+    background-color: rgb(27, 136, 176);
+    color: rgba(255, 255, 255, 255);
+}
+
+.SideButtons {
+    -unity-text-align: upper-left;
+    margin-bottom: 7px;
+}
+
+.ControlRow {
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.ControlLabel {
+    font-size: 20px;
+    background-color: rgb(26, 29, 43);
+    padding-left: 20px;
+    padding-right: 600px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    -unity-font-style: bold;
+}
+
+.ControlButtonFormat {
+    padding-left: 70px;
+    padding-right: 70px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 20px;
+    -unity-font-style: bold;
+}
+
+.ControlButtonFormat:hover {
+    background-color: rgb(27, 136, 176);
+}
+
+.ControlButton {
+    background-color: rgb(26, 29, 43);
+}
+
+.MissingControlButtton {
+    background-color: rgb(142, 140, 140);
+}
