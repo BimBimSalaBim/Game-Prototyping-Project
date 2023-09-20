@@ -23,7 +23,7 @@ public class RealmController : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         Instance = this;
-        Realm.DeleteRealm(RealmConfiguration.DefaultConfiguration);
+        // Realm.DeleteRealm(RealmConfiguration.DefaultConfiguration);
         if (_realm == null)
         {
             _realmApp = App.Create(new AppConfiguration(_realmAppId));
@@ -33,6 +33,8 @@ public class RealmController : MonoBehaviour
                 // _realmUser = await _realmApp.LogInAsync(Credentials.Anonymous());
                 try{
                 _realmUser = await _realmApp.LogInAsync(Credentials.EmailPassword(email, password));
+                // _realmUser = SignIn(email, password);
+
                 _realm = Realm.GetInstance(new PartitionSyncConfiguration(_realmUser.Id,_realmUser));
                 }
                 catch (System.Exception e){
@@ -59,6 +61,46 @@ public class RealmController : MonoBehaviour
         {
             _realm.Dispose();
         }
+    }
+
+    public async void SignIn(string email, string password){
+        if (_realm == null)
+        {
+            _realmApp = App.Create(new AppConfiguration(_realmAppId));
+            if (_realmApp.CurrentUser == null)
+            {
+                try{
+                _realmUser = await _realmApp.LogInAsync(Credentials.EmailPassword(email, password));
+                // _realmUser = SignIn(email, password);
+
+                _realm = Realm.GetInstance(new PartitionSyncConfiguration(_realmUser.Id,_realmUser));
+                }
+                catch (System.Exception e){
+                    Debug.Log(e);
+                    Debug.Log("User Not Found");
+                }
+
+            }
+            else
+            {
+                _realmUser = _realmApp.CurrentUser;
+                _realm = Realm.GetInstance(new PartitionSyncConfiguration(_realmUser.Id,_realmUser));
+            }
+            
+            
+        }
+    }
+
+    public async void SignUp(string email, string password){
+        try{
+        await _realmApp.EmailPasswordAuth.RegisterUserAsync(email, password);
+        _realmUser = await _realmApp.LogInAsync(Credentials.EmailPassword(email, password));
+        Debug.Log("User Created");
+        }
+        catch{
+            Debug.Log("User Already Exists");
+        }
+
     }
 
     private GameDataModel GetOrCreateGameData(){
