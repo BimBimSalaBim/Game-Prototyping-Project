@@ -14,8 +14,9 @@ public class PauseMenuPresenter
     private Button optionsButton;
     private Button mainMenu;
     private Button exitGame;
- 
+    private VisualElement root;
     public PauseMenuPresenter(VisualElement root) {
+        this.root = root;
         resume = root.Q<Button>("Resume");
         save = root.Q<Button>("Save");
         optionsButton = root.Q<Button>("Options");
@@ -29,15 +30,17 @@ public class PauseMenuPresenter
     }
 
     private void Resume() {
-        //Todo:
-        //Functions
-        //Creating Audio, Video, & Other Scenes
-        //Making Buttons Work
-        //Making Button Remapping Work
-        Debug.Log("Click 0");
+        Time.timeScale = 1f;
+        AudioListener.volume = 1f;
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        UnityEngine.Cursor.visible = false;
+        GameObject gameObject = GameObject.Find("PauseMenu");
+        PlayerPrefs.SetInt("Paused", 0);
+        PlayerPrefs.Save();
+        gameObject.SetActive(false);
     }
     private void Save() {
-        Debug.Log("Clicked 1");
+        //todo
     }
     private void MainMenu() {
         Time.timeScale = 1f;
@@ -45,7 +48,7 @@ public class PauseMenuPresenter
         UnityEngine.Cursor.lockState = CursorLockMode.None;
         UnityEngine.Cursor.visible = true;
         SceneManager.LoadScene("Menu");
-        Debug.Log("Click 2");
+        PlayerPrefs.DeleteKey("Paused");
     }
     private void ExitGame() {
         Application.Quit();

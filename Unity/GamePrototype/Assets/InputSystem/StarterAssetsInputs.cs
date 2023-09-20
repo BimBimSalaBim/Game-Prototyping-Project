@@ -19,7 +19,6 @@ namespace StarterAssets {
         public bool cursorInputForLook = true;
 
         [Header("PauseMenu")]
-        public bool paused = false;
         public GameObject pauseMenu;
 
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
@@ -72,19 +71,28 @@ namespace StarterAssets {
         }
 
         public void PauseInput() {
-            paused = !paused;
-            if (paused) {
+            bool paused;
+            if (PlayerPrefs.HasKey("Paused")) {
+                paused = PlayerPrefs.GetInt("Paused") == 1;
+            } else {
+                paused = false;
+            }
+            if (!paused) {
                 pauseMenu.SetActive(true);
                 Time.timeScale = 0f;
-                AudioListener.volume = 0f;
+                AudioListener.pause = true;
                 SetCursorState(false);
                 Cursor.visible = true;
+                PlayerPrefs.SetInt("Paused", 1);
+                PlayerPrefs.Save();
             } else {
                 pauseMenu.SetActive(false);
                 Time.timeScale = 1f;
-                AudioListener.volume = 1f;
+                AudioListener.pause = false;
                 SetCursorState(true);
                 Cursor.visible = false;
+                PlayerPrefs.SetInt("Paused", 0);
+                PlayerPrefs.Save();
             }
         }
     }
