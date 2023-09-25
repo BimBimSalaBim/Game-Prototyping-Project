@@ -159,6 +159,7 @@ namespace StarterAssets
             JumpAndGravity();
             GroundedCheck();
             Move();
+            
         }
 
         private void LateUpdate()
@@ -188,6 +189,14 @@ namespace StarterAssets
             {
                 _animator.SetBool(_animIDGrounded, Grounded);
             }
+        }
+
+        // Add a new public function for teleporting the character
+        public void Teleport(Vector3 destination)
+        {
+            _controller.enabled = false; // Disable the controller before changing its position to avoid any issues
+            transform.position = destination; // Update the position to the destination
+            _controller.enabled = true; // Re-enable the controller
         }
 
         private void CameraRotation()

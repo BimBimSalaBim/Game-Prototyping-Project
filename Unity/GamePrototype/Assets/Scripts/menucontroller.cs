@@ -50,17 +50,17 @@ public class menucontroller : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogError("Connection test failed: Unexpected response.");
+                        Debug.Log("Connection test failed: Unexpected response.");
                     }
                 }
                 else
                 {
-                    Debug.LogError("Error: " + response.StatusCode);
+                    Debug.Log("Error: " + response.StatusCode);
                 }
             }
             catch (Exception ex)
             {
-                Debug.LogError("Error: " + ex.Message);
+                Debug.Log("Exception Error: " + ex.Message);
             }
         }
     }
@@ -129,7 +129,7 @@ public class menucontroller : MonoBehaviour
             }
             catch (Exception ex)
             {
-                Debug.Log("Error: " + ex.Message);
+                Debug.Log("Exception Error: " + ex.Message);
                 // Handle exceptions
             }
         }
@@ -192,7 +192,7 @@ public class menucontroller : MonoBehaviour
             }
             catch (Exception ex)
             {
-                Debug.Log("Error: " + ex.Message);
+                Debug.Log("Exception Error: " + ex.Message);
                 // Handle exceptions
             }
         }
