@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PortalController : MonoBehaviour
+public class PortalController: MonoBehaviour
 {
     public GameObject textPopUp;
     public float rotationSpeed = 5f;
