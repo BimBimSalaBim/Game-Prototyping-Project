@@ -80,6 +80,10 @@ public class menucontroller : MonoBehaviour
         Debug.Log(email + " - " + password);
         string apiUrl = "http://localhost:4444/login"; // Replace with your actual API URL
 
+        RealmController.Instance.SignIn(email, password);
+
+        SceneManager.LoadScene("Playground");
+
         // Create a JSON object with email and password
         var loginData = new
         {
@@ -140,6 +144,7 @@ public class menucontroller : MonoBehaviour
         //todo: Implement signup functionality
         Debug.Log("Button Press: SignUp");
         Debug.Log(email + " - " + password);
+        RealmController.Instance.SignUp(email, password);
         string apiUrl = "http://localhost:4444/register"; // Replace with your actual API URL
 
   
