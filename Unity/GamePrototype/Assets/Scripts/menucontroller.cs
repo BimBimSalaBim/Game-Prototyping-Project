@@ -83,6 +83,8 @@ public class menucontroller : MonoBehaviour
         RealmController.Instance.SignIn(email, password);
 
         SceneManager.LoadScene("Playground");
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
         // Create a JSON object with email and password
         var loginData = new

@@ -20,10 +20,6 @@ public class PauseMenuManager : MonoBehaviour {
         SetupOptionsMenu();
     }
 
-    private void OnApplicationQuit() {
-        PlayerPrefs.DeleteKey("Paused");
-    }
-
     private void SetupPauseMenu() {
         PauseMenuPresenter menuPresenter = new PauseMenuPresenter(pauseMenu);
         menuPresenter.OpenOptions = () => {

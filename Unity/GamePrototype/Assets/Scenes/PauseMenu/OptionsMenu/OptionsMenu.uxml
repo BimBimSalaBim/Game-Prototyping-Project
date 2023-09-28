@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/Scenes/PauseMenu/OptionsMenu/OptionsMenu.uss?fileID=7433441132597879392&amp;guid=f586f160e0cea9c46a2004439cfb6400&amp;type=3#OptionsMenu" />
+    <Style src="project://database/Assets/Scenes/PauseMenu/OptionsMenu/OptionsMenu.uss?fileID=7433441132597879392&amp;guid=6b1eee9adfaebcb439ad32351a996ef1&amp;type=3#OptionsMenu" />
     <ui:VisualElement class="MainContainer" style="height: 1051px; justify-content: center; align-items: center;">
         <ui:VisualElement name="Header" class="TopBar" style="height: 112px; width: 1600px; align-items: center; justify-content: space-around;">
             <ui:Button text="&lt;" display-tooltip-when-elided="true" name="Back" class="NavButton" style="margin-right: 214px;" />
@@ -37,12 +37,12 @@
                 </ui:ScrollView>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="VideoMenu" class="ContentContainer" style="height: 788px; width: 1647px; justify-content: center; align-items: flex-start; display: none;">
+        <ui:VisualElement name="VideoMenu" class="ContentContainer" style="height: 788px; width: 1334px; justify-content: center; align-items: flex-start; display: flex;">
             <ui:VisualElement class="OptionsContainer" style="height: 782px; width: 1317px; justify-content: space-around;">
                 <ui:ScrollView style="height: 782px; width: 1292px; margin-left: 20px;">
                     <ui:VisualElement class="ControlRow rowOption" style="width: 1279px; background-color: rgb(26, 29, 43); justify-content: space-between;">
                         <ui:Label text="Video Resolution" display-tooltip-when-elided="true" class="ControlLabelSmall" />
-                        <ui:DropdownField index="1" choices="System.Collections.Generic.List`1[System.String]" class="dropDownColors" style="margin-right: 50px; font-size: 20px;" />
+                        <ui:DropdownField index="1" choices="System.Collections.Generic.List`1[System.String]" class="dropDownColors unity-base-popup-field__input" style="margin-right: 50px; font-size: 20px;" />
                     </ui:VisualElement>
                     <ui:VisualElement class="ControlRow rowOption" style="width: 1279px; background-color: rgb(26, 29, 43); justify-content: space-between;">
                         <ui:Label text="Fullscreen" display-tooltip-when-elided="true" class="ControlLabelSmall" />
@@ -51,61 +51,69 @@
                 </ui:ScrollView>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="ControlMenu" class="ContentContainer" style="height: 788px; width: 1647px; justify-content: center; align-items: flex-start; display: flex;">
-            <ui:VisualElement name="OptionOverlay" class="rebindMenu" style="position: absolute; top: 20px; height: 440px; width: 1118px; flex-direction: row; align-items: center; display: none;">
-                <ui:TextField picking-mode="Ignore" label="Action" value="filler text" text="Press Key" style="height: 72px; width: 1111px; flex-direction: row; -unity-text-align: middle-center; justify-content: space-between;" />
-            </ui:VisualElement>
-            <ui:VisualElement name="SideBar" class="SideContainer" style="height: 299px; width: 364px; display: flex;">
-                <ui:Button text="GENERAL" display-tooltip-when-elided="true" name="General" class="NavButton SideButtons" />
-                <ui:Button text="INTERFACE" display-tooltip-when-elided="true" name="Interface" class="NavButton SideButtons" />
-            </ui:VisualElement>
+        <ui:VisualElement name="ControlMenu" class="ContentContainer" style="height: 797px; width: 1158px; justify-content: space-between; align-items: center; display: none; flex-direction: column;">
             <ui:VisualElement name="GeneralControlOptions" class="OptionsContainer containerFormat" style="height: 782px; width: 1101px; justify-content: space-around; display: flex;">
                 <ui:ScrollView style="height: 782px; width: 1112px; margin-left: 20px;">
                     <ui:VisualElement name="Up" class="ControlRow">
                         <ui:Label text="Up" display-tooltip-when-elided="true" class="controlLabelText ControlLabel" />
-                        <ui:Button text="Button" display-tooltip-when-elided="true" name="Keyboard" class="ControlButton NavButton ControlButtonFormat" />
-                        <ui:Button text="Button" display-tooltip-when-elided="true" name="Gamepad" class="ControlButton NavButton ControlButtonFormat" />
+                        <ui:Button text="&#10;" display-tooltip-when-elided="true" name="Keyboard" class="NavButton ControlButtonFormat MissingControlButton" />
+                        <ui:Button display-tooltip-when-elided="true" name="Gamepad" class="NavButton ControlButtonFormat MissingControlButton" />
                     </ui:VisualElement>
                     <ui:VisualElement name="Down" class="ControlRow">
                         <ui:Label text="Down" display-tooltip-when-elided="true" class="controlLabelText ControlLabel" />
-                        <ui:Button text="Button" display-tooltip-when-elided="true" name="Keyboard" class="ControlButton NavButton ControlButtonFormat" />
-                        <ui:Button text="Button" display-tooltip-when-elided="true" name="Gamepad" class="ControlButton NavButton ControlButtonFormat" />
+                        <ui:Button display-tooltip-when-elided="true" name="Keyboard" class="NavButton ControlButtonFormat MissingControlButton" />
+                        <ui:Button display-tooltip-when-elided="true" name="Gamepad" class="NavButton ControlButtonFormat MissingControlButton" />
                     </ui:VisualElement>
                     <ui:VisualElement name="Left" class="ControlRow">
                         <ui:Label text="Left" display-tooltip-when-elided="true" class="ControlLabel controlLabelText" />
-                        <ui:Button text="Button" display-tooltip-when-elided="true" name="Keyboard" class="ControlButton NavButton ControlButtonFormat" />
-                        <ui:Button text="Button" display-tooltip-when-elided="true" name="Gamepad" class="ControlButton NavButton ControlButtonFormat" style="height: 53px;" />
+                        <ui:Button display-tooltip-when-elided="true" name="Keyboard" class="NavButton ControlButtonFormat MissingControlButton" />
+                        <ui:Button display-tooltip-when-elided="true" name="Gamepad" class="NavButton ControlButtonFormat MissingControlButton" style="height: 53px;" />
                     </ui:VisualElement>
                     <ui:VisualElement name="Right" class="ControlRow">
                         <ui:Label text="Right" display-tooltip-when-elided="true" class="ControlLabel controlLabelText" />
-                        <ui:Button text="Button" display-tooltip-when-elided="true" name="Keyboard" class="ControlButton NavButton ControlButtonFormat" />
-                        <ui:Button text="Button" display-tooltip-when-elided="true" name="Gamepad" class="ControlButton NavButton ControlButtonFormat" />
+                        <ui:Button display-tooltip-when-elided="true" name="Keyboard" class="NavButton ControlButtonFormat MissingControlButton" />
+                        <ui:Button display-tooltip-when-elided="true" name="Gamepad" class="NavButton ControlButtonFormat MissingControlButton" />
                     </ui:VisualElement>
                     <ui:VisualElement name="Jump" class="ControlRow">
                         <ui:Label text="Jump" display-tooltip-when-elided="true" class="ControlLabel controlLabelText" />
-                        <ui:Button text="Button" display-tooltip-when-elided="true" name="Keyboard" class="ControlButton NavButton ControlButtonFormat" />
-                        <ui:Button text="Button" display-tooltip-when-elided="true" name="Gamepad" class="ControlButton NavButton ControlButtonFormat" />
+                        <ui:Button display-tooltip-when-elided="true" name="Keyboard" class="NavButton ControlButtonFormat MissingControlButton" />
+                        <ui:Button display-tooltip-when-elided="true" name="Gamepad" class="NavButton ControlButtonFormat MissingControlButton" />
                     </ui:VisualElement>
                     <ui:VisualElement name="Sprint" class="ControlRow">
                         <ui:Label text="Sprint" display-tooltip-when-elided="true" class="ControlLabel controlLabelText" />
-                        <ui:Button text="Button" display-tooltip-when-elided="true" name="Keyboard" class="ControlButton NavButton ControlButtonFormat" />
-                        <ui:Button text="Button" display-tooltip-when-elided="true" name="Gamepad" class="ControlButton NavButton ControlButtonFormat" />
+                        <ui:Button display-tooltip-when-elided="true" name="Keyboard" class="NavButton ControlButtonFormat MissingControlButton" />
+                        <ui:Button display-tooltip-when-elided="true" name="Gamepad" class="NavButton ControlButtonFormat MissingControlButton" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Interact" class="ControlRow">
+                        <ui:Label text="Interact" display-tooltip-when-elided="true" class="ControlLabel controlLabelText" />
+                        <ui:Button display-tooltip-when-elided="true" name="Keyboard" class="NavButton ControlButtonFormat MissingControlButton" />
+                        <ui:Button display-tooltip-when-elided="true" name="Gamepad" class="NavButton ControlButtonFormat MissingControlButton" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="PrimaryClick" class="ControlRow">
+                        <ui:Label text="Primary Click" display-tooltip-when-elided="true" class="ControlLabel controlLabelText" />
+                        <ui:Button display-tooltip-when-elided="true" name="Keyboard" class="NavButton ControlButtonFormat MissingControlButton" />
+                        <ui:Button display-tooltip-when-elided="true" name="Gamepad" class="NavButton ControlButtonFormat MissingControlButton" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="SecondaryClick" class="ControlRow">
+                        <ui:Label text="Secondary Click" display-tooltip-when-elided="true" class="ControlLabel controlLabelText" />
+                        <ui:Button display-tooltip-when-elided="true" name="Keyboard" class="NavButton ControlButtonFormat MissingControlButton" />
+                        <ui:Button display-tooltip-when-elided="true" name="Gamepad" class="NavButton ControlButtonFormat MissingControlButton" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Dodge" class="ControlRow">
+                        <ui:Label text="Dodge" display-tooltip-when-elided="true" class="ControlLabel controlLabelText" />
+                        <ui:Button display-tooltip-when-elided="true" name="Keyboard" class="NavButton ControlButtonFormat MissingControlButton" />
+                        <ui:Button display-tooltip-when-elided="true" name="Gamepad" class="NavButton ControlButtonFormat MissingControlButton" />
                     </ui:VisualElement>
                 </ui:ScrollView>
             </ui:VisualElement>
-            <ui:VisualElement name="InterfaceControlOptions" class="OptionsContainer containerFormat" style="display: none;">
-                <ui:ScrollView style="height: 782px; width: 1112px; margin-left: 20px;">
-                    <ui:VisualElement name="Interact" class="ControlRow">
-                        <ui:Label text="Interact" display-tooltip-when-elided="true" class="controlLabelText ControlLabel" />
-                        <ui:Button text="Button" display-tooltip-when-elided="true" name="Keyboard" class="ControlButton NavButton ControlButtonFormat" />
-                        <ui:Button text="Button" display-tooltip-when-elided="true" name="Gamepad" class="ControlButton NavButton ControlButtonFormat" />
-                    </ui:VisualElement>
-                </ui:ScrollView>
+            <ui:VisualElement name="ResetControl" class="resetControl" style="position: relative; height: 43px; top: 0; width: 252px; flex-direction: row; justify-content: space-around; background-color: rgb(26, 29, 43); align-items: center; left: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; margin-left: auto;">
+                <ui:Label text="Reset Keys: " display-tooltip-when-elided="true" />
+                <ui:Label text="Backspace" display-tooltip-when-elided="true" class="resestLabel" />
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="GamePlayMenu" class="ContentContainer" style="height: 788px; width: 1647px; justify-content: center; align-items: flex-start; display: flex;">
+        <ui:VisualElement name="GamePlayMenu" class="ContentContainer" style="height: 788px; width: 1647px; justify-content: center; align-items: flex-start; display: none;">
             <ui:VisualElement class="OptionsContainer" style="height: 782px; width: 1101px; justify-content: space-around;">
-                <ui:ScrollView style="height: 782px; width: 1112px; margin-left: 20px;" />
+                <ui:ScrollView />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

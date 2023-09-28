@@ -1,3 +1,4 @@
+using StarterAssets;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,8 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-public class PauseMenuPresenter
-{
+public class PauseMenuPresenter {
     public Action OpenOptions { set => optionsButton.clicked += value; }
 
     private Button resume;
@@ -14,9 +14,9 @@ public class PauseMenuPresenter
     private Button optionsButton;
     private Button mainMenu;
     private Button exitGame;
-    private VisualElement root;
+    private GameObject gameObject;
     public PauseMenuPresenter(VisualElement root) {
-        this.root = root;
+        gameObject = GameObject.Find("PlayerArmature");
         resume = root.Q<Button>("Resume");
         save = root.Q<Button>("Save");
         optionsButton = root.Q<Button>("Options");
@@ -30,14 +30,10 @@ public class PauseMenuPresenter
     }
 
     private void Resume() {
-        Time.timeScale = 1f;
-        AudioListener.volume = 1f;
-        UnityEngine.Cursor.lockState = CursorLockMode.None;
-        UnityEngine.Cursor.visible = false;
-        GameObject gameObject = GameObject.Find("PauseMenu");
-        PlayerPrefs.SetInt("Paused", 0);
-        PlayerPrefs.Save();
-        gameObject.SetActive(false);
+        if (gameObject != null) {
+            StarterAssetsInputs input = gameObject.GetComponent<StarterAssetsInputs>();
+            input.ResumeInput();
+        }
     }
     private void Save() {
         //todo
