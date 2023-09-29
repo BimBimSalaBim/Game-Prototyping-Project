@@ -1,3 +1,4 @@
+using StarterAssets;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,8 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-public class PauseMenuPresenter
-{
+public class PauseMenuPresenter {
     public Action OpenOptions { set => optionsButton.clicked += value; }
 
     private Button resume;
@@ -14,8 +14,9 @@ public class PauseMenuPresenter
     private Button optionsButton;
     private Button mainMenu;
     private Button exitGame;
- 
+    private GameObject gameObject;
     public PauseMenuPresenter(VisualElement root) {
+        gameObject = GameObject.Find("PlayerArmature");
         resume = root.Q<Button>("Resume");
         save = root.Q<Button>("Save");
         optionsButton = root.Q<Button>("Options");
@@ -29,15 +30,13 @@ public class PauseMenuPresenter
     }
 
     private void Resume() {
-        //Todo:
-        //Functions
-        //Creating Audio, Video, & Other Scenes
-        //Making Buttons Work
-        //Making Button Remapping Work
-        Debug.Log("Click 0");
+        if (gameObject != null) {
+            StarterAssetsInputs input = gameObject.GetComponent<StarterAssetsInputs>();
+            input.ResumeInput();
+        }
     }
     private void Save() {
-        Debug.Log("Clicked 1");
+        //todo
     }
     private void MainMenu() {
         Time.timeScale = 1f;
@@ -45,7 +44,7 @@ public class PauseMenuPresenter
         UnityEngine.Cursor.lockState = CursorLockMode.None;
         UnityEngine.Cursor.visible = true;
         SceneManager.LoadScene("Menu");
-        Debug.Log("Click 2");
+        PlayerPrefs.DeleteKey("Paused");
     }
     private void ExitGame() {
         Application.Quit();

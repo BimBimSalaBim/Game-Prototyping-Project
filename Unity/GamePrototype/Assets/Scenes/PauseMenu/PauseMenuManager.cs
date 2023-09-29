@@ -3,16 +3,18 @@ using UnityEngine.UIElements;
 using StarterAssets;
 using UnityEngine.SceneManagement;
 using System;
+using UnityEngine.InputSystem;
 
 public class PauseMenuManager : MonoBehaviour {
     [SerializeField] UIDocument uiDoc;
+    [SerializeField] InputActionAsset actionAsset;
     private VisualElement pauseMenu;
-    private VisualElement optionsControlMenu;
+    private VisualElement optionsMenu;
 
     private void OnEnable() {
         VisualElement root = uiDoc.rootVisualElement;
         pauseMenu = root.Q("PauseMenu");
-        optionsControlMenu = root.Q("OptionsControlMenu");
+        optionsMenu = root.Q("OptionsMenu");
 
         SetupPauseMenu();
         SetupOptionsMenu();
@@ -22,15 +24,15 @@ public class PauseMenuManager : MonoBehaviour {
         PauseMenuPresenter menuPresenter = new PauseMenuPresenter(pauseMenu);
         menuPresenter.OpenOptions = () => {
             pauseMenu.style.display = DisplayStyle.None;
-            optionsControlMenu.style.display = DisplayStyle.Flex;
+            optionsMenu.style.display = DisplayStyle.Flex;
         };
     }
 
     private void SetupOptionsMenu() {
-        OptionsMenuPresenter optionPresenter = new OptionsMenuPresenter(optionsControlMenu);
+        OptionsMenuPresenter optionPresenter = new OptionsMenuPresenter(optionsMenu, actionAsset);
         optionPresenter.OpenPauseMenu = () => {
             pauseMenu.style.display = DisplayStyle.Flex;
-            optionsControlMenu.style.display = DisplayStyle.None;
+            optionsMenu.style.display = DisplayStyle.None;
         };
     }
 }

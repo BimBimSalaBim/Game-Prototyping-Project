@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Realms;
+using UnityEngine;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
@@ -75,6 +76,8 @@ namespace StarterAssets
         [Tooltip("For locking the camera position on all axis")]
         public bool LockCameraPosition = false;
 
+        
+
         // cinemachine
         private float _cinemachineTargetYaw;
         private float _cinemachineTargetPitch;
@@ -86,6 +89,8 @@ namespace StarterAssets
         private float _rotationVelocity;
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
+
+        public GameObject player;
 
         // timeout deltatime
         private float _jumpTimeoutDelta;
@@ -144,12 +149,18 @@ namespace StarterAssets
 #else
 			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
 #endif
-
+            
             AssignAnimationIDs();
 
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
+            
+            if(RealmController.Instance.IsRealmReady()) {
+                player.transform.position = RealmController.Instance.GetPosition();
+            }
+
+
         }
 
         private void Update()
@@ -159,6 +170,7 @@ namespace StarterAssets
             JumpAndGravity();
             GroundedCheck();
             Move();
+  
         }
 
         private void LateUpdate()
@@ -276,6 +288,10 @@ namespace StarterAssets
             {
                 _animator.SetFloat(_animIDSpeed, _animationBlend);
                 _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+            }
+
+            if(RealmController.Instance.IsRealmReady()){
+                RealmController.Instance.SetPosition(player.transform.position);
             }
         }
 
