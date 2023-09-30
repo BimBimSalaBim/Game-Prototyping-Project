@@ -11,7 +11,7 @@ public class ControlMenuPresenter {
     private InputActionMap actionMap;
     private InputAction moveAction;
     private VisualElement controlContainer;
-    private InputActionRebindingExtensions.RebindingOperation rebindOperation;
+    private RebindingOperation rebindOperation;
     private Tuple<Button, Button> upElement;
     private Tuple<Button, Button> downElement;
     private Tuple<Button, Button> leftElement;
@@ -89,12 +89,8 @@ public class ControlMenuPresenter {
     }
 
     private void updateEffectivePaths() {
-        Debug.Log(actionMap.bindings.Count);
-        for(int i = 0; i < actionMap.bindings.Count - 1; i++) {
+        for(int i = 0; i < actionMap.bindings.Count; i++) {
             effectivePaths[i] = actionMap.bindings[i].effectivePath;
-        }
-        foreach(var kvp in effectivePaths) {
-            Debug.Log(kvp.Key + " " + kvp.Value);
         }
     }
 
@@ -179,18 +175,25 @@ public class ControlMenuPresenter {
         rebindOperation.Dispose();
         button.style.backgroundColor = color;
         action.Enable();
-        checkDuplicates(action, bindingIndex);
-        effectivePaths[bindingIndex] = action.bindings[bindingIndex].effectivePath;
+        var index = checkDuplicates(action, bindingIndex);
+        effectivePaths[index] = action.bindings[bindingIndex].effectivePath;
         UpdateButtonText(button, action.bindings[bindingIndex]);
     }
 
-    private void checkDuplicates(InputAction action, int bindingIndex) {
+    private int checkDuplicates(InputAction action, int bindingIndex) {
         string currentEffectivePath = action.bindings[bindingIndex].effectivePath;
-
-        foreach (var kvp in effectivePaths) {
-            if (kvp.Key != bindingIndex && kvp.Value == currentEffectivePath) {
-                action.RemoveBindingOverride(action.bindings[bindingIndex]);
+        int index = 0;
+        for(int i = 0; i < actionMap.bindings.Count; i++) {
+            if (actionMap.bindings[i].path == action.bindings[bindingIndex].path) {
+                index = i;
+                break;
             }
         }
+        foreach (var kvp in effectivePaths) {
+            if (kvp.Key != index && kvp.Value == currentEffectivePath) {
+                action.RemoveBindingOverride(bindingIndex);
+            }
+        }
+        return index;
     }
 }
