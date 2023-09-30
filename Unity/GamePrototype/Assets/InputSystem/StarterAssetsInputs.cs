@@ -1,7 +1,9 @@
+using Unity.VisualScripting;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using System;
 #endif
 
 namespace StarterAssets {
@@ -21,8 +23,8 @@ namespace StarterAssets {
 
         [Header("PauseMenu")]
         public GameObject pauseMenu;
-
         private PlayerInput input;
+        public event Action OnDeletePressed;
 
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
         public void OnMove(InputValue value) {
@@ -56,6 +58,7 @@ namespace StarterAssets {
         }
 
         public void OnInteract() {
+            //Todo & Add portal Function
             Debug.Log("Interact");
         }
 
@@ -76,13 +79,13 @@ namespace StarterAssets {
             VisualElement optionsMenu = menu.rootVisualElement.Q<VisualElement>("OptionsMenu");
             VisualElement controlMenu = optionsMenu.Q<VisualElement>("ControlMenu");
             if (controlMenu.style.display.ToString() != "None") {
-                var actions = input.actions;
-                foreach(var action in actions) {
-                    if(action.actionMap.name == "Player") {
-                        action.RemoveAllBindingOverrides();
+                InputActionMap actionMap = input.actions.FindActionMap("Player");
+                if(actionMap != null) {
+                    actionMap.RemoveAllBindingOverrides();
+                    if(OnDeletePressed != null) {
+                        OnDeletePressed();
                     }
                 }
-                Debug.Log("Delete");
             }
         }
 #endif
