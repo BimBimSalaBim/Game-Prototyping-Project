@@ -6,6 +6,8 @@ TagManager:
   tags:
   - CinemachineTarget
   - TestObject
+  - UserProfile
+  - ProfileHolder
   layers:
   - Default
   - TransparentFX
