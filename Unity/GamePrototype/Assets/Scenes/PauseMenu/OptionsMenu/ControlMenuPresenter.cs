@@ -3,181 +3,197 @@ using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using System;
 using UnityEngine.InputSystem.Utilities;
+using StarterAssets;
 using System.Collections.Generic;
+using static UnityEngine.InputSystem.InputActionRebindingExtensions;
 
 public class ControlMenuPresenter {
-    private int screen;
-    private VisualElement root;
-    private InputActionAsset actionAsset;
-    private VisualElement generalContainer;
-    private VisualElement interfaceContainer;
-    private VisualElement sideBar;
-    private Button generalButton;
-    private Button interfaceButton;
+    private InputActionMap actionMap;
+    private InputAction moveAction;
+    private VisualElement controlContainer;
+    private RebindingOperation rebindOperation;
+    private Tuple<Button, Button> upElement;
+    private Tuple<Button, Button> downElement;
+    private Tuple<Button, Button> leftElement;
+    private Tuple<Button, Button> rightElement;
+    private Dictionary<string, bool> controls = new() {
+        { "Jump", false },
+        { "Sprint", false },
+        { "Interact", false },
+        { "PrimaryClick", true },
+        { "SecondaryClick", true },
+        { "Dodge", false }
+    };
+
+    private Dictionary<int, string> effectivePaths;
 
     public ControlMenuPresenter(VisualElement root, InputActionAsset actionAsset) {
-        //create video following tutorial
-        //resume button
-        this.root = root;
-        this.actionAsset = actionAsset;
-        generalContainer = root.Q<VisualElement>("GeneralControlOptions");
-        interfaceContainer = root.Q<VisualElement>("InterfaceControlOptions");
-        sideBar = root.Q<VisualElement>("SideBar");
-        generalButton = sideBar.Q<Button>("General");
-        interfaceButton = sideBar.Q<Button>("Interface");
+        GameObject gameObject = GameObject.Find("PlayerArmature");
+        if (gameObject != null) {
+            StarterAssetsInputs input = gameObject.GetComponent<StarterAssetsInputs>();
+            input.OnDeletePressed += () => refreshButtons();
+        }
+        controlContainer = root.Q<VisualElement>("unity-content-container");
+        upElement = GetProperties(controlContainer, "Up");
+        downElement = GetProperties(controlContainer, "Down");
+        leftElement = GetProperties(controlContainer, "Left");
+        rightElement = GetProperties(controlContainer, "Right");
+        actionMap = actionAsset.FindActionMap("Player");
+        moveAction = actionMap.FindAction("Move");
+        effectivePaths = new Dictionary<int, string>();
+        updateEffectivePaths();
 
-        generalButton.clicked += GeneralScreen;
-        interfaceButton.clicked += InterfaceScreen;
         GeneralScreen();
     }
 
-    private void InterfaceScreen() {
-        generalContainer.style.display = DisplayStyle.None;
-        interfaceContainer.style.display = DisplayStyle.Flex;
-    }
-
     private void GeneralScreen() {
-        generalContainer.style.display = DisplayStyle.Flex;
-        interfaceContainer.style.display = DisplayStyle.None;
-        VisualElement controlContainer = root.Q<VisualElement>("unity-content-container");
-        var upElement = getProperties(controlContainer, "Up");
-        var downElement = getProperties(controlContainer, "Down");
-        var leftElement = getProperties(controlContainer, "Left");
-        var rightElement = getProperties(controlContainer, "Right");
-        var jumpElement = getProperties(controlContainer, "Jump");
-        var sprintElement = getProperties(controlContainer, "Sprint");
-
-        InputActionMap actionMap = actionAsset.FindActionMap("Player");
-
-        InputAction moveAction = actionAsset.FindAction("Move");
-        InputAction jumpAction = actionAsset.FindAction("Jump");
-        InputAction sprintAction = actionAsset.FindAction("Sprint");
-
         var moveBindings = moveAction.bindings;
-        var jumpBindings = jumpAction.bindings;
-        var sprintBindings = sprintAction.bindings;
+        int[] bindingIndexes = { 1, 2, 3, 4, moveBindings.Count - 1 };
 
-        assignCallBack(upElement.Item2,
-                        evt => RebindComposite(moveAction, upElement.Item2.Item1, "up"),
-                        evt => RebindComposite(moveAction, upElement.Item2.Item1, "up", true));
-        assignCallBack(downElement.Item2,
-                        evt => RebindComposite(moveAction, downElement.Item2.Item1, "down"));
-        assignCallBack(leftElement.Item2,
-                        evt => RebindComposite(moveAction, leftElement.Item2.Item1, "left"));
-        assignCallBack(rightElement.Item2,
-                        evt => RebindComposite(moveAction, rightElement.Item2.Item1, "right"));
-        assignCallBack(jumpElement.Item2,
-                        evt => rebind(jumpAction, 0, jumpElement.Item2.Item1),
-                        evt => rebind(jumpAction, 1, jumpElement.Item2.Item1));
-        assignCallBack(sprintElement.Item2,
-                        evt => rebind(sprintAction, 0, sprintElement.Item2.Item1),
-                        evt => rebind(sprintAction, 1, sprintElement.Item2.Item1));
+        AssignCallBack(upElement, evt => PerformRebind(moveAction, bindingIndexes[0], upElement.Item1),
+                        evt => PerformRebind(moveAction, bindingIndexes[4], upElement.Item2));
+        AssignCallBack(downElement, evt => PerformRebind(moveAction, bindingIndexes[1], downElement.Item1));
+        AssignCallBack(leftElement, evt => PerformRebind(moveAction, bindingIndexes[2], leftElement.Item1));
+        AssignCallBack(rightElement, evt => PerformRebind(moveAction, bindingIndexes[3], rightElement.Item1));
 
-        updateButtons(jumpElement.Item2, jumpBindings);
-        updateButtons(sprintElement.Item2, sprintBindings);
+        updateComposite(moveBindings, bindingIndexes);
+        updateNonCompositeControls(controls, true);
     }
-    private void RebindComposite(InputAction action, Button button, string name, bool gamepad=false) {
+
+    private void refreshButtons() {
+        var moveBindings = moveAction.bindings;
+        int[] bindingIndexes = { 1, 2, 3, 4, moveBindings.Count - 1 };
+
+        updateComposite(moveBindings, bindingIndexes);
+        updateNonCompositeControls(controls, false);
+        updateEffectivePaths();
+    }
+
+    private void InitializeAction(KeyValuePair<string, bool> pair, VisualElement container, bool assignCallBacks) {
+        var element = GetProperties(container, pair.Key);
+        InputAction action = actionMap.FindAction(pair.Key);
+        if(assignCallBacks) {
+            AssignCallBack(element, evt => PerformRebind(action, 0, element.Item1, pair.Value),
+                evt => PerformRebind(action, 1, element.Item2, pair.Value));
+        }
+        ReadOnlyArray<InputBinding> bindings = action.bindings;
+        UpdateButtons(element, bindings);
+    }
+
+    private void updateComposite(ReadOnlyArray<InputBinding> moveBindings, int[] bindingIndexes) {
+        UpdateButtonText(upElement.Item1, moveBindings[bindingIndexes[0]]);
+        UpdateButtonText(upElement.Item2, moveBindings[bindingIndexes[4]]);
+        UpdateButtonText(downElement.Item1, moveBindings[bindingIndexes[1]]);
+        UpdateButtonText(leftElement.Item1, moveBindings[bindingIndexes[2]]);
+        UpdateButtonText(rightElement.Item1, moveBindings[bindingIndexes[3]]);
+    }
+
+    private void updateEffectivePaths() {
+        for(int i = 0; i < actionMap.bindings.Count; i++) {
+            effectivePaths[i] = actionMap.bindings[i].effectivePath;
+        }
+    }
+
+    private void updateNonCompositeControls(Dictionary<string, bool> controls, bool assignCallBacks) {
+        foreach (var control in controls) {
+            InitializeAction(control, controlContainer, assignCallBacks);
+        }
+    }
+
+    private StyleColor PrepButton(InputAction action, Button button) {
         action.Disable();
         button.text = "";
         var color = button.style.backgroundColor;
         button.style.backgroundColor = Color.gray;
-
-        int compositeBindingIndex = !gamepad? FindCompositeBindingIndex(action, name) : action.bindings.Count-1;
-
-        if (compositeBindingIndex >= 0) {
-            InputActionRebindingExtensions.RebindingOperation rebindOperation = action
-                .PerformInteractiveRebinding(compositeBindingIndex)
-                .WithControlsExcluding("Mouse")
-                .WithCancelingThrough("<Keyboard>/escape")
-                .OnMatchWaitForAnother(0.05f)
-                .WithMatchingEventsBeingSuppressed();
-
-            rebindOperation.OnComplete(evt => {
-                button.style.backgroundColor = color;
-                action.Enable();
-                updateButtonText(button, action.bindings[compositeBindingIndex]);
-            });
-            rebindOperation.Start();
-        }
+        return color;
     }
 
-    private int FindCompositeBindingIndex(InputAction action, string name) {
-        for (int i = 0; i < action.bindings.Count; i++) {
-            var binding = action.bindings[i];
-            if (binding.name == name) {
-                Debug.Log(binding.name);
-                Debug.Log(binding.ToString());
-                return i;
-            }
-        }
-        return -1; 
+    private Tuple<Button, Button> GetProperties(VisualElement container, string name) {
+        return GetButtons(container.Q<VisualElement>(name));
     }
 
-    private (VisualElement, (Button, Button)) getProperties(VisualElement container, string name) {
-        VisualElement element = container.Q<VisualElement>(name);
-        return (element, (getButtons(element)));
-    }
-
-    private (Button, Button) getButtons(VisualElement element) {
+    private Tuple<Button, Button> GetButtons(VisualElement element) {
         Button keyboard = element.Q<Button>("Keyboard");
         Button gamepad = element.Q<Button>("Gamepad");
-        return (keyboard, gamepad);
+        return Tuple.Create(keyboard, gamepad);
     }
 
-    private void assignCallBack((Button, Button) buttons,
-                                EventCallback<ClickEvent> callBackOne) {
+    private void AssignCallBack(Tuple<Button, Button> buttons, EventCallback<ClickEvent> callBackOne) {
         buttons.Item1.RegisterCallback(callBackOne);
     }
 
-    private void assignCallBack((Button, Button) buttons,
-                                EventCallback<ClickEvent> callBackOne,
-                                EventCallback<ClickEvent> callBackTwo) {
+    private void AssignCallBack(Tuple<Button, Button> buttons, EventCallback<ClickEvent> callBackOne, EventCallback<ClickEvent> callBackTwo) {
         buttons.Item1.RegisterCallback(callBackOne);
         buttons.Item2.RegisterCallback(callBackTwo);
     }
 
-    private List<string> getKeyBinds(InputAction action, bool composite) {
-        ReadOnlyArray<InputBinding> bindings = action.bindings;
-        List<string> keys = new List<string>();
-        foreach (var binding in bindings) {
-            keys.Add(binding.path);
-            keys.Add(binding.name);
+    private void PerformRebind(InputAction action, int bindingIndex, Button button, bool mouse=false) {
+        StyleColor color = PrepButton(action, button);
+
+        if (rebindOperation != null) {
+            rebindOperation.Cancel();
+            rebindOperation = null;
+            action.Disable();
         }
-        return keys;
+
+        rebindOperation = action
+            .PerformInteractiveRebinding(bindingIndex)
+            .WithControlsExcluding(mouse ? "<Keyboard>" : "<Mouse>")
+            .WithControlsExcluding("<Pointer>/delta")
+            .WithControlsExcluding("<Pointer>/position")
+            .WithControlsExcluding("<Touchscreen>/touch*/position")
+            .WithControlsExcluding("<Touchscreen>/touch*/delta")
+            .WithCancelingThrough("<Keyboard>/escape")
+            .OnCancel(evt => Cancel(action, bindingIndex, color, button))
+            .OnMatchWaitForAnother(0.05f)
+            .WithMatchingEventsBeingSuppressed()
+            .OnComplete(evt => End(action, bindingIndex, button, color));
+        rebindOperation.Start();
     }
 
-    private void rebind(InputAction action, int bindingIndex, Button button) {
-        performRebind(action, bindingIndex, button);
-        var bindings = action.bindings;
-        updateButtonText(button, bindings[bindingIndex]);
+    private void Cancel(InputAction action, int bindingIndex, StyleColor color, Button button) {
+        action.Enable();
+        button.style.backgroundColor = color;
+        UpdateButtonText(button, action.bindings[bindingIndex]);
+        rebindOperation?.Dispose();
+        rebindOperation = null;
+    }
+    private void UpdateButtons(Tuple<Button, Button> buttons, ReadOnlyArray<InputBinding> bindings) {
+        UpdateButtonText(buttons.Item1, bindings[0]);
+        UpdateButtonText(buttons.Item2, bindings[1]);
     }
 
-    private void performRebind(InputAction action, int bindingIndex, Button button) {
-        ReadOnlyArray<InputBinding> bindings = action.bindings;
-        action.Disable();
-        button.text = "";
-        var color = button.style.backgroundColor;
-        button.style.backgroundColor = Color.gray;
-        InputActionRebindingExtensions.RebindingOperation rebind = action.PerformInteractiveRebinding(bindingIndex)
-        .WithControlsExcluding("Mouse")
-        .WithCancelingThrough("<Keyboard>/escape")
-        .OnMatchWaitForAnother(0.05f)
-        .WithMatchingEventsBeingSuppressed()
-        .OnComplete(evt => End(action, bindings, bindingIndex, button, color));
-        rebind.Start();
+    private void UpdateButtonText(Button button, InputBinding binding) {
+        if (button.ClassListContains("MissingControlButton")) {
+            button.ToggleInClassList("MissingControlButton");
+            button.AddToClassList("ControlButton");
+        }
+        button.text = binding.effectivePath.Split("/")[1];
     }
 
-    private void updateButtons((Button, Button) buttons, ReadOnlyArray<InputBinding> bindings) {
-        updateButtonText(buttons.Item1, bindings[0]);
-        updateButtonText(buttons.Item2, bindings[1]);
-    }
-
-    private void updateButtonText(Button button, InputBinding binding) {
-        button.text = binding.path.Split("/")[1];
-    }
-
-    private void End(InputAction action, ReadOnlyArray<InputBinding> bindings, int bindingIndex, Button button, StyleColor color) {
+    private void End(InputAction action, int bindingIndex, Button button, StyleColor color) {
+        rebindOperation.Dispose();
         button.style.backgroundColor = color;
         action.Enable();
+        var index = checkDuplicates(action, bindingIndex);
+        effectivePaths[index] = action.bindings[bindingIndex].effectivePath;
+        UpdateButtonText(button, action.bindings[bindingIndex]);
+    }
+
+    private int checkDuplicates(InputAction action, int bindingIndex) {
+        string currentEffectivePath = action.bindings[bindingIndex].effectivePath;
+        int index = 0;
+        for(int i = 0; i < actionMap.bindings.Count; i++) {
+            if (actionMap.bindings[i].path == action.bindings[bindingIndex].path) {
+                index = i;
+                break;
+            }
+        }
+        foreach (var kvp in effectivePaths) {
+            if (kvp.Key != index && kvp.Value == currentEffectivePath) {
+                action.RemoveBindingOverride(bindingIndex);
+            }
+        }
+        return index;
     }
 }

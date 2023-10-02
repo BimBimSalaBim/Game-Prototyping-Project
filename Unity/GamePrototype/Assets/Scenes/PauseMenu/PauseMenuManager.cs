@@ -1,8 +1,5 @@
 using UnityEngine;
 using UnityEngine.UIElements;
-using StarterAssets;
-using UnityEngine.SceneManagement;
-using System;
 using UnityEngine.InputSystem;
 
 public class PauseMenuManager : MonoBehaviour {
@@ -18,10 +15,6 @@ public class PauseMenuManager : MonoBehaviour {
 
         SetupPauseMenu();
         SetupOptionsMenu();
-    }
-
-    private void OnApplicationQuit() {
-        PlayerPrefs.DeleteKey("Paused");
     }
 
     private void SetupPauseMenu() {

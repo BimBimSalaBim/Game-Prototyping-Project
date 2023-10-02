@@ -1,12 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
-public class OptionsMenuPresenter
-{
+public class OptionsMenuPresenter {
     public Action OpenPauseMenu { set => backButton.clicked += value; }
 
     private VisualElement audioMenu;
@@ -42,7 +38,7 @@ public class OptionsMenuPresenter
 
         this.actionAsset = actionAsset;
         Audio();
-    } 
+    }
 
     private void Audio() {
         AudioMenuPresenter menuPresenter = new AudioMenuPresenter(audioMenu);
@@ -71,8 +67,5 @@ public class OptionsMenuPresenter
         videoMenu.style.display = DisplayStyle.None;
         controlMenu.style.display = DisplayStyle.None;
         gamePlayMenu.style.display = DisplayStyle.Flex;
-    }
-    private void SetFullScreen(bool enabled) {
-
     }
 }
