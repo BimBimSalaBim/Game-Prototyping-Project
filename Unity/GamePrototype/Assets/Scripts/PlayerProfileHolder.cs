@@ -15,21 +15,25 @@ public class PlayerProfileHolder : MonoBehaviour
     {
         Debug.Log("Button clicked.");
         userProfiles[selectedProfile].SetActive(false);
+        userProfiles[selectedProfile].GetComponent<Profile>().ResetText();
         selectedProfile = (selectedProfile + 1) % userProfiles.Length;
         userProfiles[selectedProfile].SetActive(true);
-       
+        
+
     }
 
     public void PreviousProfile()
     {
         Debug.Log("Button clicked.");
         userProfiles[selectedProfile].SetActive(false);
+        userProfiles[selectedProfile].GetComponent<Profile>().ResetText();
         selectedProfile--;
         if (selectedProfile < 0)
         {
             selectedProfile += userProfiles.Length;
         }
         userProfiles[selectedProfile].SetActive(true);
+        
     }
 
     public void Sellect()
