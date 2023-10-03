@@ -16,6 +16,7 @@ public class ControlMenuPresenter {
     private Tuple<Button, Button> downElement;
     private Tuple<Button, Button> leftElement;
     private Tuple<Button, Button> rightElement;
+    private StyleColor primaryColor; 
     private Dictionary<string, bool> controls = new() {
         { "Jump", false },
         { "Sprint", false },
@@ -41,6 +42,7 @@ public class ControlMenuPresenter {
         actionMap = actionAsset.FindActionMap("Player");
         moveAction = actionMap.FindAction("Move");
         effectivePaths = new Dictionary<int, string>();
+        primaryColor = new StyleColor(new Color(26f / 255f, 29f / 255f, 43f / 255f));
         updateEffectivePaths();
 
         GeneralScreen();
@@ -128,12 +130,12 @@ public class ControlMenuPresenter {
     }
 
     private void PerformRebind(InputAction action, int bindingIndex, Button button, bool mouse=false) {
-        StyleColor color = PrepButton(action, button);
 
         if (rebindOperation != null) {
             rebindOperation.Cancel();
             rebindOperation = null;
             action.Disable();
+            Debug.Log(action.bindings[bindingIndex]);
         }
 
         rebindOperation = action
@@ -143,17 +145,18 @@ public class ControlMenuPresenter {
             .WithControlsExcluding("<Pointer>/position")
             .WithControlsExcluding("<Touchscreen>/touch*/position")
             .WithControlsExcluding("<Touchscreen>/touch*/delta")
+            .WithControlsExcluding("<Keyboard>/backspace")
             .WithCancelingThrough("<Keyboard>/escape")
-            .OnCancel(evt => Cancel(action, bindingIndex, color, button))
+            .OnCancel(evt => Cancel(action, bindingIndex, button))
             .OnMatchWaitForAnother(0.05f)
             .WithMatchingEventsBeingSuppressed()
-            .OnComplete(evt => End(action, bindingIndex, button, color));
+            .OnComplete(evt => End(action, bindingIndex, button));
         rebindOperation.Start();
     }
 
-    private void Cancel(InputAction action, int bindingIndex, StyleColor color, Button button) {
+    private void Cancel(InputAction action, int bindingIndex, Button button) {
         action.Enable();
-        button.style.backgroundColor = color;
+        button.style.backgroundColor = primaryColor;
         UpdateButtonText(button, action.bindings[bindingIndex]);
         rebindOperation?.Dispose();
         rebindOperation = null;
@@ -171,9 +174,12 @@ public class ControlMenuPresenter {
         button.text = binding.effectivePath.Split("/")[1];
     }
 
-    private void End(InputAction action, int bindingIndex, Button button, StyleColor color) {
+    private void End(InputAction action, int bindingIndex, Button button) {
         rebindOperation.Dispose();
-        button.style.backgroundColor = color;
+        if (action.bindings[bindingIndex].effectivePath == "<Keyboard>/anyKey") {
+            action.RemoveBindingOverride(bindingIndex);
+        }
+        button.style.backgroundColor = primaryColor;
         action.Enable();
         var index = checkDuplicates(action, bindingIndex);
         effectivePaths[index] = action.bindings[bindingIndex].effectivePath;
