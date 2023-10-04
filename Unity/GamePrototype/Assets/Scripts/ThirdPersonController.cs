@@ -158,8 +158,16 @@ namespace StarterAssets
 
             JumpAndGravity();
             GroundedCheck();
-            Move();
-            
+
+            if (isInDemoMode)
+            {
+                RotateCharacterDemoMode(); // if in demo mode, rotate the character
+            }
+            else
+            {
+                Move(); // if not in demo mode, move the character based on input
+            }
+
         }
 
         private void LateUpdate()
@@ -397,5 +405,26 @@ namespace StarterAssets
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
             }
         }
+        //Demo Mode
+        public bool isInDemoMode = false; // flag to check if the demo mode is active
+        public float demoRotationSpeed = 20f; // Speed of the rotation in degrees per second
+
+        public void DemoMode()
+        {
+            isInDemoMode = !isInDemoMode; // Toggle demo mode state
+        }
+
+        private void RotateCharacterDemoMode()
+        {
+            // Calculate the new rotation of the character
+            Quaternion newRotation = Quaternion.RotateTowards(transform.rotation, transform.rotation * Quaternion.Euler(0, 180, 0), demoRotationSpeed * Time.deltaTime);
+
+            // Apply the new rotation to the character
+            transform.rotation = newRotation;
+        }
+
+
+
+
     }
 }

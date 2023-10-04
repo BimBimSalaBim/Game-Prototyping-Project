@@ -1,7 +1,11 @@
+using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class Profile : MonoBehaviour
@@ -23,10 +27,18 @@ public class Profile : MonoBehaviour
     public void Start()
     {
         //this.GetComponent<TextMesh>().text = this.name;
+        //Character.SetActive(false);
     }
     public void ResetText()
     {
         this.GetComponent<TextMesh>().text = this.name;
     }
+    public void Demo()
+    {
+        //Character.GetComponent<InputSystemUIInputModule>().enabled = false;
+        Character.GetComponent<ThirdPersonController>().DemoMode();
+        Character.SetActive(true);
+    }
+
 }
 
