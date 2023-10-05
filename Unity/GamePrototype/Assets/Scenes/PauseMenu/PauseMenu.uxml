@@ -1,0 +1,18 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Scenes/PauseMenu/PauseMenu.uss?fileID=7433441132597879392&amp;guid=1fcef86170f31f04ea0e5b3308401a8f&amp;type=3#PauseMenu" />
+    <ui:VisualElement class="menuContainer" style="justify-content: center;">
+        <ui:Label text="PAUSED" display-tooltip-when-elided="true" class="title marginCenter" style="height: 113px; width: 256px; padding-left: 0; padding-right: 0; margin-top: auto; margin-bottom: 40px; border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; font-size: 120px; -unity-text-align: upper-center;" />
+        <ui:VisualElement style="justify-content: flex-start; flex-grow: 7; flex-shrink: 0; align-items: center;">
+            <ui:VisualElement class="SubContainer">
+                <ui:Button text="Resume" display-tooltip-when-elided="true" name="Resume" class="btn subButton" />
+                <ui:Button text="Save" display-tooltip-when-elided="true" name="Save" class="btn subButton" />
+            </ui:VisualElement>
+            <ui:VisualElement class="SubContainer">
+                <ui:Button text="Options" display-tooltip-when-elided="true" name="Options" class="btn subButton" />
+                <ui:Button text="Main Menu" display-tooltip-when-elided="true" name="MainMenu" class="btn subButton" />
+            </ui:VisualElement>
+            <ui:Button text="Exit Game" display-tooltip-when-elided="true" name="ExitGame" class="btn marginCenter finalButton" style="margin-top: 0; margin-bottom: 0;" />
+            <ui:VisualElement />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

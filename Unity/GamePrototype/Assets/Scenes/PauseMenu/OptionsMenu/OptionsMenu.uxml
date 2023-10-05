@@ -1,0 +1,126 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Scenes/PauseMenu/OptionsMenu/OptionsMenu.uss?fileID=7433441132597879392&amp;guid=6b1eee9adfaebcb439ad32351a996ef1&amp;type=3#OptionsMenu" />
+    <ui:VisualElement class="MainContainer" style="height: 1051px; justify-content: center; align-items: center;">
+        <ui:VisualElement name="Header" class="TopBar" style="height: 112px; width: 1600px; align-items: center; justify-content: space-around;">
+            <ui:Button text="&lt;" display-tooltip-when-elided="true" name="Back" class="NavButton" style="margin-right: 214px;" />
+            <ui:VisualElement style="flex-direction: row; justify-content: center; width: 1124px; background-color: rgb(26, 29, 43); height: 63px; -unity-background-image-tint-color: rgb(130, 130, 130);">
+                <ui:Button text="AUDIO" display-tooltip-when-elided="true" name="Audio" class="NavButton" />
+                <ui:Button text="VIDEO" display-tooltip-when-elided="true" name="Video" class="NavButton" />
+                <ui:Button text="CONTROL" display-tooltip-when-elided="true" name="Control" class="NavButton" />
+                <ui:Button text="GAMEPLAY" display-tooltip-when-elided="true" name="GamePlay" class="NavButton" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="AudioMenu" class="ContentContainer" style="height: 788px; width: 1411px; justify-content: center; align-items: flex-start; display: none;">
+            <ui:VisualElement class="OptionsContainer" style="height: 782px; width: 1375px; justify-content: space-around;">
+                <ui:ScrollView style="height: 782px; width: 1280px; margin-left: 20px;">
+                    <ui:VisualElement class="ControlRow rowOption" style="width: 1279px; background-color: rgb(26, 29, 43); justify-content: space-between;">
+                        <ui:Label text="Master Volume" display-tooltip-when-elided="true" class="ControlLabelSmall" />
+                        <ui:VisualElement name="VolumeSlider" focusable="false" class="slider" style="justify-content: flex-end; padding-left: 100px; padding-right: 100px; padding-top: 20px; padding-bottom: 20px; align-items: center; font-size: 20px; flex-direction: row;">
+                            <ui:Label text="100" display-tooltip-when-elided="true" name="MasterLabel" class="sliderLabels" style="margin-right: 20px;" />
+                            <ui:Slider picking-mode="Ignore" value="100" high-value="100" name="MasterSlider" inverted="false" show-input-field="false" class="sliderFont" style="width: 429px; align-items: stretch; flex-direction: row; color: rgb(255, 255, 255); background-color: rgba(0, 0, 0, 0);" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="ControlRow rowOption" style="width: 1279px; background-color: rgb(26, 29, 43); justify-content: space-between;">
+                        <ui:Label text="Sound Effect Volume" display-tooltip-when-elided="true" class="ControlLabelSmall" />
+                        <ui:VisualElement name="VolumeSlider" focusable="false" class="slider" style="justify-content: flex-end; padding-left: 100px; padding-right: 100px; padding-top: 20px; padding-bottom: 20px; align-items: center; font-size: 20px; flex-direction: row;">
+                            <ui:Label text="100" display-tooltip-when-elided="true" name="EffectLabel" class="sliderLabels" style="margin-right: 20px;" />
+                            <ui:Slider picking-mode="Ignore" value="100" high-value="100" inverted="false" show-input-field="false" name="EffectsSlider" style="width: 429px; align-items: stretch;" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="ControlRow rowOption" style="width: 1279px; background-color: rgb(26, 29, 43); justify-content: space-between; height: 64px;">
+                        <ui:Label text="Music Volume" display-tooltip-when-elided="true" class="ControlLabelSmall" />
+                        <ui:VisualElement name="VolumeSlider" focusable="false" class="slider" style="justify-content: flex-end; padding-left: 100px; padding-right: 100px; padding-top: 20px; padding-bottom: 20px; align-items: center; font-size: 20px; flex-direction: row;">
+                            <ui:Label text="100" display-tooltip-when-elided="true" name="MusicLabel" class="sliderLabels" style="margin-right: 20px;" />
+                            <ui:Slider picking-mode="Ignore" value="100" high-value="100" inverted="false" show-input-field="false" name="MusicSlider" style="width: 429px; align-items: stretch;" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:ScrollView>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="VideoMenu" class="ContentContainer" style="height: 788px; width: 1334px; justify-content: center; align-items: flex-start; display: none;">
+            <ui:VisualElement class="OptionsContainer" style="height: 782px; width: 1317px; justify-content: space-around;">
+                <ui:ScrollView style="height: 782px; width: 1292px; margin-left: 20px;">
+                    <ui:VisualElement class="ControlRow rowOption" style="width: 1279px; background-color: rgb(26, 29, 43); justify-content: space-between;">
+                        <ui:Label text="Video Resolution" display-tooltip-when-elided="true" class="ControlLabelSmall" />
+                        <ui:DropdownField index="1" choices="System.Collections.Generic.List`1[System.String]" class="dropDownColors unity-base-popup-field__input" style="margin-right: 50px; font-size: 20px;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="ControlRow rowOption" style="width: 1279px; background-color: rgb(26, 29, 43); justify-content: space-between;">
+                        <ui:Label text="Fullscreen" display-tooltip-when-elided="true" class="ControlLabelSmall" />
+                        <ui:Toggle style="font-size: 50px; margin-right: 50px;" />
+                    </ui:VisualElement>
+                </ui:ScrollView>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="ControlMenu" class="ContentContainer" style="height: 797px; width: 1158px; justify-content: space-between; align-items: center; display: flex; flex-direction: column;">
+            <ui:VisualElement name="GeneralControlOptions" class="OptionsContainer containerFormat" style="height: 782px; width: 1101px; justify-content: space-around; display: flex;">
+                <ui:ScrollView style="height: 782px; width: 1112px; margin-left: 20px;">
+                    <ui:VisualElement name="MovementLabel" class="controlHeader controlLabelText ControlLabel" style="flex-direction: row; align-items: stretch; justify-content: center;">
+                        <ui:Label text="Movement Controls" display-tooltip-when-elided="true" style="-unity-text-align: middle-center; white-space: nowrap;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Up" class="ControlRow">
+                        <ui:Label text="Up" display-tooltip-when-elided="true" class="controlLabelText ControlLabel" />
+                        <ui:Button text="&#10;" display-tooltip-when-elided="true" name="Keyboard" class="NavButton ControlButtonFormat MissingControlButton" />
+                        <ui:Button display-tooltip-when-elided="true" name="Gamepad" class="NavButton ControlButtonFormat MissingControlButton" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Down" class="ControlRow">
+                        <ui:Label text="Down" display-tooltip-when-elided="true" class="controlLabelText ControlLabel" />
+                        <ui:Button display-tooltip-when-elided="true" name="Keyboard" class="NavButton ControlButtonFormat MissingControlButton" />
+                        <ui:Button display-tooltip-when-elided="true" name="Gamepad" class="NavButton ControlButtonFormat MissingControlButton" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Left" class="ControlRow">
+                        <ui:Label text="Left" display-tooltip-when-elided="true" class="ControlLabel controlLabelText" />
+                        <ui:Button display-tooltip-when-elided="true" name="Keyboard" class="NavButton ControlButtonFormat MissingControlButton" />
+                        <ui:Button display-tooltip-when-elided="true" name="Gamepad" class="NavButton ControlButtonFormat MissingControlButton" style="height: 53px;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Right" class="ControlRow">
+                        <ui:Label text="Right" display-tooltip-when-elided="true" class="ControlLabel controlLabelText" />
+                        <ui:Button display-tooltip-when-elided="true" name="Keyboard" class="NavButton ControlButtonFormat MissingControlButton" />
+                        <ui:Button display-tooltip-when-elided="true" name="Gamepad" class="NavButton ControlButtonFormat MissingControlButton" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Jump" class="ControlRow">
+                        <ui:Label text="Jump" display-tooltip-when-elided="true" class="ControlLabel controlLabelText" />
+                        <ui:Button display-tooltip-when-elided="true" name="Keyboard" class="NavButton ControlButtonFormat MissingControlButton" />
+                        <ui:Button display-tooltip-when-elided="true" name="Gamepad" class="NavButton ControlButtonFormat MissingControlButton" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Sprint" class="ControlRow">
+                        <ui:Label text="Sprint" display-tooltip-when-elided="true" class="ControlLabel controlLabelText" />
+                        <ui:Button display-tooltip-when-elided="true" name="Keyboard" class="NavButton ControlButtonFormat MissingControlButton" />
+                        <ui:Button display-tooltip-when-elided="true" name="Gamepad" class="NavButton ControlButtonFormat MissingControlButton" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="GameControls" style="flex-direction: row; align-items: stretch; justify-content: center;">
+                        <ui:Label text="Game Controls" display-tooltip-when-elided="true" class="controlLabelText ControlLabel controlHeader" style="-unity-text-align: middle-center; white-space: nowrap;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Interact" class="ControlRow">
+                        <ui:Label text="Interact" display-tooltip-when-elided="true" class="ControlLabel controlLabelText" />
+                        <ui:Button display-tooltip-when-elided="true" name="Keyboard" class="NavButton ControlButtonFormat MissingControlButton" />
+                        <ui:Button display-tooltip-when-elided="true" name="Gamepad" class="NavButton ControlButtonFormat MissingControlButton" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="PrimaryClick" class="ControlRow">
+                        <ui:Label text="Primary Click" display-tooltip-when-elided="true" class="ControlLabel controlLabelText" />
+                        <ui:Button display-tooltip-when-elided="true" name="Keyboard" class="NavButton ControlButtonFormat MissingControlButton" />
+                        <ui:Button display-tooltip-when-elided="true" name="Gamepad" class="NavButton ControlButtonFormat MissingControlButton" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="SecondaryClick" class="ControlRow">
+                        <ui:Label text="Secondary Click" display-tooltip-when-elided="true" class="ControlLabel controlLabelText" />
+                        <ui:Button display-tooltip-when-elided="true" name="Keyboard" class="NavButton ControlButtonFormat MissingControlButton" />
+                        <ui:Button display-tooltip-when-elided="true" name="Gamepad" class="NavButton ControlButtonFormat MissingControlButton" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Dodge" class="ControlRow">
+                        <ui:Label text="Dodge" display-tooltip-when-elided="true" class="ControlLabel controlLabelText" />
+                        <ui:Button display-tooltip-when-elided="true" name="Keyboard" class="NavButton ControlButtonFormat MissingControlButton" />
+                        <ui:Button display-tooltip-when-elided="true" name="Gamepad" class="NavButton ControlButtonFormat MissingControlButton" />
+                    </ui:VisualElement>
+                </ui:ScrollView>
+            </ui:VisualElement>
+            <ui:VisualElement name="ResetControl" class="resetControl" style="position: relative; height: 43px; top: 0; width: 252px; flex-direction: row; justify-content: space-around; background-color: rgb(26, 29, 43); align-items: center; left: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; margin-left: auto;">
+                <ui:Label text="Reset Keys: " display-tooltip-when-elided="true" />
+                <ui:Label text="Backspace" display-tooltip-when-elided="true" class="resestLabel" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="GamePlayMenu" class="ContentContainer" style="height: 788px; width: 1647px; justify-content: center; align-items: flex-start; display: none;">
+            <ui:VisualElement class="OptionsContainer" style="height: 782px; width: 1101px; justify-content: space-around;">
+                <ui:ScrollView />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

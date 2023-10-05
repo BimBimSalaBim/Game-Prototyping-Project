@@ -1,0 +1,191 @@
+.OptionsContainer {
+    background-color: rgba(32, 32, 32, 0);
+    align-items: center;
+    margin-left: 35px;
+}
+
+.SideContainer {
+    background-color: rgba(56, 56, 56, 0);
+}
+
+.TopBar {
+    background-color: rgba(56, 56, 56, 0);
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+}
+
+.MainContainer {
+    align-items: center;
+    background-color: rgba(56, 56, 56, 0);
+    justify-content: flex-end;
+}
+
+.ContentContainer {
+    background-color: rgba(56, 56, 56, 0);
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.NavButton {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 25px;
+    -unity-background-image-tint-color: rgb(56, 56, 56);
+    background-color: rgb(26, 29, 43);
+    -unity-font-style: bold;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    color: rgb(255, 255, 255);
+}
+
+.NavButton:hover {
+    background-color: rgb(27, 136, 176);
+    color: rgb(255, 255, 255);
+}
+
+.SideButtons {
+    -unity-text-align: upper-left;
+    margin-bottom: 7px;
+}
+
+.ControlRow {
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.ControlLabel {
+    font-size: 20px;
+    background-color: rgb(26, 29, 43);
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+    width: 723px;
+    margin-bottom: 5px;
+    height: 50px;
+    align-items: stretch;
+    justify-content: flex-end;
+    -unity-text-align: upper-left;
+}
+
+.ControlButtonFormat {
+    padding-left: 0;
+    padding-right: 0;
+    -unity-font-style: bold;
+    padding-top: 0;
+    padding-bottom: 0;
+    width: 175px;
+    height: 53px;
+}
+
+.ControlButton {
+    background-color: rgb(26, 29, 43);
+}
+
+.MissingControlButton {
+    background-color: rgb(142, 140, 140);
+}
+
+.rowOption {
+    background-color: rgb(37, 46, 58);
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: rgb(255, 255, 255);
+    -unity-font-style: normal;
+}
+
+.ControlLabelSmall {
+    font-size: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    -unity-font-style: bold;
+}
+
+.slider {
+    flex-direction: row;
+    justify-content: space-around;
+    color: rgb(255, 255, 255);
+}
+
+.sliderLabels {
+}
+
+.controlLabelText {
+    align-items: stretch;
+    justify-content: center;
+    -unity-text-align: middle-center;
+}
+
+.rebindMenu {
+    font-size: 40px;
+    overflow: visible;
+}
+
+.containerFormat {
+}
+
+.dropDownColors {
+    background-color: rgb(2, 2, 2);
+    color: rgb(0, 0, 0);
+    -unity-font-style: bold;
+    width: 800px;
+    font-size: 20px;
+}
+
+.unity-base-popup-field__input {
+    background-color: rgb(63, 63, 63);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.unity-base-popup-field__text {
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+}
+
+.resetControl {
+    justify-content: flex-end;
+    flex-direction: row;
+    font-size: 20px;
+    color: rgb(255, 255, 255);
+}
+
+.resestLabel {
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.controlHeader {
+    background-color: rgba(91, 88, 88, 0.95);
+    font-size: 25px;
+    min-width: 99%;
+    align-items: auto;
+    justify-content: flex-start;
+    margin-left: auto;
+    margin-right: auto;
+}
