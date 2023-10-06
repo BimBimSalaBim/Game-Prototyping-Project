@@ -29,7 +29,7 @@ public class menucontroller : MonoBehaviour
     // Just test connection to the server
     public async Task TestConnection()
     {
-        string testUrl = "https://service.hoanhnguyen.com"; // Replace with the API URL that returns 'hello!'
+        string testUrl = "http://localhost:4444"; // Replace with the API URL that returns 'hello!'
 
         using (HttpClient client = new HttpClient())
         {
@@ -78,7 +78,13 @@ public class menucontroller : MonoBehaviour
     {
         Debug.Log("Button LogIn!");
         Debug.Log(email + " - " + password);
-        string apiUrl = "https://service.hoanhnguyen.com/login"; // Replace with your actual API URL
+        string apiUrl = "http://localhost:4444/login"; // Replace with your actual API URL
+
+        RealmController.Instance.SignIn(email, password);
+
+        SceneManager.LoadScene("Playground");
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
         // Create a JSON object with email and password
         var loginData = new
@@ -140,7 +146,8 @@ public class menucontroller : MonoBehaviour
         //todo: Implement signup functionality
         Debug.Log("Button Press: SignUp");
         Debug.Log(email + " - " + password);
-        string apiUrl = "https://service.hoanhnguyen.com/register"; // Replace with your actual API URL
+        RealmController.Instance.SignUp(email, password);
+        string apiUrl = "http://localhost:4444/register"; // Replace with your actual API URL
 
   
 
