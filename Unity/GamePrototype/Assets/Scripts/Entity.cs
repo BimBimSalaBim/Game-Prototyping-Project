@@ -25,4 +25,14 @@ public class Entity : MonoBehaviour
     {
         _stats.Unsubscribe(iStat, iFunction);
     }
+
+    public virtual void Move(Vector3 iDir)
+    {
+
+    }
+
+    public virtual void Jump(bool iJump)
+    {
+
+    }
 }
