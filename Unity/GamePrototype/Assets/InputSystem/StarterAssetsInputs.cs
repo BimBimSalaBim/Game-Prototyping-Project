@@ -22,7 +22,6 @@ namespace StarterAssets {
         [Header("Mouse Cursor Settings")]
         public bool cursorLocked = true;
         public bool cursorInputForLook = true;
-        public bool primary = false;
 
         [Header("PauseMenu")]
         public GameObject pauseMenu;
@@ -84,7 +83,7 @@ namespace StarterAssets {
         }
 
         public void OnPrimaryClick(InputValue value) {
-            PrimaryInput(value.isPressed);
+            Debug.Log("PrimaryClick");
         }
 
         public void OnSecondaryClick() {
@@ -128,10 +127,6 @@ namespace StarterAssets {
 
         public void SprintInput(bool newSprintState) {
             sprint = newSprintState;
-        }
-
-        public void PrimaryInput(bool newPrimaryInput) {
-            primary = newPrimaryInput;
         }
 
         private void OnApplicationFocus(bool hasFocus) {
