@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.Editor;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -11,6 +12,7 @@ namespace StarterAssets {
         [Header("Character Input Values")]
         public Vector2 move;
         public Vector2 look;
+        public Vector2 interactLook;
         public bool jump;
         public bool sprint;
 
@@ -20,11 +22,15 @@ namespace StarterAssets {
         [Header("Mouse Cursor Settings")]
         public bool cursorLocked = true;
         public bool cursorInputForLook = true;
+        public bool primary = false;
 
         [Header("PauseMenu")]
         public GameObject pauseMenu;
         private PlayerInput input;
         public event Action OnDeletePressed;
+
+        [Header("RadialMenu")]
+        public GameObject radialMenu;
 
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
         public void OnMove(InputValue value) {
@@ -32,8 +38,11 @@ namespace StarterAssets {
         }
 
         public void OnLook(InputValue value) {
+            var direction = value.Get<Vector2>();
             if (cursorInputForLook) {
-                LookInput(value.Get<Vector2>());
+                LookInput(direction);
+            } else {
+                InteractLookInput(direction);
             }
         }
 
@@ -57,13 +66,25 @@ namespace StarterAssets {
             
         }
 
-        public void OnInteract() {
-            //Todo & Add portal Function
-            Debug.Log("Interact");
+        public void OnInteract(InputValue value) {
+            GameObject gameObject = GameObject.Find("MainCamera");
+            if (gameObject != null && value.isPressed) {
+                gameObject.GetComponent<Interactor>().checkRayCast(radialMenu);
+                if (radialMenu.activeSelf == true) {
+                    cursorInputForLook = false;
+                    SetCursorState(false);
+                    UnityEngine.Cursor.visible = true;
+                }
+            } else {
+                radialMenu.SetActive(false);
+                cursorInputForLook = true;
+                SetCursorState(true);
+                UnityEngine.Cursor.visible = false;
+            }
         }
 
-        public void OnPrimaryClick() {
-            Debug.Log("PrimaryClick");
+        public void OnPrimaryClick(InputValue value) {
+            PrimaryInput(value.isPressed);
         }
 
         public void OnSecondaryClick() {
@@ -97,6 +118,9 @@ namespace StarterAssets {
         public void LookInput(Vector2 newLookDirection) {
             look = newLookDirection;
         }
+        public void InteractLookInput(Vector2 newLookDirection) {
+            interactLook = newLookDirection;
+        }
 
         public void JumpInput(bool newJumpState) {
             jump = newJumpState;
@@ -104,6 +128,10 @@ namespace StarterAssets {
 
         public void SprintInput(bool newSprintState) {
             sprint = newSprintState;
+        }
+
+        public void PrimaryInput(bool newPrimaryInput) {
+            primary = newPrimaryInput;
         }
 
         private void OnApplicationFocus(bool hasFocus) {
