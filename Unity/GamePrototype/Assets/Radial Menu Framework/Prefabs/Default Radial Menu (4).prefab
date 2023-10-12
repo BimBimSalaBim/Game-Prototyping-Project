@@ -280,7 +280,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 11500000, guid: f8623862c988fc644b0a5e4de14fe1f2, type: 3}
         m_TargetAssemblyTypeName: UnityEngine.Object, UnityEngine
-        m_MethodName: set_name
+        m_MethodName: 
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -412,7 +412,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: 43c28f50566f16743873791e48bdfe66, type: 3}
+      - m_Target: {fileID: 11500000, guid: f8623862c988fc644b0a5e4de14fe1f2, type: 3}
         m_TargetAssemblyTypeName: UnityEngine.Object, UnityEngine
         m_MethodName: 
         m_Mode: 5
@@ -625,7 +625,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 11500000, guid: f8623862c988fc644b0a5e4de14fe1f2, type: 3}
         m_TargetAssemblyTypeName: UnityEngine.Object, UnityEngine
-        m_MethodName: set_name
+        m_MethodName: 
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -646,7 +646,6 @@ GameObject:
   - component: {fileID: 22463210}
   - component: {fileID: 22273298}
   - component: {fileID: 11456274}
-  - component: {fileID: 11490302}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -716,19 +715,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: A
---- !u!114 &11490302
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 138010}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 542a37534fa624c4cb90ded402505a57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  forcedZRotation: 0
 --- !u!1 &143072
 GameObject:
   m_ObjectHideFlags: 0
@@ -781,7 +767,6 @@ GameObject:
   - component: {fileID: 22450524}
   - component: {fileID: 22238458}
   - component: {fileID: 11464576}
-  - component: {fileID: 11432962}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -851,19 +836,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: B
---- !u!114 &11432962
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 145914}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 542a37534fa624c4cb90ded402505a57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  forcedZRotation: 0
 --- !u!1 &153566
 GameObject:
   m_ObjectHideFlags: 0
@@ -914,15 +886,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae0badd581c547f4faac55714273a331, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rt: {fileID: 0}
-  parentRM: {fileID: 0}
-  selectable: {fileID: 11493070}
-  label: Element B
-  angleMin: 0
-  angleMax: 0
-  angleOffset: 0
-  active: 0
-  assignedIndex: 0
 --- !u!1 &154238
 GameObject:
   m_ObjectHideFlags: 0
@@ -973,15 +936,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae0badd581c547f4faac55714273a331, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rt: {fileID: 0}
-  parentRM: {fileID: 0}
-  selectable: {fileID: 11499586}
-  label: Element A
-  angleMin: 0
-  angleMax: 0
-  angleOffset: 0
-  active: 0
-  assignedIndex: 0
 --- !u!1 &160090
 GameObject:
   m_ObjectHideFlags: 0
@@ -993,7 +947,6 @@ GameObject:
   - component: {fileID: 22463106}
   - component: {fileID: 22220776}
   - component: {fileID: 11428280}
-  - component: {fileID: 11449954}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -1063,19 +1016,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: D
---- !u!114 &11449954
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 160090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 542a37534fa624c4cb90ded402505a57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  forcedZRotation: 0
 --- !u!1 &161320
 GameObject:
   m_ObjectHideFlags: 0
@@ -1200,7 +1140,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 11500000, guid: f8623862c988fc644b0a5e4de14fe1f2, type: 3}
         m_TargetAssemblyTypeName: UnityEngine.Object, UnityEngine
-        m_MethodName: set_name
+        m_MethodName: 
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1260,15 +1200,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae0badd581c547f4faac55714273a331, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rt: {fileID: 0}
-  parentRM: {fileID: 0}
-  selectable: {fileID: 11435124}
-  label: Element D
-  angleMin: 0
-  angleMax: 0
-  angleOffset: 0
-  active: 0
-  assignedIndex: 0
 --- !u!1 &172674
 GameObject:
   m_ObjectHideFlags: 0
@@ -1321,20 +1252,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 596c16ceda382094bb544ea45272cec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rt: {fileID: 0}
-  useLazySelection: 1
-  useSelectionFollower: 1
-  selectionFollowerContainer: {fileID: 0}
-  textLabel: {fileID: 0}
-  elements:
-  - {fileID: 11495294}
-  - {fileID: 11478188}
-  - {fileID: 11406700}
-  - {fileID: 11469206}
-  globalOffset: 45
-  currentAngle: 0
-  index: 0
-  playerObject: {fileID: 0}
 --- !u!225 &22522322
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1358,7 +1275,6 @@ GameObject:
   - component: {fileID: 22402864}
   - component: {fileID: 22245626}
   - component: {fileID: 11485486}
-  - component: {fileID: 11462960}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -1428,19 +1344,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: C
---- !u!114 &11462960
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 175126}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 542a37534fa624c4cb90ded402505a57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  forcedZRotation: 0
 --- !u!1 &190118
 GameObject:
   m_ObjectHideFlags: 0
@@ -1491,12 +1394,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae0badd581c547f4faac55714273a331, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rt: {fileID: 0}
-  parentRM: {fileID: 0}
-  selectable: {fileID: 11471096}
-  label: Element C
-  angleMin: 0
-  angleMax: 0
-  angleOffset: 0
-  active: 0
-  assignedIndex: 0

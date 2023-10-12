@@ -68,7 +68,7 @@ namespace StarterAssets {
         public void OnInteract(InputValue value) {
             GameObject gameObject = GameObject.Find("MainCamera");
             if (gameObject != null && value.isPressed) {
-                gameObject.GetComponent<Interactor>().checkRayCast(radialMenu);
+                gameObject.GetComponent<Interactor>().CheckInteract(radialMenu);
                 if (radialMenu.activeSelf == true) {
                     cursorInputForLook = false;
                     SetCursorState(false);
@@ -82,8 +82,12 @@ namespace StarterAssets {
             }
         }
 
-        public void OnPrimaryClick(InputValue value) {
-            Debug.Log("PrimaryClick");
+        public void OnPrimaryClick() {
+            GameObject gameObject = GameObject.Find("MainCamera");
+            if (gameObject != null) {
+                Debug.Log("ClicK");
+                gameObject.GetComponent<Interactor>().CheckPrimary();
+            }
         }
 
         public void OnSecondaryClick() {
@@ -92,6 +96,14 @@ namespace StarterAssets {
 
         public void OnDodge() {
             Debug.Log("Dodge");
+        }
+
+        public void OnCrouch() {
+            Debug.Log("Crouch");
+        }
+
+        public void OnInventory() {
+            Debug.Log("Inventory");
         }
 
         public void OnDelete() {

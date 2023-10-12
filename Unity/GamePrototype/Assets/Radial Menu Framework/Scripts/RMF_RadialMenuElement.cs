@@ -6,5 +6,4 @@ using System;
 
 [AddComponentMenu("Radial Menu Framework/RMF Element")]
 public class RMF_RadialMenuElement : MonoBehaviour {
-
 }
