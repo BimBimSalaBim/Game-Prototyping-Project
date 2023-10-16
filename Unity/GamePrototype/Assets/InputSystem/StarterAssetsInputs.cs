@@ -85,7 +85,6 @@ namespace StarterAssets {
         public void OnPrimaryClick() {
             GameObject gameObject = GameObject.Find("MainCamera");
             if (gameObject != null) {
-                Debug.Log("ClicK");
                 gameObject.GetComponent<Interactor>().CheckPrimary();
             }
         }

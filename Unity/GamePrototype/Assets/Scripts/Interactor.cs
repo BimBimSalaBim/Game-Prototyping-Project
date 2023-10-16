@@ -22,7 +22,7 @@ public class Interactor : MonoBehaviour {
         if (Physics.Raycast(r, out RaycastHit hitInfo, InteractRange)) {
             if (hitInfo.collider.gameObject.TryGetComponent(out IMineral mineral)) {
                 mineral.PerformAction();
-            } else if (hitInfo.collider.gameObject.TryGetComponent(out IMonster monster)) {
+            } else if (hitInfo.collider.gameObject.TryGetComponent(out IAttackable monster)) {
                 monster.PerformAction();
             }
         }
@@ -62,6 +62,6 @@ public interface IMineral : IActionable, IDroppableResource {
 
 }
 
-public interface IMonster : IActionable, IDroppableResource {
+public interface IAttackable : IActionable, IDroppableResource {
 
 }

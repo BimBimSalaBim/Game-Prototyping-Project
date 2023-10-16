@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wolf : MonoBehaviour, IMonster {
+public class Wolf : MonoBehaviour, IAttackable {
     public string Name { get; set; }
     public string Description { get; set; }
     public string Icon { get; set; }
