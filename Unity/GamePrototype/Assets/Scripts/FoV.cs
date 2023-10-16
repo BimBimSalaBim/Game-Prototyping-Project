@@ -42,7 +42,7 @@ public class FoV : MonoBehaviour
                 navMeshAgent.isStopped = false;
                 navMeshAgent.updateRotation = true;
 
-                navMeshAgent.SetDestination(originPos);
+                // navMeshAgent.SetDestination(originPos);
                 // Debug.Log("WalkToOrg");
                 // SetFace(faces.WalkFace);
                 // agent reaches the destination
