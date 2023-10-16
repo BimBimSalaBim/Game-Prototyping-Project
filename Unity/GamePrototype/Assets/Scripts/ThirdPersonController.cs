@@ -156,9 +156,9 @@ namespace StarterAssets
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
             
-            if(RealmController.Instance.IsRealmReady()) {
-                player.transform.position = RealmController.Instance.GetPosition();
-            }
+            // if(RealmController.Instance.IsRealmReady()) {
+            //     player.transform.position = RealmController.Instance.GetPosition();
+            // }
 
 
         }
@@ -290,9 +290,9 @@ namespace StarterAssets
                 _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
             }
 
-            if(RealmController.Instance.IsRealmReady()){
-                RealmController.Instance.SetPosition(player.transform.position);
-            }
+            // if(RealmController.Instance.IsRealmReady()){
+            //     RealmController.Instance.SetPosition(player.transform.position);
+            // }
         }
 
         private void JumpAndGravity()
