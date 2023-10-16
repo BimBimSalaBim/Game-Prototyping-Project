@@ -14,8 +14,10 @@ public class FontEndController : MonoBehaviour
     public TMP_InputField passwordInput;
     public TMP_Text feedbackText;  // Drag your feedback message Text here
     public GameObject uiMenu;
+    public GameObject loadingScreen;
     private string email;
     private string password;
+    public string serverURL = "https://service.hoanhnguyen.com";
 
     private async void Start()
     {
@@ -31,7 +33,7 @@ public class FontEndController : MonoBehaviour
     // Just test connection to the server
     public async Task TestConnection()
     {
-        string testUrl = "http://localhost:4444"; // Replace with the API URL that returns 'hello!'
+        string testUrl = serverURL; // Replace with the API URL that returns 'hello!'
 
         using (HttpClient client = new HttpClient())
         {
@@ -48,8 +50,11 @@ public class FontEndController : MonoBehaviour
 
                     if (message == "hello!")
                     {
+                       // yield return new WaitForSeconds(3);
                         Debug.Log("Connection successful!");
                         this.uiMenu.SetActive(true);
+                        
+                        this.loadingScreen.SetActive(false);
                     }
                     else
                     {
@@ -81,7 +86,7 @@ public class FontEndController : MonoBehaviour
     {
         Debug.Log("Button LogIn!");
         Debug.Log(email + " - " + password);
-        string apiUrl = "http://localhost:4444/login"; // Replace with your actual API URL
+        string apiUrl = serverURL + "/login"; // Replace with your actual API URL
 
         RealmController.Instance.SignIn(email, password);
 
@@ -150,7 +155,7 @@ public class FontEndController : MonoBehaviour
         Debug.Log("Button Press: SignUp");
         Debug.Log(email + " - " + password);
         RealmController.Instance.SignUp(email, password);
-        string apiUrl = "http://localhost:4444/register"; // Replace with your actual API URL
+        string apiUrl = serverURL + "/register"; // Replace with your actual API URL
 
 
 
