@@ -1,5 +1,4 @@
-﻿using Realms;
-using UnityEngine;
+﻿using UnityEngine;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
@@ -76,8 +75,6 @@ namespace StarterAssets
         [Tooltip("For locking the camera position on all axis")]
         public bool LockCameraPosition = false;
 
-        
-
         // cinemachine
         private float _cinemachineTargetYaw;
         private float _cinemachineTargetPitch;
@@ -89,8 +86,6 @@ namespace StarterAssets
         private float _rotationVelocity;
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
-
-        public GameObject player;
 
         // timeout deltatime
         private float _jumpTimeoutDelta;
@@ -149,18 +144,12 @@ namespace StarterAssets
 #else
 			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
 #endif
-            
+
             AssignAnimationIDs();
 
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
-            
-            // if(RealmController.Instance.IsRealmReady()) {
-            //     player.transform.position = RealmController.Instance.GetPosition();
-            // }
-
-
         }
 
         private void Update()
@@ -169,8 +158,16 @@ namespace StarterAssets
 
             JumpAndGravity();
             GroundedCheck();
-            Move();
-  
+
+            if (isInDemoMode)
+            {
+                RotateCharacterDemoMode(); // if in demo mode, rotate the character
+            }
+            else
+            {
+                Move(); // if not in demo mode, move the character based on input
+            }
+
         }
 
         private void LateUpdate()
@@ -200,6 +197,14 @@ namespace StarterAssets
             {
                 _animator.SetBool(_animIDGrounded, Grounded);
             }
+        }
+
+        // Add a new public function for teleporting the character
+        public void Teleport(Vector3 destination)
+        {
+            _controller.enabled = false; // Disable the controller before changing its position to avoid any issues
+            transform.position = destination; // Update the position to the destination
+            _controller.enabled = true; // Re-enable the controller
         }
 
         private void CameraRotation()
@@ -289,10 +294,6 @@ namespace StarterAssets
                 _animator.SetFloat(_animIDSpeed, _animationBlend);
                 _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
             }
-
-            // if(RealmController.Instance.IsRealmReady()){
-            //     RealmController.Instance.SetPosition(player.transform.position);
-            // }
         }
 
         private void JumpAndGravity()
@@ -404,5 +405,26 @@ namespace StarterAssets
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
             }
         }
+        //Demo Mode
+        public bool isInDemoMode = false; // flag to check if the demo mode is active
+        public float demoRotationSpeed = 20f; // Speed of the rotation in degrees per second
+
+        public void DemoMode()
+        {
+            isInDemoMode = !isInDemoMode; // Toggle demo mode state
+        }
+
+        private void RotateCharacterDemoMode()
+        {
+            // Calculate the new rotation of the character
+            Quaternion newRotation = Quaternion.RotateTowards(transform.rotation, transform.rotation * Quaternion.Euler(0, 180, 0), demoRotationSpeed * Time.deltaTime);
+
+            // Apply the new rotation to the character
+            transform.rotation = newRotation;
+        }
+
+
+
+
     }
 }
