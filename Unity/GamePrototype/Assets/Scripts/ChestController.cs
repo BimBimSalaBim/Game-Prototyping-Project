@@ -5,6 +5,7 @@ using UnityEngine;
 public class ChestController : MonoBehaviour
 {
     public GameObject topCover;
+    public GameObject inventory;
     private Vector3 originalRotation;
 
 
@@ -34,6 +35,14 @@ public class ChestController : MonoBehaviour
             // Close the chest by setting the rotation back to the original value
             topCover.transform.localEulerAngles = originalRotation;
         }
+    }
+    public GameObject getInventory()
+    {
+        return inventory;
+    }
+    public void setInventory(GameObject inputInventory)
+    {
+        
     }
 }
 
