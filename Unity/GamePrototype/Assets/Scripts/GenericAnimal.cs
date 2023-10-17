@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Interactor;
 
-public class Cat : MonoBehaviour, IAnimal {
+public class GenericAnimal : MonoBehaviour, IAnimal {
     public string Name { get; set; }
     public string Description { get; set; }
     public string Icon { get; set; }
@@ -34,7 +34,7 @@ public class Cat : MonoBehaviour, IAnimal {
     }
 
     void FeedOnClick() {
-        Debug.Log("Feed button clicked");
+        Debug.Log("Nom Nom Nom");
     }
 
     void PetOnClick() {
