@@ -7,6 +7,7 @@ public class ChestController : MonoBehaviour
     public GameObject topCover;
     public GameObject inventory;
     private Vector3 originalRotation;
+    public GameObject textPopUp;
 
 
     private void Start()
@@ -17,11 +18,10 @@ public class ChestController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // Check if the object that entered the trigger is the player
-        // assuming the player has a tag "Player".
         if (other.CompareTag("Player"))
         {
-            // Open the chest by setting the x rotation to 30 degrees
+            Debug.Log("Player Entered Chest Trigger");
+            textPopUp.SetActive(true);
             Vector3 newRotation = new Vector3(-40, topCover.transform.localEulerAngles.y, topCover.transform.localEulerAngles.z);
             topCover.transform.localEulerAngles = newRotation;
         }
@@ -33,6 +33,7 @@ public class ChestController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // Close the chest by setting the rotation back to the original value
+            textPopUp.SetActive(false);
             topCover.transform.localEulerAngles = originalRotation;
         }
     }
