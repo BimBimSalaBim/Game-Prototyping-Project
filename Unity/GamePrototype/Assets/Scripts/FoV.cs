@@ -8,7 +8,7 @@ public class FoV : MonoBehaviour
 
     public AnimationState currentState; 
     public Animator animator;
-    public string CreatureType;
+    public string CreatureType ;
     public float ViewDistance;
     public float FieldOfViewAngle;
     public bool canSeeTarget;
@@ -26,44 +26,51 @@ public class FoV : MonoBehaviour
     }
      void Update()
     {
-        switch (currentState)
-        {
-            case AnimationState.Idle:
-                
-                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) return;
-                StopAgent();
-                // SetFace(faces.Idleface);
-                break;
+        try{
+            switch (currentState)
+                    {
+                        case AnimationState.Idle:
+                            
+                            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) return;
+                            StopAgent();
+                            // SetFace(faces.Idleface);
+                            break;
 
-            case AnimationState.Walk:
+                        case AnimationState.Walk:
 
-                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Walk")) return;
+                            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Walk")) return;
 
-                navMeshAgent.isStopped = false;
-                navMeshAgent.updateRotation = true;
+                            navMeshAgent.isStopped = false;
+                            navMeshAgent.updateRotation = true;
 
-                // navMeshAgent.SetDestination(originPos);
-                // Debug.Log("WalkToOrg");
-                // SetFace(faces.WalkFace);
-                // agent reaches the destination
-                if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
-                {
-                    
+                            // navMeshAgent.SetDestination(originPos);
+                            // Debug.Log("WalkToOrg");
+                            // SetFace(faces.WalkFace);
+                            // agent reaches the destination
+                            if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance)
+                            {
+                                
 
-                    //facing to camera
-                    transform.rotation = Quaternion.identity;
+                                //facing to camera
+                                transform.rotation = Quaternion.identity;
 
-                    currentState = AnimationState.Idle;
-                }
-                       
-            
-               
-                // set Speed parameter synchronized with agent root motion moverment
-                animator.SetFloat("Speed", navMeshAgent.velocity.magnitude);
-                
+                                currentState = AnimationState.Idle;
+                            }
+                                
+                        
+                        
+                            // set Speed parameter synchronized with agent root motion moverment
+                            animator.SetFloat("Speed", navMeshAgent.velocity.magnitude);
+                            
 
-                break;
+                            break;
         }
+        }
+        catch(System.Exception e)
+        {
+            return;
+        }
+       
     }
 
 
@@ -128,6 +135,11 @@ public class FoV : MonoBehaviour
         navMeshAgent.isStopped = true;
         animator.SetFloat("Speed", 0);
         navMeshAgent.updateRotation = false;
+    }
+
+    public string getCreatureType()
+    {
+        return CreatureType;
     }
 
 
