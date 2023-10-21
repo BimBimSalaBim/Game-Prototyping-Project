@@ -31,6 +31,9 @@ namespace StarterAssets {
         [Header("RadialMenu")]
         public GameObject radialMenu;
 
+        [Header("Inventory")]
+        public bool openInventory = false;
+
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
         public void OnMove(InputValue value) {
             MoveInput(value.Get<Vector2>());
@@ -102,7 +105,14 @@ namespace StarterAssets {
         }
 
         public void OnInventory() {
-            Debug.Log("Inventory");
+            GameObject inventory = GameObject.Find("Inventory");
+            if (inventory != null) {
+                openInventory = !openInventory;
+                inventory.transform.GetChild(0).gameObject.SetActive(openInventory);
+                cursorInputForLook = !openInventory;
+                SetCursorState(!openInventory);
+                UnityEngine.Cursor.visible = openInventory;
+            }
         }
 
         public void OnDelete() {
