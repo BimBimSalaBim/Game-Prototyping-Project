@@ -7,7 +7,8 @@ using UnityEngine.InputSystem;
 public class InventoryManager : MonoBehaviour {
     
     public static InventoryManager instance;
-    
+
+    public Item[] startItems;
     public int maxStackItems = 64;
     public InventorySlot[] inventorySlots;
     public GameObject inventoryItemPrefab;
@@ -15,10 +16,14 @@ public class InventoryManager : MonoBehaviour {
 
     public void Awake() {
         instance = this;
+        foreach (Item item in startItems) {
+            AddItem(item);
+        }
     }
 
     private void Start() {
         ChangeSelectedSlot(0);
+
     }
 
     private void Update() {
@@ -52,7 +57,7 @@ public class InventoryManager : MonoBehaviour {
         for (int i = 0; i < inventorySlots.Length; i++) {
             InventorySlot slot = inventorySlots[i];
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
-            if (itemInSlot == null 
+            if (itemInSlot != null 
                     && itemInSlot.item == item 
                     && itemInSlot.count < maxStackItems
                     && itemInSlot.item.stackable) {
