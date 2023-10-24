@@ -6,26 +6,12 @@ using UnityEngine.InputSystem.Utilities;
 using StarterAssets;
 using System.Collections.Generic;
 using static UnityEngine.InputSystem.InputActionRebindingExtensions;
+using System.Text.RegularExpressions;
 
 public class ControlMenuPresenter {
     private InputActionMap actionMap;
-    private InputAction moveAction;
     private VisualElement controlContainer;
     private RebindingOperation rebindOperation;
-    private Tuple<Button, Button> upElement;
-    private Tuple<Button, Button> downElement;
-    private Tuple<Button, Button> leftElement;
-    private Tuple<Button, Button> rightElement;
-    private StyleColor primaryColor; 
-    private Dictionary<string, bool> controls = new() {
-        { "Jump", false },
-        { "Sprint", false },
-        { "Interact", false },
-        { "PrimaryClick", true },
-        { "SecondaryClick", true },
-        { "Dodge", false }
-    };
-
     private Dictionary<int, string> effectivePaths;
 
     public ControlMenuPresenter(VisualElement root, InputActionAsset actionAsset) {
@@ -35,59 +21,90 @@ public class ControlMenuPresenter {
             input.OnDeletePressed += () => refreshButtons();
         }
         controlContainer = root.Q<VisualElement>("unity-content-container");
-        upElement = GetProperties(controlContainer, "Up");
-        downElement = GetProperties(controlContainer, "Down");
-        leftElement = GetProperties(controlContainer, "Left");
-        rightElement = GetProperties(controlContainer, "Right");
         actionMap = actionAsset.FindActionMap("Player");
-        moveAction = actionMap.FindAction("Move");
         effectivePaths = new Dictionary<int, string>();
-        primaryColor = new StyleColor(new Color(26f / 255f, 29f / 255f, 43f / 255f));
         updateEffectivePaths();
-
         GeneralScreen();
     }
 
+    private void addToControls(string labelText, InputBinding firstBinding, InputBinding secondBinding, InputAction action, 
+        int firstIndex, int secondIndex, bool hasSecondBinding) {
+        VisualElement newRow = new();
+        newRow.AddToClassList("ControlRow");
+
+        Label label = new() {
+            text = Regex.Replace(char.ToUpper(labelText[0]) + labelText[1..], "([a-z])([A-Z])", "$1 $2")
+        };
+        label.AddToClassList("ControlLabel");
+        label.AddToClassList("controlLabelText");
+        newRow.Add(label);
+        
+        Button keyboardButton = new() {
+            text = firstBinding.effectivePath.Split("/")[1]
+        };
+        keyboardButton.AddToClassList("NavButton");
+        keyboardButton.AddToClassList("ControlButton");
+        keyboardButton.AddToClassList("ControlButtonFormat");
+        newRow.Add(keyboardButton);
+
+        Button gamepadButton = new() {
+            text = hasSecondBinding ? secondBinding.effectivePath.Split("/")[1] : ""
+        };
+        if (hasSecondBinding) {
+            gamepadButton.AddToClassList("NavButton");
+            gamepadButton.AddToClassList("ControlButton");
+        } else {
+            gamepadButton.AddToClassList("MissingControlButton");
+        }
+        gamepadButton.AddToClassList("ControlButtonFormat");
+        newRow.Add(gamepadButton);
+
+        if(hasSecondBinding) {
+            AssignCallBack(keyboardButton, gamepadButton, evt => PerformRebind(action, firstIndex, keyboardButton, 
+                firstBinding.effectivePath.Contains("Mouse")),
+                evt => PerformRebind(action, secondIndex, gamepadButton, 
+                firstBinding.effectivePath.Contains("Mouse")));
+        } else {
+            AssignCallBack(keyboardButton, evt => PerformRebind(action, firstIndex, keyboardButton,
+                firstBinding.effectivePath.Contains("Mouse")));
+        }
+
+        controlContainer.Add(newRow);
+    }
+
     private void GeneralScreen() {
-        var moveBindings = moveAction.bindings;
-        int[] bindingIndexes = { 1, 2, 3, 4, moveBindings.Count - 1 };
+        VisualElement gameControls = controlContainer[1];
+        controlContainer.RemoveAt(1);
 
-        AssignCallBack(upElement, evt => PerformRebind(moveAction, bindingIndexes[0], upElement.Item1),
-                        evt => PerformRebind(moveAction, bindingIndexes[4], upElement.Item2));
-        AssignCallBack(downElement, evt => PerformRebind(moveAction, bindingIndexes[1], downElement.Item1));
-        AssignCallBack(leftElement, evt => PerformRebind(moveAction, bindingIndexes[2], leftElement.Item1));
-        AssignCallBack(rightElement, evt => PerformRebind(moveAction, bindingIndexes[3], rightElement.Item1));
+        List<List<InputBinding>> bindingPairs = new();
+        foreach (var action in actionMap.actions) {
+            ReadOnlyArray<InputBinding> bindings = action.bindings;
+            if (bindings.Count > 2) {
+                bindingPairs.Add((new List<InputBinding> { bindings[1], bindings[^1] }));
+                addToControls(bindings[1].name, bindings[1], bindings[^1], action, 1, bindings.Count-1, true);
+                for (int j = 2; j < bindings.Count - 1; j++) {
+                    bindingPairs.Add(new List<InputBinding> { bindings[j] });
+                    addToControls(bindings[j].name, bindings[j], new InputBinding(), action, j, -1, false);
+                }
+            } else {
+                if (action.name.Equals("Pause") || action.name.Equals("Look")) continue;
+                bindingPairs.Add(new List<InputBinding> { bindings[0], bindings[1] });
+                addToControls(action.name, bindings[0], bindings[1], action, 0, 1, true);
+            }
+        }
 
-        updateComposite(moveBindings, bindingIndexes);
-        updateNonCompositeControls(controls, true);
+        controlContainer.Insert(9, gameControls);
     }
 
     private void refreshButtons() {
-        var moveBindings = moveAction.bindings;
-        int[] bindingIndexes = { 1, 2, 3, 4, moveBindings.Count - 1 };
-
-        updateComposite(moveBindings, bindingIndexes);
-        updateNonCompositeControls(controls, false);
+        VisualElement movementLabel = controlContainer[0];
+        VisualElement gameControls = controlContainer[9];
+        controlContainer.Clear();
+        controlContainer.Add(movementLabel);
+        controlContainer.Add(gameControls);
+        actionMap.RemoveAllBindingOverrides();
+        GeneralScreen();
         updateEffectivePaths();
-    }
-
-    private void InitializeAction(KeyValuePair<string, bool> pair, VisualElement container, bool assignCallBacks) {
-        var element = GetProperties(container, pair.Key);
-        InputAction action = actionMap.FindAction(pair.Key);
-        if(assignCallBacks) {
-            AssignCallBack(element, evt => PerformRebind(action, 0, element.Item1, pair.Value),
-                evt => PerformRebind(action, 1, element.Item2, pair.Value));
-        }
-        ReadOnlyArray<InputBinding> bindings = action.bindings;
-        UpdateButtons(element, bindings);
-    }
-
-    private void updateComposite(ReadOnlyArray<InputBinding> moveBindings, int[] bindingIndexes) {
-        UpdateButtonText(upElement.Item1, moveBindings[bindingIndexes[0]]);
-        UpdateButtonText(upElement.Item2, moveBindings[bindingIndexes[4]]);
-        UpdateButtonText(downElement.Item1, moveBindings[bindingIndexes[1]]);
-        UpdateButtonText(leftElement.Item1, moveBindings[bindingIndexes[2]]);
-        UpdateButtonText(rightElement.Item1, moveBindings[bindingIndexes[3]]);
     }
 
     private void updateEffectivePaths() {
@@ -96,45 +113,23 @@ public class ControlMenuPresenter {
         }
     }
 
-    private void updateNonCompositeControls(Dictionary<string, bool> controls, bool assignCallBacks) {
-        foreach (var control in controls) {
-            InitializeAction(control, controlContainer, assignCallBacks);
-        }
+    private void AssignCallBack(Button button, EventCallback<ClickEvent> callBackOne) {
+        button.RegisterCallback(callBackOne);
     }
 
-    private StyleColor PrepButton(InputAction action, Button button) {
+    private void AssignCallBack(Button buttonOne, Button buttonTwo, EventCallback<ClickEvent> callBackOne, EventCallback<ClickEvent> callBackTwo) {
+        buttonOne.RegisterCallback(callBackOne);
+        buttonTwo.RegisterCallback(callBackTwo);
+    }
+
+    private void PerformRebind(InputAction action, int bindingIndex, Button button, bool mouse) {
+        button.ToggleInClassList("MissingControlButton");
+        button.ToggleInClassList("ControlButton");
         action.Disable();
-        button.text = "";
-        var color = button.style.backgroundColor;
-        button.style.backgroundColor = Color.gray;
-        return color;
-    }
-
-    private Tuple<Button, Button> GetProperties(VisualElement container, string name) {
-        return GetButtons(container.Q<VisualElement>(name));
-    }
-
-    private Tuple<Button, Button> GetButtons(VisualElement element) {
-        Button keyboard = element.Q<Button>("Keyboard");
-        Button gamepad = element.Q<Button>("Gamepad");
-        return Tuple.Create(keyboard, gamepad);
-    }
-
-    private void AssignCallBack(Tuple<Button, Button> buttons, EventCallback<ClickEvent> callBackOne) {
-        buttons.Item1.RegisterCallback(callBackOne);
-    }
-
-    private void AssignCallBack(Tuple<Button, Button> buttons, EventCallback<ClickEvent> callBackOne, EventCallback<ClickEvent> callBackTwo) {
-        buttons.Item1.RegisterCallback(callBackOne);
-        buttons.Item2.RegisterCallback(callBackTwo);
-    }
-
-    private void PerformRebind(InputAction action, int bindingIndex, Button button, bool mouse=false) {
 
         if (rebindOperation != null) {
             rebindOperation.Cancel();
             rebindOperation = null;
-            action.Disable();
             Debug.Log(action.bindings[bindingIndex]);
         }
 
@@ -156,21 +151,16 @@ public class ControlMenuPresenter {
 
     private void Cancel(InputAction action, int bindingIndex, Button button) {
         action.Enable();
-        button.style.backgroundColor = primaryColor;
+        button.ToggleInClassList("MissingControlButton");
+        button.ToggleInClassList("ControlButton");
         UpdateButtonText(button, action.bindings[bindingIndex]);
         rebindOperation?.Dispose();
         rebindOperation = null;
     }
-    private void UpdateButtons(Tuple<Button, Button> buttons, ReadOnlyArray<InputBinding> bindings) {
-        UpdateButtonText(buttons.Item1, bindings[0]);
-        UpdateButtonText(buttons.Item2, bindings[1]);
-    }
 
     private void UpdateButtonText(Button button, InputBinding binding) {
-        if (button.ClassListContains("MissingControlButton")) {
-            button.ToggleInClassList("MissingControlButton");
-            button.AddToClassList("ControlButton");
-        }
+        button.ToggleInClassList("MissingControlButton");
+        button.ToggleInClassList("ControlButton");
         button.text = binding.effectivePath.Split("/")[1];
     }
 
@@ -179,7 +169,6 @@ public class ControlMenuPresenter {
         if (action.bindings[bindingIndex].effectivePath == "<Keyboard>/anyKey") {
             action.RemoveBindingOverride(bindingIndex);
         }
-        button.style.backgroundColor = primaryColor;
         action.Enable();
         var index = checkDuplicates(action, bindingIndex);
         effectivePaths[index] = action.bindings[bindingIndex].effectivePath;

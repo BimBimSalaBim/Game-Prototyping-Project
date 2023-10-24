@@ -51,6 +51,24 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Crouch",
+                    "type": "Button",
+                    "id": "068387c2-8cd3-44c9-8318-1490dde857d6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Dodge",
+                    "type": "Button",
+                    "id": "e8c7d8de-d032-496f-ada0-de0208f67b42",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Interact",
                     "type": "Value",
                     "id": "12335ee2-59cb-4278-b765-df0c197295fa",
@@ -72,24 +90,6 @@
                     "name": "SecondaryClick",
                     "type": "Button",
                     "id": "1b09a123-5004-4879-bbfc-e4d78a4e491c",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Dodge",
-                    "type": "Button",
-                    "id": "e8c7d8de-d032-496f-ada0-de0208f67b42",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Crouch",
-                    "type": "Button",
-                    "id": "068387c2-8cd3-44c9-8318-1490dde857d6",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -263,7 +263,7 @@
                 {
                     "name": "",
                     "id": "5c47fa92-2a70-4e9c-a0c7-7db9af31039d",
-                    "path": "<Keyboard>/f",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
@@ -328,23 +328,23 @@
                 },
                 {
                     "name": "",
-                    "id": "08e95851-2d1c-433b-a713-3d6f0e8c63dc",
+                    "id": "bfa4a0ac-cbaa-473b-8214-6ce3e91af0be",
                     "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
-                    "action": "Dodge",
+                    "action": "Inventory",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "3e0343d2-1ae0-41c0-bc3a-9adc18dce067",
-                    "path": "<Gamepad>/leftShoulder",
+                    "id": "4e5ddd84-9959-4a16-ac30-4e880820619d",
+                    "path": "<Gamepad>/select",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Dodge",
+                    "action": "Inventory",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -372,23 +372,23 @@
                 },
                 {
                     "name": "",
-                    "id": "bfa4a0ac-cbaa-473b-8214-6ce3e91af0be",
-                    "path": "<Keyboard>/e",
+                    "id": "08e95851-2d1c-433b-a713-3d6f0e8c63dc",
+                    "path": "<Keyboard>/g",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
-                    "action": "Inventory",
+                    "action": "Dodge",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "4e5ddd84-9959-4a16-ac30-4e880820619d",
-                    "path": "<Gamepad>/select",
+                    "id": "3e0343d2-1ae0-41c0-bc3a-9adc18dce067",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Inventory",
+                    "action": "Dodge",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

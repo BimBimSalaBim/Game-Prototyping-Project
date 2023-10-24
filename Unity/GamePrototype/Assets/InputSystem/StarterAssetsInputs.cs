@@ -112,6 +112,8 @@ namespace StarterAssets {
                 cursorInputForLook = !openInventory;
                 SetCursorState(!openInventory);
                 UnityEngine.Cursor.visible = openInventory;
+                Time.timeScale = 1f * (openInventory ? 0.0f : 1.0f);
+                AudioListener.pause = openInventory;
             }
         }
 
