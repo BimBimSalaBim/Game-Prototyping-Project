@@ -105,6 +105,9 @@ namespace StarterAssets
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
+        private static ThirdPersonController _singleton;
+        public static ThirdPersonController sSingleton {get{ return _singleton; } private set{ _singleton = value; }}
+
 
         private const float _threshold = 0.01f;
 
@@ -150,6 +153,13 @@ namespace StarterAssets
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
+            sSingleton = this;
+            if (Database.Instance.isLoggedIn)
+            {
+                Vector3 position = Database.Instance.getPosition();
+                transform.position = position;
+            }
+
         }
 
         private void Update()

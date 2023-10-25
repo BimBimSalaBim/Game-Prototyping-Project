@@ -80,9 +80,12 @@ public class menucontroller : MonoBehaviour
         Debug.Log(email + " - " + password);
         string apiUrl = "http://localhost:4444/login"; // Replace with your actual API URL
 
-        RealmController.Instance.SignIn(email, password);
+        // RealmController.Instance.SignIn(email, password);
+        if(Database.Instance.login(email, password)){
 
-        SceneManager.LoadScene("Playground");
+        SceneManager.LoadScene("Prototype_scene");
+        }
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -146,7 +149,10 @@ public class menucontroller : MonoBehaviour
         //todo: Implement signup functionality
         Debug.Log("Button Press: SignUp");
         Debug.Log(email + " - " + password);
-        RealmController.Instance.SignUp(email, password);
+        // RealmController.Instance.SignUp(email, password);
+        if(Database.Instance.signup(email, password, email)){
+            SceneManager.LoadScene("Prototype_scene");
+        }
         string apiUrl = "http://localhost:4444/register"; // Replace with your actual API URL
 
   

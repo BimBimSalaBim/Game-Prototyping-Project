@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Entity : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class Entity : MonoBehaviour
     public float mStrength { get { return _stats[EntityStat.STRENGTH]; } set { _stats[EntityStat.STRENGTH] = value; } }
     public float mHunger { get { return _stats[EntityStat.HUNGER]; } set { _stats[EntityStat.HUNGER] = value; } }
     public float mInventory_Slots { get { return _stats[EntityStat.INVENTORY_SLOTS]; } set { _stats[EntityStat.INVENTORY_SLOTS] = value; } }
+    public NavMeshAgent navMeshAgent;
+    
 
     public void Subscribe(EntityStat iStat, Value<float>.OnModify iFunction)
     {
@@ -28,7 +31,7 @@ public class Entity : MonoBehaviour
 
     public virtual void Move(Vector3 iDir)
     {
-
+        navMeshAgent.SetDestination(iDir);
     }
 
     public virtual void Jump(bool iJump)

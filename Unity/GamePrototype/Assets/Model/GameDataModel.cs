@@ -1,28 +1,33 @@
-using Realms;
+// using Realms;
 using MongoDB.Bson;
 using System.Numerics;
 
-public class GameDataModel : RealmObject
+// public class GameDataModel : RealmObject
+public class GameDataModel  
 {
 
-    [PrimaryKey]
-    [MapTo("_id")]
+    // [PrimaryKey]
+    // [MapTo("_id")]
     public ObjectId Id { get; set; } = ObjectId.GenerateNewId();
 
-    [Required]
-    [MapTo("user_id")]
+    // [Required]
+    // [MapTo("user_id")]
     public string UserId { get; set; } = "gamertag";
 
-    [MapTo("PositionX")]
+    // [MapTo("PositionX")]
     public float PositionX { get; set; } = 0;
 
-    [MapTo("PositionY")]
+    // [MapTo("PositionY")]
     public float PositionY { get; set; } = 0;
-    [MapTo("PositionZ")]
+    // [MapTo("PositionZ")]
     public float PositionZ { get; set; } = 0;
 
-    [MapTo("name")]
+    // [MapTo("name")]
     public string Name { get; set; }
+
+    public string Email { get; set; }
+
+    public string Password { get; set; }
 
     public Vector3 GetPosition()
     {
