@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum AnimationState { Idle,Walk,Jump,Attack,Damage}
-public class FoV : MonoBehaviour
+public class FoV : Entity
 {
 
     public AnimationState currentState; 
@@ -13,15 +13,15 @@ public class FoV : MonoBehaviour
     public float FieldOfViewAngle;
     public bool canSeeTarget;
     
-
     public float movementSpeed = 5.0f;
+    public float tempHunger = 0.0f;
 
-    public UnityEngine.AI.NavMeshAgent navMeshAgent;
 
     private void Start()
     {
         
         StartCoroutine("FindTargetsWithDelay");
+        
         
     }
      void Update()
@@ -84,6 +84,7 @@ public class FoV : MonoBehaviour
             yield return Wait;
             FindVisibleTargets();
         }
+        tempHunger -= 0.5f;
     }
 
     private void FindVisibleTargets()
@@ -127,7 +128,7 @@ public class FoV : MonoBehaviour
         randomDirection += transform.position;
         UnityEngine.AI.NavMeshHit hit;
         UnityEngine.AI.NavMesh.SamplePosition(randomDirection, out hit, ViewDistance, 1); 
-        navMeshAgent.SetDestination(hit.position);
+        Move(hit.position);
     }
 
     private void StopAgent()

@@ -88,7 +88,7 @@ public class FontEndController : MonoBehaviour
         Debug.Log(email + " - " + password);
         string apiUrl = serverURL + "/login"; // Replace with your actual API URL
 
-        RealmController.Instance.SignIn(email, password);
+        // RealmController.Instance.SignIn(email, password);
 
         SceneManager.LoadScene("Playground");
         Cursor.lockState = CursorLockMode.Locked;
@@ -154,7 +154,7 @@ public class FontEndController : MonoBehaviour
         //todo: Implement signup functionality
         Debug.Log("Button Press: SignUp");
         Debug.Log(email + " - " + password);
-        RealmController.Instance.SignUp(email, password);
+        // RealmController.Instance.SignUp(email, password);
         string apiUrl = serverURL + "/register"; // Replace with your actual API URL
 
 

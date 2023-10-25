@@ -1420,7 +1420,6 @@ GameObject:
   - component: {fileID: 3332543642612929287}
   - component: {fileID: 1977150898}
   - component: {fileID: 1977150899}
-  - component: {fileID: 1977150900}
   - component: {fileID: 1977150901}
   m_Layer: 0
   m_Name: Creature Carnivore
@@ -1497,6 +1496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a41b63ef985635469b48e1bed7f4312, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  navMeshAgent: {fileID: 1977150898}
   currentState: 0
   animator: {fileID: 0}
   CreatureType: rex
@@ -1504,19 +1504,6 @@ MonoBehaviour:
   FieldOfViewAngle: 44.89
   canSeeTarget: 0
   movementSpeed: 5
-  navMeshAgent: {fileID: 1977150898}
---- !u!114 &1977150900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3332543642612929285}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26986d0ea6b989b49b26508fdf6a8ede, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1977150901
 MonoBehaviour:
   m_ObjectHideFlags: 0
