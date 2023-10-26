@@ -24,14 +24,17 @@ public enum ItemType {
     Tool,
     Food,
     Resource,
-    Weapon
+    Weapon,
+    NULL
 }
 
 public enum ActionType {
     Dig, 
     Mine,
-    Feed,
+    FeedHerbivore,
+    FeedCarnivore,
     Craft,
     Build,
-    Attack
+    Attack,
+    NULL
 }

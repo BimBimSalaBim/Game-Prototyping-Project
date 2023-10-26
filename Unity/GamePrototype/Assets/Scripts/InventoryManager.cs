@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class InventoryManager : MonoBehaviour {
     
@@ -84,6 +85,16 @@ public class InventoryManager : MonoBehaviour {
         inventoryItem.InitializeItem(item);
     }
 
+    public (string, ItemType, ActionType) CheckSelectedItem() {
+        InventorySlot slot = inventorySlots[selectedSlot];
+        InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+        if (itemInSlot != null) {
+            Item item = itemInSlot.item;
+            return (item.name, item.type, item.actionType);
+        }
+        return (null, ItemType.NULL, ActionType.NULL);
+    }
+
     public Item GetSelectedItem(bool use) {
         InventorySlot slot = inventorySlots[selectedSlot];
         InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
@@ -97,6 +108,7 @@ public class InventoryManager : MonoBehaviour {
                     itemInSlot.RefreshCount();
                 }
             }
+            return item;
         }
         return null;
     }

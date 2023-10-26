@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Interactor;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class GenericAnimal : MonoBehaviour, IAnimal {
     public string Name { get; set; }
@@ -12,6 +13,7 @@ public class GenericAnimal : MonoBehaviour, IAnimal {
     public bool statsEnabled { get; set; }
 
     public GameObject canvas;
+    public ActionType feedType = ActionType.FeedHerbivore;
     private FoV fov;
 
     private Entity entity;
@@ -61,10 +63,6 @@ public class GenericAnimal : MonoBehaviour, IAnimal {
     }
 
 
-
-    void FeedOnClick() {
-        Debug.Log("Nom Nom Nom");
-    }
 
     void ViewStatsOnClick() {
         Debug.Log("Stats button clicked");
@@ -118,5 +116,15 @@ public class GenericAnimal : MonoBehaviour, IAnimal {
 
     public IEnumerator MoveAndCollect() {
         throw new System.NotImplementedException();
+    }
+
+    public void FeedOnClick() {
+        var (name, type, actionType) = InventoryManager.instance.CheckSelectedItem();
+        if (type == ItemType.Food && actionType.Equals(actionType)) {
+            InventoryManager.instance.GetSelectedItem(true);
+            Debug.Log("Nom nom nom");
+            Debug.Log(string.Format("Ate a {0}", name));
+            //change entity stats 
+        }
     }
 }

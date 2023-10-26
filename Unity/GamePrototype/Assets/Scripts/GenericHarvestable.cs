@@ -36,6 +36,7 @@ public class GenericHarvestable : MonoBehaviour, IPlant {
         while (Vector3.Distance(transform.position, player.position) > collectDistance) {
             transform.position = Vector3.MoveTowards(transform.position, oldPosition + new Vector3(0, fallHeight, 0), fallSpeed);
             transform.localScale = new Vector3(shrinkSize, shrinkSize, shrinkSize);
+            //maybe add timer here that will break out and then alter code to destroy when not picked up
             yield return 0;
         }
 

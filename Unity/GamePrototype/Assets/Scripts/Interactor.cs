@@ -54,6 +54,8 @@ public interface IResource : Describable {
 
 public interface IAnimal : IInteractable, IDroppableResource {
     void CommandMenu(GameObject radialMenu);
+
+    void FeedOnClick();
 }
 
 public interface IPlant : IInteractable, IDroppableResource {
