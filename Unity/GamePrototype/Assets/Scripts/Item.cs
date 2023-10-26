@@ -9,7 +9,8 @@ public class Item : ScriptableObject {
     public TileBase tile;
     public ItemType type;
     public ActionType actionType;
-    public Vector2Int range = new Vector2Int(5, 4);
+    //in tutorial but not sure what it does
+    //public Vector2Int range = new Vector2Int(5, 4);
 
     [Header("Only UI")]
     public bool stackable = true;
@@ -20,10 +21,17 @@ public class Item : ScriptableObject {
 
 public enum ItemType {
     BuildingBlock, 
-    Tool
+    Tool,
+    Food,
+    Resource,
+    Weapon
 }
 
 public enum ActionType {
     Dig, 
-    Mine
+    Mine,
+    Feed,
+    Craft,
+    Build,
+    Attack
 }

@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -53,7 +54,6 @@ public class InventoryManager : MonoBehaviour {
         selectedSlot = newValue;
     }
     public bool AddItem(Item item) {
-
         for (int i = 0; i < inventorySlots.Length; i++) {
             InventorySlot slot = inventorySlots[i];
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();

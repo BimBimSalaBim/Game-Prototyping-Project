@@ -1,19 +1,42 @@
+using StarterAssets;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GenericHarvestable : MonoBehaviour, IPlant {
-    public string Name { get; set; }
-    public string Description { get; set; }
-    public string Icon { get; set; }
 
-    public void Interact() {
-        Debug.Log("HARVESTABLE");
-        this.gameObject.SetActive(false);
+    [SerializeField] private float collectDistance = 1;
+    [SerializeField] private Item item;
+    [SerializeField] private float shrinkSize = 0.17f;
+    private Collider collider;
+    private Transform player;
+
+    public void Start() {
+        Initialize(item);
     }
 
-    public List<IResource> DropResources() {
-        List<IResource> resources = new List<IResource>();
-        return resources;
+    public void Initialize(Item item) {
+        this.item = item;
+        player = GameObject.Find("PlayerArmature").GetComponent<Transform>();
+        collider = GetComponent<Collider>();
+    }
+    public void Interact() {
+        StartCoroutine(MoveAndCollect());
+    }
+
+    public IEnumerator MoveAndCollect() {
+        Destroy(collider);
+        var oldPosition = transform.position;
+        transform.position += Vector3.up;
+        while (Vector3.Distance(transform.position, player.position) > collectDistance) {
+            transform.position = Vector3.MoveTowards(transform.position, oldPosition + new Vector3(0, 0.17f, 0), 0.01f);
+            transform.localScale = new Vector3(shrinkSize, shrinkSize, shrinkSize);
+            yield return 0;
+        }
+
+        Destroy(gameObject);
+        Debug.Log(InventoryManager.instance.AddItem(item));
     }
 }
