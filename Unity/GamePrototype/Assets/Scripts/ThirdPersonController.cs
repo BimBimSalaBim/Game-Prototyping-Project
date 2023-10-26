@@ -154,11 +154,11 @@ namespace StarterAssets
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
             sSingleton = this;
-            if (Database.Instance.isLoggedIn)
+/*            if (Database.Instance.isLoggedIn)
             {
                 Vector3 position = Database.Instance.getPosition();
                 transform.position = position;
-            }
+            }*/
 
         }
 

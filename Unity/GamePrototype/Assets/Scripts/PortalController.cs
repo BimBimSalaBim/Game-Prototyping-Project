@@ -11,6 +11,7 @@ public class PortalController: MonoBehaviour
     private bool playerInRange = false;
     private bool playerPressKey = false;
 
+
     void Update()
     {
         var keyboard = Keyboard.current;

@@ -92,6 +92,18 @@ namespace StarterAssets {
             }
         }
 
+        public void  OnUseTool()
+        {
+            //Debug.Log("Tool in use!");
+            GameObject equiqmentController = GameObject.Find("EquiqmentController");
+            if (equiqmentController != null)
+            {
+
+                equiqmentController.GetComponent<EquipmentController>().UseTool();
+ 
+                Debug.Log("Tool in use!");
+            }
+        }
         public void OnSecondaryClick() {
             Debug.Log("SecondaryClick");
         }
