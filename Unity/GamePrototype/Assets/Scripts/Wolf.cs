@@ -15,4 +15,12 @@ public class Wolf : MonoBehaviour, IAttackable {
         List<IResource> resources = new List<IResource>();
         return resources;
     }
+
+    public void Initialize(Item item) {
+        throw new System.NotImplementedException();
+    }
+
+    public IEnumerator MoveAndCollect() {
+        throw new System.NotImplementedException();
+    }
 }

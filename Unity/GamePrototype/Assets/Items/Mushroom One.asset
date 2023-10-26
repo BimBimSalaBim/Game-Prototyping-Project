@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: Mushroom One
   m_EditorClassIdentifier: 
   tile: {fileID: 0}
-  type: 0
-  actionType: 0
-  range: {x: 5, y: 4}
-  stackable: 0
+  type: 2
+  actionType: 2
+  stackable: 1
   image: {fileID: 21300000, guid: 12e6e71d3682fd84d9debde5b2a17dee, type: 3}

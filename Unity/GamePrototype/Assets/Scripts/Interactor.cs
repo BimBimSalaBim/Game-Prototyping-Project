@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class Interactor : MonoBehaviour {
@@ -38,7 +38,9 @@ public interface IActionable {
 }
 
 public interface IDroppableResource {
-    List<IResource> DropResources();
+    public void Initialize(Item item);
+
+    public IEnumerator MoveAndCollect();
 }
 
 public interface Describable {

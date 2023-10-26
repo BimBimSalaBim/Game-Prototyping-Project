@@ -2,13 +2,14 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine;
 using static Interactor;
+using System.Collections;
 
 public class GenericAnimal : MonoBehaviour, IAnimal {
     public string Name { get; set; }
     public string Description { get; set; }
     public string Icon { get; set; }
 
-    public bool statsEnabled { get; set;}
+    public bool statsEnabled { get; set; }
 
     public GameObject canvas;
     private FoV fov;
@@ -26,14 +27,13 @@ public class GenericAnimal : MonoBehaviour, IAnimal {
 
     public void Update() {
         //check if command menu is open
-        
-        if(statsEnabled){
-            
+
+        if (statsEnabled) {
+
             //find the PlayerArmature and set the rotation of canvas to face the player
             GameObject MainCamera = GameObject.Find("MainCamera");
             canvas.transform.LookAt(MainCamera.transform);
-        }
-        else{
+        } else {
             canvas.SetActive(false);
         }
     }
@@ -83,7 +83,7 @@ public class GenericAnimal : MonoBehaviour, IAnimal {
         int mHunger = 100;
         int mInventory_Slots = 100;
 
-        text.text = "Creature Name: "+ fov.getCreatureType() +
+        text.text = "Creature Name: " + fov.getCreatureType() +
                     "\nHealth: " + mHealth +
                     "\nMax Health: " + mMaxHealth +
                     "\nSpeed: " + mSpeed +
@@ -107,12 +107,16 @@ public class GenericAnimal : MonoBehaviour, IAnimal {
     void StayOnClick() {
         Debug.Log("Stay button clicked");
     }
-public List<IResource> DropResources() {
-        List<IResource> resources = new List<IResource>();
-        return resources;
-    }
 
     public void CommandMenu(GameObject radialMenu) {
         commandMenu = radialMenu;
+    }
+
+    public void Initialize(Item item) {
+        throw new System.NotImplementedException();
+    }
+
+    public IEnumerator MoveAndCollect() {
+        throw new System.NotImplementedException();
     }
 }

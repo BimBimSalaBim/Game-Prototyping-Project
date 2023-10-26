@@ -1,5 +1,6 @@
 
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -19,12 +20,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
     [HideInInspector]
     public int count = 1;
 
-    //Start should be removed once we have a item pickup system working
-    //should be connected to InventoryManager that will then call InitializeItem
-    public void Start() {
-        InitializeItem(item);
-    }
-
     public void InitializeItem(Item newItem) {
         item = newItem;
         image.sprite = newItem.image;
@@ -33,6 +28,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
 
     public void RefreshCount() {
         countText.text = count.ToString();
+        countText.color = Color.black;
         bool textActive = count > 1;
         countText.gameObject.SetActive(textActive);
     }
