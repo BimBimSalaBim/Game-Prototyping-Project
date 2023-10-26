@@ -96,11 +96,16 @@ namespace StarterAssets {
         {
             //Debug.Log("Tool in use!");
             GameObject equiqmentController = GameObject.Find("EquiqmentController");
-            if (equiqmentController != null)
+            GameObject mineralController = GameObject.Find("Mineral");
+            if (equiqmentController != null && mineralController != null)
             {
 
                 equiqmentController.GetComponent<EquipmentController>().UseTool();
- 
+                if (mineralController.GetComponent<MineralController>()._isPlayerInRange == true)
+                {
+                    mineralController.GetComponent<MineralController>().SpawnGem();
+                }
+                
                 Debug.Log("Tool in use!");
             }
         }

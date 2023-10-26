@@ -1,7 +1,13 @@
 fileFormatVersion: 2
-guid: 56e9d19983c667345a23f29986966481
+<<<<<<<< HEAD:Unity/GamePrototype/Assets/Scenes/Demo Screen/Mining.unity.meta
+guid: 2b18514f6f4811c4ba743ba121d60aea
 DefaultImporter:
+========
+guid: 4236aa287daf5f343bdcafff92767f2e
+NativeFormatImporter:
+>>>>>>>> b67d222713a8bee37adad32604f0c820f348e96b:Unity/GamePrototype/Assets/Items/Animal Hide.asset.meta
   externalObjects: {}
+  mainObjectFileID: 11400000
   userData: 
   assetBundleName: 
   assetBundleVariant: 
