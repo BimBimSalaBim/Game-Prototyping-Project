@@ -10,6 +10,9 @@ public class GenericHarvestable : MonoBehaviour, IPlant {
     [SerializeField] private float collectDistance = 1;
     [SerializeField] private Item item;
     [SerializeField] private float shrinkSize = 0.17f;
+    [SerializeField] private float fallHeight = 0.17f;
+    [SerializeField] private float fallSpeed = 0.01f;
+    [SerializeField] private GameObject shrinkObject = null;
     private Collider collider;
     private Transform player;
 
@@ -31,7 +34,7 @@ public class GenericHarvestable : MonoBehaviour, IPlant {
         var oldPosition = transform.position;
         transform.position += Vector3.up;
         while (Vector3.Distance(transform.position, player.position) > collectDistance) {
-            transform.position = Vector3.MoveTowards(transform.position, oldPosition + new Vector3(0, 0.17f, 0), 0.01f);
+            transform.position = Vector3.MoveTowards(transform.position, oldPosition + new Vector3(0, fallHeight, 0), fallSpeed);
             transform.localScale = new Vector3(shrinkSize, shrinkSize, shrinkSize);
             yield return 0;
         }
