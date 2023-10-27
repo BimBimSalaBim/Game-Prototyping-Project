@@ -109,6 +109,18 @@ namespace StarterAssets {
                 Debug.Log("Tool in use!");
             }
         }
+
+        public void OnPickUp()
+        {
+            GameObject player = GameObject.FindWithTag("Player");
+            GameObject gemStone = GameObject.FindWithTag("GemStone");
+            if(player != null && gemStone != null)
+            {
+                player.GetComponent<PickUpAsset>().toInventory(gemStone);
+                gemStone.GetComponent<MineralStone>().pickUpAsset();
+                Debug.Log("Pick Up Asset");
+            }
+        }
         public void OnSecondaryClick() {
             Debug.Log("SecondaryClick");
         }
