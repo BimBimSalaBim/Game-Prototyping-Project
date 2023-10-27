@@ -9,6 +9,9 @@ TagManager:
   - EquiqmentController
   - GemStone
   - InventoryLocation
+  - Wood
+  - WoodField
+  - MineralField
   layers:
   - Default
   - TransparentFX

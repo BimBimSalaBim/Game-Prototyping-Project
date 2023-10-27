@@ -96,7 +96,8 @@ namespace StarterAssets {
         {
             //Debug.Log("Tool in use!");
             GameObject equiqmentController = GameObject.Find("EquiqmentController");
-            GameObject mineralController = GameObject.Find("Mineral");
+            GameObject mineralController = GameObject.FindWithTag("MineralField");
+            GameObject woodFieldController = GameObject.FindWithTag("WoodField");
             if (equiqmentController != null && mineralController != null)
             {
 
@@ -108,16 +109,34 @@ namespace StarterAssets {
                 
                 Debug.Log("Tool in use!");
             }
+            if (equiqmentController != null && woodFieldController != null)
+            {
+
+                equiqmentController.GetComponent<EquipmentController>().UseTool();
+                if (woodFieldController.GetComponent<WoodMiinerController>()._isPlayerInRange == true)
+                {
+                    woodFieldController.GetComponent<WoodMiinerController>().SpawnWood();
+                }
+
+                Debug.Log("Tool in use!");
+            }
         }
 
         public void OnPickUp()
         {
             GameObject player = GameObject.FindWithTag("Player");
             GameObject gemStone = GameObject.FindWithTag("GemStone");
+            GameObject wood = GameObject.FindWithTag("Wood");
             if(player != null && gemStone != null)
             {
                 player.GetComponent<PickUpAsset>().toInventory(gemStone);
                 gemStone.GetComponent<MineralStone>().pickUpAsset();
+                Debug.Log("Pick Up Asset");
+            }
+            if (player != null && wood != null)
+            {
+                player.GetComponent<PickUpAsset>().toInventory(wood);
+                wood.GetComponent<WoodResource>().pickUpAsset();
                 Debug.Log("Pick Up Asset");
             }
         }
