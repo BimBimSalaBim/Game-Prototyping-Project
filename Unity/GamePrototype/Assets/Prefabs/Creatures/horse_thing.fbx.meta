@@ -3,7 +3,12 @@ guid: a78117252efc5404cbe1234c2e3dc349
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: horse_body
+    second: {fileID: 2100000, guid: 75f4bbbaa71440b4fbb8a3343e0b12be, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
