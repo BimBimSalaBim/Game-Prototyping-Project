@@ -3,7 +3,12 @@ guid: 137d5edcaeb37b949ba7b77682a292c3
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: abomination_body
+    second: {fileID: 2100000, guid: a5a0bb7331006ed429b76f651ab54313, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
