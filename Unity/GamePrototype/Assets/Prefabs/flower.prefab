@@ -135,6 +135,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 8929603364987874110}
+    - targetCorrespondingSourceObject: {fileID: -8391222552659086748, guid: e842f182e6a53544ba728d2d16b065e0,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7462881447201276747}
   m_SourcePrefab: {fileID: 100100000, guid: e842f182e6a53544ba728d2d16b065e0, type: 3}
 --- !u!1 &4910858053052254762 stripped
 GameObject:
@@ -197,6 +201,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d58c220288d5a14e80531a701c92162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectDistance: 1
   item: {fileID: 11400000, guid: b9fb2d211a3bff5419c688709646a4ec, type: 2}
-  shrinkSize: 3
+  collectibleItem: {fileID: 7462881447201276747}
+--- !u!114 &7462881447201276747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4910858053052254762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 009111fd14d59894b91dbc4b0ce5ec9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectDistance: 1
+  shrinkSize: 2.4
+  fallHeight: 0.37
+  fallSpeed: 0.01

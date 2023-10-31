@@ -4,8 +4,13 @@ using UnityEngine;
 using static Interactor;
 using System.Collections;
 using Unity.VisualScripting;
+using static UnityEditor.Progress;
 
 public class GenericAnimal : MonoBehaviour, IAnimal {
+
+    [SerializeField] private Item item;
+    [SerializeField] private CollectibleItem collectibleItem;
+
     public string Name { get; set; }
     public string Description { get; set; }
     public string Icon { get; set; }
@@ -25,6 +30,8 @@ public class GenericAnimal : MonoBehaviour, IAnimal {
         canvas = this.transform.parent.Find("Canvas").gameObject;
         entity = this.GetComponent<Entity>();
         canvas.SetActive(false);
+        collectibleItem = GetComponent<CollectibleItem>();
+        collectibleItem.Initialize(item);
     }
 
     public void Update() {
@@ -110,14 +117,6 @@ public class GenericAnimal : MonoBehaviour, IAnimal {
         commandMenu = radialMenu;
     }
 
-    public void Initialize(Item item) {
-        throw new System.NotImplementedException();
-    }
-
-    public IEnumerator MoveAndCollect() {
-        throw new System.NotImplementedException();
-    }
-
     public void FeedOnClick() {
         var (name, type, actionType) = InventoryManager.instance.CheckSelectedItem();
         if (type == ItemType.Food && actionType.Equals(actionType)) {
@@ -126,5 +125,10 @@ public class GenericAnimal : MonoBehaviour, IAnimal {
             Debug.Log(string.Format("Ate a {0}", name));
             //change entity stats 
         }
+    }
+
+    public void PrimaryInteract() {
+        Debug.Log("Oww");
+        StartCoroutine(collectibleItem.MoveAndCollect());
     }
 }
