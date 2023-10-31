@@ -95,7 +95,7 @@ namespace StarterAssets {
         public void  OnUseTool()
         {
             //Debug.Log("Tool in use!");
-            GameObject equiqmentController = GameObject.Find("EquiqmentController");
+            GameObject equiqmentController = GameObject.FindWithTag("EquiqmentController");
             GameObject mineralController = GameObject.FindWithTag("MineralField");
             GameObject woodFieldController = GameObject.FindWithTag("WoodField");
             if (equiqmentController != null && mineralController != null)
@@ -141,6 +141,7 @@ namespace StarterAssets {
             }
         }
         public void OnSecondaryClick() {
+            //OnUseTool();
             Debug.Log("SecondaryClick");
         }
 
