@@ -1,6 +1,3 @@
-
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -11,6 +8,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
     [Header("UI")]
     public Image image;
     public Text countText;
+    public Image background;
     public Item item;
 
 
@@ -28,8 +26,8 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
 
     public void RefreshCount() {
         countText.text = count.ToString();
-        countText.color = Color.black;
         bool textActive = count > 1;
+        background.gameObject.SetActive(textActive);
         countText.gameObject.SetActive(textActive);
     }
 
