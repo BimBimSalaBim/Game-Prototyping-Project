@@ -90,7 +90,7 @@ public class FontEndController : MonoBehaviour
 
         // RealmController.Instance.SignIn(email, password);
 
-        SceneManager.LoadScene("Playground");
+        SceneManager.LoadScene("Prototype_scene");
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -126,7 +126,7 @@ public class FontEndController : MonoBehaviour
                         Debug.Log("Login successful!");
 
                         //feedbackText.text = "Login successful!"; //dehighligh for use
-                        SceneManager.LoadScene("Playground");
+                        SceneManager.LoadScene("Prototype_scene");
 
                     }
                     else
