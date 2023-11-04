@@ -14,7 +14,7 @@ public class InventoryManager : MonoBehaviour {
     public int maxStackItems = 64;
     public InventorySlot[] inventorySlots;
     public GameObject inventoryItemPrefab;
-    int selectedSlot = -1;
+    public int selectedSlot = 0;
 
     public void Awake() {
         instance = this;
@@ -111,5 +111,18 @@ public class InventoryManager : MonoBehaviour {
             return item;
         }
         return null;
+    }
+
+    public bool selectedItemChange(Item last) {
+        if(!last) {
+            return false;
+        }
+        InventorySlot slot = inventorySlots[selectedSlot];
+        InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+        if (itemInSlot != null) {
+            Item item = itemInSlot.item;
+            return last.name == item.name;
+        }
+        return false;
     }
 }

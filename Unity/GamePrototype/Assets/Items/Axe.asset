@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 579d4ca47d2211e4093a8966a27092a5, type: 3}
   m_Name: Axe
   m_EditorClassIdentifier: 
-  tile: {fileID: 0}
   type: 1
-  actionType: 1
-  range: {x: 5, y: 4}
-  stackable: 0
+  actionType: 7
+  model: {fileID: 281947533912038287, guid: 5832d2fa2129f444883d92327597a04d, type: 3}
+  stackable: 1
   image: {fileID: 21300000, guid: b0264816ce286a74bbce726a02d2ef8d, type: 3}

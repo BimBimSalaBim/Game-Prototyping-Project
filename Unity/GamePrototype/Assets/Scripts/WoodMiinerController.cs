@@ -25,6 +25,7 @@ public class WoodMiinerController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("In range");
             _isPlayerInRange = true;
 
         }
@@ -34,6 +35,7 @@ public class WoodMiinerController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("Out range");
             _isPlayerInRange = false;
 
         }

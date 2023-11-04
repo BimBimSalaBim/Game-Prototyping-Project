@@ -103,24 +103,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "UseTool",
-                    "type": "Button",
-                    "id": "0ba85001-e33c-48d4-b430-dc1cd8393107",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "PickUp",
-                    "type": "Button",
-                    "id": "32ddff43-8d9b-40b2-aa45-60b73b5a4893",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -407,28 +389,6 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Dodge",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "37bb6410-7ba1-4454-83bf-ee692dd7ae06",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KeyboardMouse",
-                    "action": "UseTool",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "afcb4239-e5a9-4cc8-a0e6-0ca9bd80674a",
-                    "path": "<Keyboard>/f",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KeyboardMouse",
-                    "action": "PickUp",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

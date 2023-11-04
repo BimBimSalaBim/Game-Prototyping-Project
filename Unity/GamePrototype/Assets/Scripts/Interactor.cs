@@ -25,6 +25,16 @@ public class Interactor : MonoBehaviour {
             }
         }
     }
+
+    public bool InRange() {
+        Ray r = new Ray(InteractorSource.position, InteractorSource.forward);
+        if (Physics.Raycast(r, out RaycastHit hitInfo, InteractRange)) {
+            if (hitInfo.collider.gameObject.TryGetComponent(out IAnimal mineral)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 public interface IInteractable {

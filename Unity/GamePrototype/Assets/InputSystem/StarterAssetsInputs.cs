@@ -34,6 +34,9 @@ namespace StarterAssets {
         [Header("Inventory")]
         public bool openInventory = false;
 
+        [Header("Inventory")]
+        public bool interactMenuOpen = false;
+
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
         public void OnMove(InputValue value) {
             MoveInput(value.Get<Vector2>());
@@ -76,68 +79,61 @@ namespace StarterAssets {
                     cursorInputForLook = false;
                     SetCursorState(false);
                     UnityEngine.Cursor.visible = true;
+                    interactMenuOpen = true;
                 }
             } else {
+                interactMenuOpen = false;
                 radialMenu.SetActive(false);
                 cursorInputForLook = true;
                 SetCursorState(true);
                 UnityEngine.Cursor.visible = false;
             }
-        }
 
-        public void OnPrimaryClick() {
-            GameObject gameObject = GameObject.Find("MainCamera");
-            if (gameObject != null) {
-                gameObject.GetComponent<Interactor>().CheckPrimary();
-            }
-        }
-
-        public void  OnUseTool()
-        {
-            //Debug.Log("Tool in use!");
-            GameObject equiqmentController = GameObject.FindWithTag("EquiqmentController");
-            GameObject mineralController = GameObject.FindWithTag("MineralField");
-            GameObject woodFieldController = GameObject.FindWithTag("WoodField");
-            if (equiqmentController != null && mineralController != null)
-            {
-
-                equiqmentController.GetComponent<EquipmentController>().UseTool();
-                if (mineralController.GetComponent<MineralController>()._isPlayerInRange == true)
-                {
-                    mineralController.GetComponent<MineralController>().SpawnGem();
-                }
-                
-                Debug.Log("Tool in use!");
-            }
-            if (equiqmentController != null && woodFieldController != null)
-            {
-
-                equiqmentController.GetComponent<EquipmentController>().UseTool();
-                if (woodFieldController.GetComponent<WoodMiinerController>()._isPlayerInRange == true)
-                {
-                    woodFieldController.GetComponent<WoodMiinerController>().SpawnWood();
-                }
-
-                Debug.Log("Tool in use!");
-            }
-        }
-
-        public void OnPickUp()
-        {
             GameObject player = GameObject.FindWithTag("Player");
             GameObject gemStone = GameObject.FindWithTag("GemStone");
             GameObject wood = GameObject.FindWithTag("Wood");
-            if(player != null && gemStone != null)
-            {
+            if (player != null && gemStone != null) {
                 player.GetComponent<PickUpAsset>().toInventory(gemStone);
                 gemStone.GetComponent<MineralStone>().pickUpAsset();
                 Debug.Log("Pick Up Asset");
             }
-            if (player != null && wood != null)
-            {
+            if (player != null && wood != null) {
                 player.GetComponent<PickUpAsset>().toInventory(wood);
                 wood.GetComponent<WoodResource>().pickUpAsset();
                 Debug.Log("Pick Up Asset");
+            }
+        }
+
+        public void OnPrimaryClick() {
+            GameObject gameObject = GameObject.Find("MainCamera");
+            if (interactMenuOpen) {
+                return;
+            }
+            if (gameObject != null) {
+                gameObject.GetComponent<Interactor>().CheckPrimary();
+            }
+            if (InventoryManager.instance.CheckSelectedItem().Item2 == ItemType.Tool) {
+                GameObject equiqmentController = GameObject.FindWithTag("EquiqmentController");
+                GameObject mineralController = GameObject.FindWithTag("MineralField");
+                GameObject woodFieldController = GameObject.FindWithTag("WoodField");
+                equiqmentController.GetComponent<EquipmentController>().UseTool();
+                if (equiqmentController != null && mineralController != null && mineralController.GetComponent<MineralController>()._isPlayerInRange == true) {
+                    if (InventoryManager.instance.CheckSelectedItem().Item2 != ItemType.Tool || InventoryManager.instance.CheckSelectedItem().Item3 != ActionType.Mine) {
+                        Debug.Log("Wrong tool");
+                        return;
+                    }
+                    mineralController.GetComponent<MineralController>().SpawnGem();
+                    Debug.Log("Tool in use!");
+                }
+                if (equiqmentController != null && woodFieldController != null && woodFieldController.GetComponent<WoodMiinerController>()._isPlayerInRange == true) {
+                    if (InventoryManager.instance.CheckSelectedItem().Item2 != ItemType.Tool || InventoryManager.instance.CheckSelectedItem().Item3 != ActionType.Cut) {
+                        Debug.Log("Wrong tool");
+                        Debug.Log(InventoryManager.instance.CheckSelectedItem().Item3);
+                        return;
+                    }
+                    woodFieldController.GetComponent<WoodMiinerController>().SpawnWood();
+                    Debug.Log("Tool in use!");
+                }
             }
         }
         public void OnSecondaryClick() {

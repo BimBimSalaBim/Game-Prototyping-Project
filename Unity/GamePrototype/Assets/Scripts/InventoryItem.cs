@@ -18,9 +18,15 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
     [HideInInspector]
     public int count = 1;
 
+    [HideInInspector]
+    public GameObject model;
+
     public void InitializeItem(Item newItem) {
         item = newItem;
         image.sprite = newItem.image;
+        if(item.type != ItemType.Tool) {
+            model = null;
+        }
         RefreshCount();
     }
 
