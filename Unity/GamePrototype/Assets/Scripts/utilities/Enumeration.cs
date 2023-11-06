@@ -5,10 +5,10 @@ using System;
 
 public class Enumeration
 {
-    public static int EnumSize(Type iEnum)
-    {
-        return ((Enum[])Enum.GetValues(iEnum.GetType())).Length;
-    }
+public static int EnumSize(Type iEnum)
+{
+    return Enum.GetValues(iEnum).Length;
+}
     //public static int EnumSize(Enum iEnum)
     //{
     //    return ((Enum[])Enum.GetValues(iEnum.GetType())).Length;

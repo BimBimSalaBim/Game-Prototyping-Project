@@ -28,7 +28,8 @@ public class GenericAnimal : MonoBehaviour, IAnimal {
     public void Start() {
         statsEnabled = false;
         canvas = this.transform.parent.Find("Canvas").gameObject;
-        entity = this.GetComponent<Entity>();
+        entity = this.transform.parent.GetComponent<Entity>();
+        fov = this.transform.parent.GetComponent<FoV>();
         canvas.SetActive(false);
         collectibleItem = GetComponent<CollectibleItem>();
         collectibleItem.Initialize(item);
@@ -76,27 +77,18 @@ public class GenericAnimal : MonoBehaviour, IAnimal {
         //get child of panel in canvas and set the text to the stats of the animal
         GameObject panel = canvas.transform.Find("statsPanel").gameObject;
         TMPro.TextMeshProUGUI text = panel.transform.Find("CreatureType").gameObject.GetComponent<TMPro.TextMeshProUGUI>();
-        fov = this.transform.parent.GetComponent<FoV>();
-        entity = this.transform.parent.GetComponent<Entity>();
-        //temp set all stats to 100
-        int mHealth = 100;
-        int mMaxHealth = 100;
-        int mSpeed = 100;
-        int mJumpHeight = 100;
-        int mStamina = 100;
-        int mStrength = 100;
-        int mHunger = 100;
-        int mInventory_Slots = 100;
+        
+        
 
         text.text = "Creature Name: " + fov.getCreatureType() +
-                    "\nHealth: " + mHealth +
-                    "\nMax Health: " + mMaxHealth +
-                    "\nSpeed: " + mSpeed +
-                    "\nJump Height: " + mJumpHeight +
-                    "\nStamina: " + mStamina +
-                    "\nStrength: " + mStrength +
-                    "\nHunger: " + mHunger +
-                    "\nInventory Slots: " + mInventory_Slots;
+                    "\nHealth: " + entity.mHealth +
+                    "\nMax Health: " + entity.mMaxHealth +
+                    "\nSpeed: " + entity.mSpeed +
+                    "\nJump Height: " + entity.mJumpHeight +
+                    "\nStamina: " + entity.mStamina +
+                    "\nStrength: " + entity.mStrength +
+                    "\nHunger: " + entity.mHunger +
+                    "\nInventory Slots: " + entity.mInventory_Slots;
 
         canvas.SetActive(true);
         statsEnabled = true;
@@ -124,11 +116,20 @@ public class GenericAnimal : MonoBehaviour, IAnimal {
             Debug.Log("Nom nom nom");
             Debug.Log(string.Format("Ate a {0}", name));
             //change entity stats 
+            if (entity.mHunger + 10 > entity.mMaxHealth) {
+                entity.mHunger = entity.mMaxHealth;
+            } else{
+            entity.mHunger += 10;
+            }
         }
     }
 
     public void PrimaryInteract() {
         Debug.Log("Oww");
-        StartCoroutine(collectibleItem.MoveAndCollect());
+        fov.TakeDamage(10, transform.position);
+        if (entity.mHealth <= 0) {
+            Debug.Log("Dead");
+            StartCoroutine(collectibleItem.MoveAndCollect());
+        }
     }
 }

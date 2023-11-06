@@ -8,7 +8,8 @@ public class Value<T>
     private OnModify _subscriptions;
     public delegate T OnModify(T iPrev, T iNext);
 
-    public T mValue { get { return _value; } set {_subscriptions(_value, value); _value = value; } }
+    // public T mValue { get { return _value; } set {_subscriptions(_value, value); _value = value; } }
+    public T mValue{ get { return _value; } set{_value = value;}}
 
     public Value()
     {

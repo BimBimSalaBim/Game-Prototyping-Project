@@ -12549,9 +12549,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1684075570, guid: d941199d4a58fcb45adc75ea8e37c42c, type: 3}
+      propertyPath: tempHunger
+      value: 0.39
+      objectReference: {fileID: 0}
+    - target: {fileID: 1684075570, guid: d941199d4a58fcb45adc75ea8e37c42c, type: 3}
+      propertyPath: ViewDistance
+      value: 3.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 1684075570, guid: d941199d4a58fcb45adc75ea8e37c42c, type: 3}
+      propertyPath: movementSpeed
+      value: 2.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 1684075570, guid: d941199d4a58fcb45adc75ea8e37c42c, type: 3}
+      propertyPath: FieldOfViewAngle
+      value: 46.95
+      objectReference: {fileID: 0}
     - target: {fileID: 1684075571, guid: d941199d4a58fcb45adc75ea8e37c42c, type: 3}
       propertyPath: m_Speed
-      value: 0
+      value: 1.56
+      objectReference: {fileID: 0}
+    - target: {fileID: 1684075571, guid: d941199d4a58fcb45adc75ea8e37c42c, type: 3}
+      propertyPath: m_Height
+      value: 0.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 1684075571, guid: d941199d4a58fcb45adc75ea8e37c42c, type: 3}
+      propertyPath: m_Acceleration
+      value: 6.21
       objectReference: {fileID: 0}
     - target: {fileID: 3972997536781052547, guid: d941199d4a58fcb45adc75ea8e37c42c,
         type: 3}
@@ -12616,7 +12640,7 @@ PrefabInstance:
     - target: {fileID: 6705402075998324148, guid: d941199d4a58fcb45adc75ea8e37c42c,
         type: 3}
       propertyPath: m_Name
-      value: Slime_01
+      value: Slime
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -41800,6 +41824,84 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1133223010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133223005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 552cdaa4d777cbd4689a3fc3c15b3728, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: 8b64fab3c860a63439d4e549549d7a65, type: 2}
+  collectibleItem: {fileID: 1133223011}
+  canvas: {fileID: 0}
+  feedType: 2
+--- !u!114 &1133223011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133223005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 009111fd14d59894b91dbc4b0ce5ec9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectDistance: 1
+  shrinkSize: 0.17
+  fallHeight: 0.17
+  fallSpeed: 0.01
+--- !u!114 &1133223012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133223005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a41b63ef985635469b48e1bed7f4312, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentAnimationState: 0
+  currentBehaviourState: 0
+  animator: {fileID: 1882160434}
+  navMeshAgent: {fileID: 1133223013}
+  CreatureType: horse
+  ViewDistance: 5.4
+  FieldOfViewAngle: 57.67
+  canSeeTarget: 0
+  movementSpeed: 0
+  hungerThreshold: 25
+  wanderTimer: 5
+  foodChaseDistance: 10
+--- !u!195 &1133223013
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133223005}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!4 &1133985941 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a1dd7410803e8334b9531498a7536978,
@@ -56299,6 +56401,22 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1133223008}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a78117252efc5404cbe1234c2e3dc349,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1133223011}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a78117252efc5404cbe1234c2e3dc349,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1133223010}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a78117252efc5404cbe1234c2e3dc349,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1133223013}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a78117252efc5404cbe1234c2e3dc349,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1133223012}
     - targetCorrespondingSourceObject: {fileID: -5117700066308340382, guid: a78117252efc5404cbe1234c2e3dc349,
         type: 3}
       insertIndex: -1
@@ -58292,6 +58410,18 @@ PrefabInstance:
       propertyPath: collectibleItem
       value: 
       objectReference: {fileID: 563681108}
+    - target: {fileID: 1361187515, guid: 5c84e80aa2e051f46a399ff3c2e01df5, type: 3}
+      propertyPath: m_Speed
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1361187516, guid: 5c84e80aa2e051f46a399ff3c2e01df5, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 1882160434}
+    - target: {fileID: 1361187516, guid: 5c84e80aa2e051f46a399ff3c2e01df5, type: 3}
+      propertyPath: wanderTimer
+      value: 3.95
+      objectReference: {fileID: 0}
     - target: {fileID: 1812429604184036072, guid: 5c84e80aa2e051f46a399ff3c2e01df5,
         type: 3}
       propertyPath: m_Name
@@ -69169,7 +69299,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26986d0ea6b989b49b26508fdf6a8ede, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  navMeshAgent: {fileID: 0}
 --- !u!1001 &1927474716
 PrefabInstance:
   m_ObjectHideFlags: 0
