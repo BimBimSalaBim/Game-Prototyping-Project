@@ -27,12 +27,27 @@ public class GenericAnimal : MonoBehaviour, IAnimal {
 
     public void Start() {
         statsEnabled = false;
-        canvas = this.transform.parent.Find("Canvas").gameObject;
-        entity = this.transform.parent.GetComponent<Entity>();
-        fov = this.transform.parent.GetComponent<FoV>();
-        canvas.SetActive(false);
+        Transform lParent = transform;
+        while(lParent.parent != null)
+        {
+            lParent = lParent.parent;
+        }
+        Transform lCanvas = lParent.Find("Canvas");
+        if(lCanvas != null)
+        {
+            canvas = lCanvas.gameObject;
+        }
+        if (canvas != null)
+        {
+            canvas.SetActive(false);
+        }
+        entity = lParent.GetComponent<Entity>();
+        fov = lParent.GetComponent<FoV>();
         collectibleItem = GetComponent<CollectibleItem>();
-        collectibleItem.Initialize(item);
+        if (collectibleItem != null)
+        {
+            collectibleItem.Initialize(item);
+        }
     }
 
     public void Update() {
@@ -43,7 +58,7 @@ public class GenericAnimal : MonoBehaviour, IAnimal {
             //find the PlayerArmature and set the rotation of canvas to face the player
             GameObject MainCamera = GameObject.Find("MainCamera");
             canvas.transform.LookAt(MainCamera.transform);
-        } else {
+        } else if(canvas != null) {
             canvas.SetActive(false);
         }
     }

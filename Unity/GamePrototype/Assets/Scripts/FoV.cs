@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -69,7 +70,7 @@ public class FoV : Entity
                     {
                         MoveRandomly();
                         // Reset the wander timer with some randomness to make movement more natural
-                        wanderTimerCounter = wanderTimer + Random.Range(-2.0f, 2.0f);
+                        wanderTimerCounter = wanderTimer + UnityEngine.Random.Range(-2.0f, 2.0f);
                     }
                     else
                     {
@@ -178,7 +179,7 @@ public class FoV : Entity
                 return; // Still in cooldown, do not change destination
             }
 
-            Vector3 randomDirection = Random.insideUnitSphere * ViewDistance;
+            Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * ViewDistance;
             randomDirection += transform.position;
             NavMeshHit hit;
             NavMeshPath path = new NavMeshPath();
@@ -193,7 +194,7 @@ public class FoV : Entity
                         currentAnimationState = AnimationState.Walk;
                         
                         // Reset the wander timer with a randomized cooldown
-                        wanderTimerCounter = wanderTimer + Random.Range(-2.0f, 2.0f);
+                        wanderTimerCounter = wanderTimer + UnityEngine.Random.Range(-2.0f, 2.0f);
                     }
                 }
             }

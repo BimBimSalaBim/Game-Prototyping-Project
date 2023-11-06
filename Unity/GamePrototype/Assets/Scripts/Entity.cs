@@ -7,7 +7,7 @@ using UnityEngine.AI;
 
 public class Entity : MonoBehaviour
 {
-    private EntityStats _stats = new EntityStats();
+    protected EntityStats _stats = new EntityStats();
     //MAX_HEALTH, HEALTH,SPEED, JUMP_HEIGHT, STAMINA, STRENGTH, HUNGER, INVENTORY_SLOTS
     public float mHealth { get { return _stats[EntityStat.HEALTH]; } set { _stats[EntityStat.HEALTH] = value; } }
     public float mMaxHealth { get { return _stats[EntityStat.MAX_HEALTH]; } set { _stats[EntityStat.MAX_HEALTH] = value; } }

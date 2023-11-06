@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Value<T>
 {
-    private T _value;
+    private T _value = default(T);
     private OnModify _subscriptions;
     public delegate T OnModify(T iPrev, T iNext);
 
     // public T mValue { get { return _value; } set {_subscriptions(_value, value); _value = value; } }
-    public T mValue{ get { return _value; } set{_value = value;}}
+    public T mValue{ get { return _value; } set{  if(_subscriptions != null)_subscriptions.Invoke(_value, value); _value = value;}}
 
     public Value()
     {

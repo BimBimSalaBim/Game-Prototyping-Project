@@ -6,11 +6,10 @@ public class EntityStats
 {
     
     public float this[EntityStat stat] { get { return stats[(int)stat].mValue; } set { stats[(int)stat].mValue = value; }}
-    private Value<float>[] stats;
+    private Value<float>[] stats = new Value<float>[Enumeration.EnumSize(typeof(EntityStat))];
 
     public EntityStats()
     {
-        stats = new Value<float>[Enumeration.EnumSize(typeof(EntityStat))];
         for (int i = 0; i < stats.Length; i++)
         {
             stats[i] = new Value<float>(0); 
