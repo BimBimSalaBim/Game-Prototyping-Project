@@ -41880,6 +41880,8 @@ MonoBehaviour:
   hungerThreshold: 25
   wanderTimer: 5
   foodChaseDistance: 10
+  safeDistance: 20
+  healthThresholdForFleeing: 25
 --- !u!195 &1133223013
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -56341,42 +56343,42 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: a78117252efc5404cbe1234c2e3dc349,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18.26
+      value: 18.7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a78117252efc5404cbe1234c2e3dc349,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.1
+      value: 0.29
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a78117252efc5404cbe1234c2e3dc349,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0
+      value: 4.7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a78117252efc5404cbe1234c2e3dc349,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.04617589
+      value: -0.031146616
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a78117252efc5404cbe1234c2e3dc349,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: -0.0340896
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a78117252efc5404cbe1234c2e3dc349,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.9989333
+      value: 0.6738017
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a78117252efc5404cbe1234c2e3dc349,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: -0.73746794
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a78117252efc5404cbe1234c2e3dc349,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 95.166016
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a78117252efc5404cbe1234c2e3dc349,
         type: 3}
