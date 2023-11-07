@@ -95,7 +95,7 @@ public class GenericAnimal : MonoBehaviour, IAnimal {
         
         
 
-        text.text = "Creature Name: " + fov.getCreatureType() +
+        text.text = "Creature Name: " + fov.GetCreatureType() +
                     "\nHealth: " + entity.mHealth +
                     "\nMax Health: " + entity.mMaxHealth +
                     "\nSpeed: " + entity.mSpeed +
