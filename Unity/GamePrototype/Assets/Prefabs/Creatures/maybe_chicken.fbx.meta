@@ -7,8 +7,9 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Material.001
-    second: {fileID: 2100000, guid: 7ab977a21c92388468ee65ad1c0e5a78, type: 2}
+      name: chicken_body
+    second: {fileID: 2565904769104933234, guid: 8616eed2674cdff4184852c9f4a8f35f,
+      type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
