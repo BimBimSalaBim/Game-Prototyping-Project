@@ -48,6 +48,9 @@ MonoBehaviour:
   toolContainer: {fileID: 1809439409255376306}
   mountedEquipment: {fileID: 1127922752529018315}
   isAnimating: 0
+  lastSlot: -1
+  lastItem: {fileID: 0}
+  player: {fileID: 0}
 --- !u!1 &1809439409255376306
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,7 +157,9 @@ PrefabInstance:
       value: 90
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4481819515273700601, guid: e6dea0011c255d04ab709eeca059bd54, type: 3}
+    - {fileID: 4150842853082901608, guid: e6dea0011c255d04ab709eeca059bd54, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6dea0011c255d04ab709eeca059bd54, type: 3}
