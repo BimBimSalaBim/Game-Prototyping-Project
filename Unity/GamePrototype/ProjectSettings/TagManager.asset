@@ -12,6 +12,7 @@ TagManager:
   - Wood
   - WoodField
   - MineralField
+  - Sword
   layers:
   - Default
   - TransparentFX

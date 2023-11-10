@@ -78,11 +78,139 @@ public class EquipmentController : MonoBehaviour {
     {
         if (!isAnimating)
         {
-            StartCoroutine(RotateEquipment());
+            if(mountedEquipment.tag == "Sword") 
+            {
+                int rand = Random.Range(0, 3); // Get a random number 0, 1, or 2
+                switch (rand)
+                {
+                    case 0:
+                        StartCoroutine(RotateEquipmentForSwordV0());
+                        Debug.Log("Using Tool V-" + rand);
+                        break;
+                    case 1:
+                        StartCoroutine(RotateEquipmentForSwordV1());
+                        Debug.Log("Using Tool V-" + rand);
+                        break;
+                    case 2:
+                        StartCoroutine(RotateEquipmentForSwordV2());
+                        Debug.Log("Using Tool V-" + rand);
+                        break;
+                }
+            }
+            else {
+                StartCoroutine(RotateEquipment());
+            }
+            
             Debug.Log("Using Equipment");
 
         }
     }
+
+
+    IEnumerator RotateEquipmentForSwordV0()
+    {
+        isAnimating = true;
+        Quaternion startLocalRotation = mountedEquipment.transform.localRotation;
+
+        Quaternion endRotation = startLocalRotation * Quaternion.Euler(0, 90, 0);
+
+        float duration = 0.1f;
+        float elapsedTime = 0;
+
+
+        while (elapsedTime < duration)
+        {
+            Quaternion newLocalRotation = Quaternion.Lerp(startLocalRotation, endRotation, elapsedTime / duration);
+            mountedEquipment.transform.localRotation = newLocalRotation;
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        mountedEquipment.transform.localRotation = endRotation;
+
+        elapsedTime = 0;
+        while (elapsedTime < duration)
+        {
+            Quaternion newLocalRotation = Quaternion.Lerp(endRotation, startLocalRotation, elapsedTime / duration);
+            mountedEquipment.transform.localRotation = newLocalRotation;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        mountedEquipment.transform.localRotation = startLocalRotation;
+
+        isAnimating = false;
+    }
+
+    IEnumerator RotateEquipmentForSwordV1()
+    {
+        isAnimating = true;
+        Quaternion startLocalRotation = mountedEquipment.transform.localRotation;
+
+        Quaternion endRotation = startLocalRotation * Quaternion.Euler(120, 90, 0);
+
+        float duration = 0.1f;
+        float elapsedTime = 0;
+
+
+        while (elapsedTime < duration)
+        {
+            Quaternion newLocalRotation = Quaternion.Lerp(startLocalRotation, endRotation, elapsedTime / duration);
+            mountedEquipment.transform.localRotation = newLocalRotation;
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        mountedEquipment.transform.localRotation = endRotation;
+
+        elapsedTime = 0;
+        while (elapsedTime < duration)
+        {
+            Quaternion newLocalRotation = Quaternion.Lerp(endRotation, startLocalRotation, elapsedTime / duration);
+            mountedEquipment.transform.localRotation = newLocalRotation;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        mountedEquipment.transform.localRotation = startLocalRotation;
+
+        isAnimating = false;
+    }
+
+    IEnumerator RotateEquipmentForSwordV2()
+    {
+        isAnimating = true;
+        Quaternion startLocalRotation = mountedEquipment.transform.localRotation;
+
+        Quaternion endRotation = startLocalRotation * Quaternion.Euler(-120, 90, 0);
+
+        float duration = 0.1f;
+        float elapsedTime = 0;
+
+
+        while (elapsedTime < duration)
+        {
+            Quaternion newLocalRotation = Quaternion.Lerp(startLocalRotation, endRotation, elapsedTime / duration);
+            mountedEquipment.transform.localRotation = newLocalRotation;
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        mountedEquipment.transform.localRotation = endRotation;
+
+        elapsedTime = 0;
+        while (elapsedTime < duration)
+        {
+            Quaternion newLocalRotation = Quaternion.Lerp(endRotation, startLocalRotation, elapsedTime / duration);
+            mountedEquipment.transform.localRotation = newLocalRotation;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        mountedEquipment.transform.localRotation = startLocalRotation;
+
+        isAnimating = false;
+    }
+
+
+
     IEnumerator RotateEquipment() {
         isAnimating = true;
         Quaternion startLocalRotation = mountedEquipment.transform.localRotation;
