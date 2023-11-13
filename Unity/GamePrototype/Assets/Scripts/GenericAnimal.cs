@@ -6,6 +6,7 @@ using System.Collections;
 using Unity.VisualScripting;
 using static UnityEditor.Progress;
 
+
 public class GenericAnimal : MonoBehaviour, IAnimal {
 
     [SerializeField] private Item item;
@@ -25,6 +26,7 @@ public class GenericAnimal : MonoBehaviour, IAnimal {
 
     private GameObject commandMenu;
 
+
     public void Start() {
         statsEnabled = false;
         Transform lParent = transform;
@@ -32,7 +34,7 @@ public class GenericAnimal : MonoBehaviour, IAnimal {
         {
             lParent = lParent.parent;
         }
-        Transform lCanvas = lParent.Find("Canvas");
+        Transform lCanvas = lParent.Find("StatCanvas");
         if(lCanvas != null)
         {
             canvas = lCanvas.gameObject;

@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
+using Unity.VisualScripting;
+
 
 public enum AnimationState { Idle, Walk, Jump, Attack, Damage }
 public enum BehaviourState { Idle, Wandering, SeekingFood, Fleeing, Attacking }
@@ -27,9 +30,12 @@ public class FoV : Entity
     public float attackDamage = 10f;
     public float attackCooldown = 1.0f;
     private float attackTimer;
+    public Image agitationIndicator;
+    private Color calmColor = Color.green;
+    private Color agitatedColor = Color.red;
     
     // List of entities that have agitated this creature
-    private List<Entity> agitatedBy = new List<Entity>();
+    public List<Entity> agitatedBy = new List<Entity>();
 
     // State Management
     public AnimationState currentAnimationState; 
@@ -48,6 +54,7 @@ public class FoV : Entity
     {
         StartCoroutine(FindTargetsWithDelay());
         SetInitialBehaviorState();
+        agitationIndicator = GetComponentInChildren<Image>();
     }
 
     void Update()
@@ -70,9 +77,20 @@ public class FoV : Entity
     private void CheckAgitationStatus()
     {
         // Check if there are any agitators
+        if (agitationIndicator == null){
+            agitationIndicator = GetComponentInChildren<Image>();
+            Debug.Log("Agitation Indicator is null");
+
+        }
         if (agitatedBy.Count > 0)
         {
             currentBehaviourState = BehaviourState.Attacking;
+            agitationIndicator.color = agitatedColor; // Set to agitated color
+        }
+        else
+        {
+            currentBehaviourState = BehaviourState.Wandering;
+            agitationIndicator.color = calmColor; // Set to calm color
         }
 
         // State machine for behavior
