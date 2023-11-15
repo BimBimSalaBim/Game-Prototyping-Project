@@ -85,15 +85,15 @@ public class EquipmentController : MonoBehaviour {
                 {
                     case 0:
                         StartCoroutine(RotateEquipmentForSwordV0());
-                        Debug.Log("Using Tool V-" + rand);
+                        Debug.Log("Using Sword V-" + rand);
                         break;
                     case 1:
                         StartCoroutine(RotateEquipmentForSwordV1());
-                        Debug.Log("Using Tool V-" + rand);
+                        Debug.Log("Using Sword V-" + rand);
                         break;
                     case 2:
                         StartCoroutine(RotateEquipmentForSwordV2());
-                        Debug.Log("Using Tool V-" + rand);
+                        Debug.Log("Using Sword V-" + rand);
                         break;
                 }
             }

@@ -105,6 +105,7 @@ namespace StarterAssets {
         }
 
         public void OnPrimaryClick() {
+            GameObject player = GameObject.FindWithTag("Player");
             GameObject gameObject = GameObject.Find("MainCamera");
             if (interactMenuOpen) {
                 return;
@@ -114,25 +115,78 @@ namespace StarterAssets {
             }
             if (InventoryManager.instance.CheckSelectedItem().Item2 == ItemType.Tool) {
                 GameObject equiqmentController = GameObject.FindWithTag("EquiqmentController");
-                GameObject mineralController = GameObject.FindWithTag("MineralField");
-                GameObject woodFieldController = GameObject.FindWithTag("WoodField");
+               
+                
+                GameObject[] mineralFields = GameObject.FindGameObjectsWithTag("MineralField");
+                GameObject[] woodFields = GameObject.FindGameObjectsWithTag("WoodField");
+                GameObject[] trees = GameObject.FindGameObjectsWithTag("Tree");
                 equiqmentController.GetComponent<EquipmentController>().UseTool();
-                if (equiqmentController != null && mineralController != null && mineralController.GetComponent<MineralController>()._isPlayerInRange == true) {
+
+                GameObject closestMineralField = null;
+                GameObject closestWoodField = null;
+                GameObject closestTree = null;
+                float minDistance = float.MaxValue;
+
+                foreach (GameObject tree in trees)
+                {
+                    float distance = Vector3.Distance(player.transform.position, tree.transform.position);
+                    if (distance < minDistance)
+                    {
+                        closestTree = tree;
+                        minDistance = distance;
+                    }
+                }
+                foreach (GameObject mineralField in mineralFields)
+                {
+                    float distance = Vector3.Distance(player.transform.position, mineralField.transform.position);
+                    if (distance < minDistance)
+                    {
+                        closestMineralField = mineralField;
+                        minDistance = distance;
+                    }
+                }
+                foreach (GameObject woodField in woodFields)
+                {
+                    float distance = Vector3.Distance(player.transform.position, woodField.transform.position);
+                    if (distance < minDistance)
+                    {
+                        closestWoodField = woodField;
+                        minDistance = distance;
+                    }
+                }
+
+
+                if (equiqmentController != null && closestMineralField != null && closestMineralField.GetComponent<MineralController>()._isPlayerInRange == true) {
                     if (InventoryManager.instance.CheckSelectedItem().Item2 != ItemType.Tool || InventoryManager.instance.CheckSelectedItem().Item3 != ActionType.Mine) {
                         Debug.Log("Wrong tool");
                         return;
                     }
-                    mineralController.GetComponent<MineralController>().SpawnGem();
-                    Debug.Log("Tool in use!");
+                    closestMineralField.GetComponent<MineralController>().SpawnGem();
+                    Debug.Log("Tool in use to make mineral!");
                 }
-                if (equiqmentController != null && woodFieldController != null && woodFieldController.GetComponent<WoodMiinerController>()._isPlayerInRange == true) {
+                if (equiqmentController != null && closestWoodField != null && closestWoodField.GetComponent<WoodMiinerController>()._isPlayerInRange == true) {
                     if (InventoryManager.instance.CheckSelectedItem().Item2 != ItemType.Tool || InventoryManager.instance.CheckSelectedItem().Item3 != ActionType.Cut) {
                         Debug.Log("Wrong tool");
                         Debug.Log(InventoryManager.instance.CheckSelectedItem().Item3);
                         return;
                     }
-                    woodFieldController.GetComponent<WoodMiinerController>().SpawnWood();
+                    closestWoodField.GetComponent<WoodMiinerController>().SpawnWood();
+                    Debug.Log("Tool in use to make wood!");
+                }
+                if (equiqmentController != null && closestTree != null && closestTree.GetComponent<TreeCutDown>()._isPlayerInRange == true)
+                {
+                    if (InventoryManager.instance.CheckSelectedItem().Item2 != ItemType.Tool || InventoryManager.instance.CheckSelectedItem().Item3 != ActionType.Cut)
+                    {
+                        Debug.Log("Cutting Down Tree");
+                        Debug.Log(InventoryManager.instance.CheckSelectedItem().Item3);
+                        return;
+                    }
+                    closestTree.GetComponent<TreeCutDown>().CutTree();
                     Debug.Log("Tool in use!");
+                }
+                else
+                {
+                    return;
                 }
             }
         }
