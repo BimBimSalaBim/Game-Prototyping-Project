@@ -22,6 +22,8 @@ public class FoV : Entity
     public float FieldOfViewAngle;
     public float movementSpeed = 5.0f;
     public float hungerThreshold = 25f;
+    public float Hunger = 100f;
+    private Coroutine hungerDamageCoroutine;
     public float healthThresholdForFleeing = 25f;
     public float safeDistance = 20f;
     public float foodChaseDistance = 10f;
@@ -33,9 +35,13 @@ public class FoV : Entity
     public Image agitationIndicator;
     private Color calmColor = Color.green;
     private Color agitatedColor = Color.red;
+    private Color fleeingColor = Color.yellow;
+    [SerializeField] private GameObject hitParticlePrefab; // Assign this in the Inspector
+
+
     
     // List of entities that have agitated this creature
-    public List<Entity> agitatedBy = new List<Entity>();
+    public List<GameObject> agitatedBy = new List<GameObject>();
 
     // State Management
     public AnimationState currentAnimationState; 
@@ -45,8 +51,11 @@ public class FoV : Entity
     private Transform targetFood;
     private Vector3 damageSourcePosition;
     private float wanderTimerCounter;
-    private float wanderTimer = 5f; // Time in seconds to wait before picking a new wander destination
+    public float wanderTimer = 5f; // Time in seconds to wait before picking a new wander destination
     
+    public float health;
+    public GameObject closestTarget;
+    public Transform closestFood = null;
     #endregion
 
     #region Unity Methods
@@ -63,6 +72,9 @@ public class FoV : Entity
         CheckHungerStatus();
         CheckAgitationStatus();
         ManageAnimationState();
+        mHunger -= Time.deltaTime ;
+        Hunger = mHunger;
+        health = mHealth;
     }
     #endregion
 
@@ -74,68 +86,51 @@ public class FoV : Entity
         wanderTimerCounter = wanderTimer;
     }
 
-    private void CheckAgitationStatus()
-    {
-        // Check if there are any agitators
-        if (agitationIndicator == null){
-            agitationIndicator = GetComponentInChildren<Image>();
-            Debug.Log("Agitation Indicator is null");
+   private void CheckAgitationStatus()
+{
+    // Update agitation indicator color based on whether the creature is agitated
+    agitationIndicator.color = agitatedBy.Count > 0 ? agitatedColor : calmColor;
 
-        }
-        if (agitatedBy.Count > 0)
+    if (agitatedBy.Count > 0)
+    {
+        GameObject target = ChooseAttackTarget();
+        if (target != null)
         {
             currentBehaviourState = BehaviourState.Attacking;
-            agitationIndicator.color = agitatedColor; // Set to agitated color
+            AttackTarget(target);
         }
         else
         {
-            currentBehaviourState = BehaviourState.Wandering;
-            agitationIndicator.color = calmColor; // Set to calm color
-        }
-
-        // State machine for behavior
-        switch (currentBehaviourState)
-        {
-            case BehaviourState.Attacking:
-                Entity target = ChooseAttackTarget();
-                if (target != null)
-                {
-                    AttackTarget(target);
-                }
-                else
-                {
-                    // If there's no valid target, revert to another state, like wandering
-                    currentBehaviourState = BehaviourState.Wandering;
-                }
-                break;
-            case BehaviourState.Fleeing:
-                FleeFromDamageSource();
-                break;
-            case BehaviourState.SeekingFood:
-                Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, ViewDistance);
-                foreach (var localtarget in targetsInViewRadius)
-                {
-                    customTags customTagScript = localtarget.GetComponent<customTags>();
-                    if (customTagScript != null && customTagScript.HasTag(CreatureType + "Food"))
-                    {
-                        float distance = Vector3.Distance(transform.position, localtarget.transform.position);
-                        if (distance <= attackRange)
-                        {
-                            // Initiate attack
-                            currentBehaviourState = BehaviourState.Attacking;
-                            targetFood = localtarget.transform; // Set the target food as the current target
-                            break;
-                        }
-                    }
-                }
-                break;
-
+            // Consider other behaviors if no valid target for attack
+            EvaluateOtherBehaviors();
         }
     }
+    else
+    {
+        // If not agitated, consider other behaviors
+        EvaluateOtherBehaviors();
+    }
+}
+
+private void EvaluateOtherBehaviors()
+{
+    if (mHealth < healthThresholdForFleeing)
+    {
+        currentBehaviourState = BehaviourState.Fleeing;
+    }
+    else if (mHunger <= hungerThreshold)
+    {
+        currentBehaviourState = BehaviourState.SeekingFood;
+    }
+    else if (currentBehaviourState != BehaviourState.Attacking)
+    {
+        currentBehaviourState = BehaviourState.Wandering;
+    }
+}
     private void CheckHealthStatus()
     {
         // Handle the entity's behavior when health is below a certain threshold
-        if (mHealth < healthThresholdForFleeing)
+        if (mHealth < healthThresholdForFleeing && agitatedBy.Count > 0)
         {
             FleeFromDamageSource();
         }
@@ -146,14 +141,29 @@ public class FoV : Entity
         // Handle the entity's behavior based on its hunger level
         if (mHunger <= hungerThreshold)
         {
+            wanderTimer = 0.0f;
             SeekFood();
+            if (hungerDamageCoroutine == null)
+                hungerDamageCoroutine = StartCoroutine(HungerDamageRoutine());
         }
         else
         {
+            if (hungerDamageCoroutine != null)
+            {
+                StopCoroutine(hungerDamageCoroutine);
+                hungerDamageCoroutine = null;
+            }
             Wander();
         }
     }
-
+    private IEnumerator HungerDamageRoutine()
+    {
+        while (mHunger < hungerThreshold)
+        {
+            yield return new WaitForSeconds(5f);
+            TakeDamage(1, transform.position); 
+        }
+    }
     private void SeekFood()
     {
         // Logic to seek food when hungry
@@ -172,6 +182,13 @@ public class FoV : Entity
         // Logic to chase the food if it has been found
         navMeshAgent.SetDestination(targetFood.position);
         currentAnimationState = AnimationState.Walk;
+        // Debug.Log("Distance to food: " + Vector3.Distance(transform.position, targetFood.position));
+        // Debug.Log("Attack range: " + attackRange);
+        if (Vector3.Distance(transform.position, targetFood.position) <= attackRange)
+        {
+            // Initiate attack
+            currentBehaviourState = BehaviourState.Attacking;
+        }
     }
 
     private void Wander()
@@ -224,7 +241,7 @@ public class FoV : Entity
     private void MoveRandomly()
     {
         // Logic for moving the entity randomly
-        if (currentBehaviourState == BehaviourState.Wandering)
+        if (currentBehaviourState == BehaviourState.Wandering || currentBehaviourState == BehaviourState.SeekingFood)
         {
             if (wanderTimerCounter > 0)
             {
@@ -263,14 +280,15 @@ public class FoV : Entity
     private void FleeFromDamageSource()
     {
         // Logic to flee from the damage source
+        agitatedColor= fleeingColor;
         Vector3 fleeDirection = transform.position - damageSourcePosition;
         fleeDirection.y = 0;
         Vector3 fleePosition = transform.position + fleeDirection.normalized * safeDistance;
-
+        navMeshAgent.speed = movementSpeed;
         NavMeshHit hit;
         if (NavMesh.SamplePosition(fleePosition, out hit, safeDistance, NavMesh.AllAreas))
         {
-            navMeshAgent.SetDestination(hit.position);
+            Move(fleePosition);
         }
 
         if (Vector3.Distance(transform.position, damageSourcePosition) >= safeDistance)
@@ -283,22 +301,64 @@ public class FoV : Entity
     #region Combat Methods
     public void TakeDamage(float amount, Vector3 damageSource)
     {
-        // Logic to handle when the entity takes damage
+        
         mHealth -= amount;
-        damageSourcePosition = damageSource;
-        currentBehaviourState = BehaviourState.Fleeing;
+        if (mHealth <= 0)
+        {
+            // Health has dropped to 0 or below, handle the collectible item
+            HandleCollectibleItem();
+            
+        }
+        else
+        {
+            damageSourcePosition = damageSource;
+            currentBehaviourState = BehaviourState.Fleeing;
+        }
+        StartCoroutine(FlashEffect());
+        PlayHitParticleEffect();
+    }
+    private void HandleCollectibleItem()
+    {
+        GenericAnimal genericAnimal = GetComponentInChildren<GenericAnimal>();
+        if (genericAnimal != null )
+        {
+            genericAnimal.ActivateCollectibleItem();
+        }
+        else
+        {
+            Debug.LogError("GenericAnimal or CollectibleItem not found!");
+        }
+    }
+
+    private IEnumerator FlashEffect()
+    {
+        Renderer creatureRenderer = GetComponentInChildren<Renderer>();
+        if (creatureRenderer != null)
+        {
+            Color originalColor = creatureRenderer.material.color;
+            creatureRenderer.material.color = Color.red; // Flash color
+            yield return new WaitForSeconds(0.1f); // Duration of the flash
+            creatureRenderer.material.color = originalColor; // Revert to original color
+        }
+    }
+    private void PlayHitParticleEffect()
+    {
+        if (hitParticlePrefab != null)
+        {
+            Instantiate(hitParticlePrefab, transform.position, Quaternion.identity);
+        }
     }
     #endregion
     // Attack Methods region
     #region Attack Methods
 
-    private Entity ChooseAttackTarget()
+    private GameObject ChooseAttackTarget()
     {
         // Logic to choose the closest agitating entity as the target
-        Entity closestTarget = null;
+        
         float closestDistanceSqr = Mathf.Infinity;
 
-        foreach (Entity entity in agitatedBy)
+        foreach (GameObject entity in agitatedBy)
         {
             float distanceSqr = (entity.transform.position - transform.position).sqrMagnitude;
             if (distanceSqr < closestDistanceSqr)
@@ -316,7 +376,7 @@ public class FoV : Entity
 
         return null;
     }
-    private void AttackTarget(Entity target)
+    private void AttackTarget(GameObject target)
     {
         if (attackTimer <= 0)
         {
@@ -327,15 +387,29 @@ public class FoV : Entity
             Vector3 directionToTarget = (target.transform.position - transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directionToTarget.x, 0, directionToTarget.z));
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * movementSpeed);
-
+            
             // Perform the attack
             Debug.Log("Attacking the target!");
-            // Here you would call a method like `target.TakeDamage(attackDamage)` to apply damage to the target
-            // For now, let's just simulate it with a debug message
-            target.transform.parent.GetComponent<FoV>().TakeDamage(attackDamage, transform.position);
+            target.GetComponent<FoV>().TakeDamage(attackDamage, transform.position);
+            if(target.GetComponent<FoV>().mHealth <= 0)
+            {
+                try
+                {
+                    agitatedBy.Remove(target);
+                }
+                catch
+                {
+                    Debug.Log("Target not found in list");
+                }
+                GameObject.Destroy(target);
+                closestFood = null;
+                targetFood = null;
+                mHunger = 100f;
+                currentBehaviourState = BehaviourState.Wandering;
 
-            // Optionally, trigger an attack animation
-            animator.SetTrigger("Attack");
+            }
+            target.GetComponent<FoV>().Agitate(gameObject);
+            // animator.SetTrigger("Attack");
         }
         else
         {
@@ -343,7 +417,7 @@ public class FoV : Entity
         }
     }
 
-    public void Agitate(Entity agitator)
+    public void Agitate(GameObject agitator)
     {
         // Logic to add an entity to the list of agitators
         if (!agitatedBy.Contains(agitator))
@@ -371,7 +445,7 @@ public class FoV : Entity
     private void FindVisibleTargets()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, ViewDistance);
-        Transform closestFood = null;
+        
         float closestDistance = Mathf.Infinity;
         foreach (var hitCollider in hitColliders)
         {
@@ -392,6 +466,8 @@ public class FoV : Entity
                             {
                                 closestFood = hitCollider.transform;
                                 closestDistance = distance;
+                                
+                                break;
                             }
                         }
                     }
@@ -401,6 +477,20 @@ public class FoV : Entity
 
          if (closestFood != null)
         {
+            // get distance to closest food and check if it is within the chase distance
+            float distanceToFood = Vector3.Distance(transform.position, closestFood.position);
+            closestTarget = closestFood.gameObject;
+            Debug.Log("Distance to food: " + distanceToFood);
+            Debug.Log("Attack range: " + attackRange);
+            if(distanceToFood <= attackRange)
+            {
+                // Initiate attack
+                currentBehaviourState = BehaviourState.Attacking;
+                targetFood = closestFood; // Set the target food as the current target
+                
+                Agitate(closestTarget);
+                return;
+            }
             // Food is in sight and within the field of view. Set it as the new destination
             targetFood = closestFood; // Update the target food
             navMeshAgent.SetDestination(targetFood.position);

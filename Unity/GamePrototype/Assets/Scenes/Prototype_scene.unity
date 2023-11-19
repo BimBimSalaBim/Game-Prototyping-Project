@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 8900000, guid: 619e305f5165a9946b7f72464e44ca4a, type: 3}
   m_Sun: {fileID: 2114283754330233425}
-  m_IndirectSpecularColor: {r: 4322.811, g: 2969.9397, b: 2402.4065, a: 1}
+  m_IndirectSpecularColor: {r: 4320.896, g: 2969.526, b: 2404.762, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -13098,7 +13098,7 @@ PrefabInstance:
     - target: {fileID: 6216532115693788942, guid: d941199d4a58fcb45adc75ea8e37c42c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 22.1
+      value: 24.59
       objectReference: {fileID: 0}
     - target: {fileID: 6216532115693788942, guid: d941199d4a58fcb45adc75ea8e37c42c,
         type: 3}
@@ -13108,7 +13108,7 @@ PrefabInstance:
     - target: {fileID: 6216532115693788942, guid: d941199d4a58fcb45adc75ea8e37c42c,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 20.98
+      value: 22.06
       objectReference: {fileID: 0}
     - target: {fileID: 6216532115693788942, guid: d941199d4a58fcb45adc75ea8e37c42c,
         type: 3}
@@ -40771,6 +40771,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Creature Carnivore
       objectReference: {fileID: 0}
+    - target: {fileID: 3332543642612929285, guid: 6524b772a0bab4449840067a94423446,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3332543642612929286, guid: 6524b772a0bab4449840067a94423446,
         type: 3}
       propertyPath: m_RootOrder
@@ -43837,6 +43842,7 @@ MonoBehaviour:
   FieldOfViewAngle: 57.67
   movementSpeed: 0
   hungerThreshold: 25
+  Hunger: 100
   healthThresholdForFleeing: 25
   safeDistance: 20
   foodChaseDistance: 10
@@ -43844,9 +43850,14 @@ MonoBehaviour:
   attackDamage: 10
   attackCooldown: 1
   agitationIndicator: {fileID: 0}
+  hitParticlePrefab: {fileID: 0}
   agitatedBy: []
   currentAnimationState: 0
   currentBehaviourState: 0
+  wanderTimer: 5
+  health: 0
+  closestTarget: {fileID: 0}
+  closestFood: {fileID: 0}
 --- !u!195 &1133223013
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -58977,6 +58988,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: horse_thing
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a78117252efc5404cbe1234c2e3dc349,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -61015,39 +61031,59 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1882160434}
     - target: {fileID: 1361187516, guid: 5c84e80aa2e051f46a399ff3c2e01df5, type: 3}
+      propertyPath: attackRange
+      value: 3.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 1361187516, guid: 5c84e80aa2e051f46a399ff3c2e01df5, type: 3}
       propertyPath: wanderTimer
       value: 3.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 1361187516, guid: 5c84e80aa2e051f46a399ff3c2e01df5, type: 3}
+      propertyPath: ViewDistance
+      value: 7.61
+      objectReference: {fileID: 0}
+    - target: {fileID: 1361187516, guid: 5c84e80aa2e051f46a399ff3c2e01df5, type: 3}
+      propertyPath: attackDamage
+      value: 24.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1361187516, guid: 5c84e80aa2e051f46a399ff3c2e01df5, type: 3}
+      propertyPath: hungerThreshold
+      value: 32.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1361187516, guid: 5c84e80aa2e051f46a399ff3c2e01df5, type: 3}
+      propertyPath: healthThresholdForFleeing
+      value: 25.11
       objectReference: {fileID: 0}
     - target: {fileID: 1812429602863713421, guid: 5c84e80aa2e051f46a399ff3c2e01df5,
         type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 4589b87b8508f6e48b8fddb385924b16, type: 2}
+      objectReference: {fileID: 2100000, guid: d6d82eb17fc82634590c56e637cee518, type: 2}
     - target: {fileID: 1812429603184826751, guid: 5c84e80aa2e051f46a399ff3c2e01df5,
         type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 4589b87b8508f6e48b8fddb385924b16, type: 2}
+      objectReference: {fileID: 2100000, guid: d6d82eb17fc82634590c56e637cee518, type: 2}
     - target: {fileID: 1812429603230445301, guid: 5c84e80aa2e051f46a399ff3c2e01df5,
         type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 4589b87b8508f6e48b8fddb385924b16, type: 2}
+      objectReference: {fileID: 2100000, guid: d6d82eb17fc82634590c56e637cee518, type: 2}
     - target: {fileID: 1812429603866711311, guid: 5c84e80aa2e051f46a399ff3c2e01df5,
         type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 4589b87b8508f6e48b8fddb385924b16, type: 2}
+      objectReference: {fileID: 2100000, guid: d6d82eb17fc82634590c56e637cee518, type: 2}
     - target: {fileID: 1812429603888721858, guid: 5c84e80aa2e051f46a399ff3c2e01df5,
         type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 4589b87b8508f6e48b8fddb385924b16, type: 2}
+      objectReference: {fileID: 2100000, guid: d6d82eb17fc82634590c56e637cee518, type: 2}
     - target: {fileID: 1812429604175798870, guid: 5c84e80aa2e051f46a399ff3c2e01df5,
         type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 4589b87b8508f6e48b8fddb385924b16, type: 2}
+      objectReference: {fileID: 2100000, guid: d6d82eb17fc82634590c56e637cee518, type: 2}
     - target: {fileID: 1812429604184036072, guid: 5c84e80aa2e051f46a399ff3c2e01df5,
         type: 3}
       propertyPath: m_Name
@@ -61061,7 +61097,7 @@ PrefabInstance:
     - target: {fileID: 1812429604184036073, guid: 5c84e80aa2e051f46a399ff3c2e01df5,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18.139914
+      value: 20.629913
       objectReference: {fileID: 0}
     - target: {fileID: 1812429604184036073, guid: 5c84e80aa2e051f46a399ff3c2e01df5,
         type: 3}
@@ -61071,7 +61107,7 @@ PrefabInstance:
     - target: {fileID: 1812429604184036073, guid: 5c84e80aa2e051f46a399ff3c2e01df5,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 13.808151
+      value: 14.888151
       objectReference: {fileID: 0}
     - target: {fileID: 1812429604184036073, guid: 5c84e80aa2e051f46a399ff3c2e01df5,
         type: 3}
@@ -61112,7 +61148,7 @@ PrefabInstance:
         type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 4589b87b8508f6e48b8fddb385924b16, type: 2}
+      objectReference: {fileID: 2100000, guid: d6d82eb17fc82634590c56e637cee518, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

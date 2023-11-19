@@ -88,7 +88,24 @@ public class GenericAnimal : MonoBehaviour, IAnimal {
     }
 
 
-
+    public void ActivateCollectibleItem()
+    {
+        if (collectibleItem != null)
+        {
+            Debug.Log("Dead");
+            // StartCoroutine(collectibleItem.MoveAndCollect());
+            entity.mSpeed = 0;
+            entity.mHealth = 0;
+            try{
+                fov.gameObject.GetComponent<Animator>().enabled = false;
+            }
+            catch{
+                Debug.Log("No animator");
+            }
+            fov.gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = false;
+            fov.enabled = false;
+        }
+    }
     void ViewStatsOnClick() {
         Debug.Log("Stats button clicked");
         //get child of panel in canvas and set the text to the stats of the animal
@@ -144,9 +161,9 @@ public class GenericAnimal : MonoBehaviour, IAnimal {
     public void PrimaryInteract() {
         Debug.Log("Oww");
         fov.TakeDamage(10, transform.position);
+        fov.Agitate(GameObject.Find("PlayerArmature"));
         if (entity.mHealth <= 0) {
-            Debug.Log("Dead");
-            StartCoroutine(collectibleItem.MoveAndCollect());
+           ActivateCollectibleItem();
         }
     }
 }

@@ -11,6 +11,8 @@ public class FoVEditor : Editor {
         FoV fov = (FoV)target;
         Handles.color = Color.white;
         Handles.DrawWireArc(fov.transform.position, Vector3.up, Vector3.forward, 360, fov.ViewDistance);
+        Handles.DrawWireArc(fov.transform.position, Vector3.up, Vector3.forward, 360, fov.attackRange);
+
         Vector3 viewAngleA = DirectionFromAngle(fov.transform.eulerAngles.y, -fov.FieldOfViewAngle / 2);
         Vector3 viewAngleB = DirectionFromAngle(fov.transform.eulerAngles.y, fov.FieldOfViewAngle / 2);
         
