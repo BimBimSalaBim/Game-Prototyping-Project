@@ -163,7 +163,8 @@ public class GenericAnimal : MonoBehaviour, IAnimal {
         fov.TakeDamage(10, transform.position);
         fov.Agitate(GameObject.Find("PlayerArmature"));
         if (entity.mHealth <= 0) {
-           ActivateCollectibleItem();
+            Debug.Log("Dead");
+            StartCoroutine(collectibleItem.MoveAndCollect());
         }
     }
 }
