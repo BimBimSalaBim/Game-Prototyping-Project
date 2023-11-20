@@ -20,7 +20,7 @@ public class EntityStats
         Set(EntityStat.SPEED, 5f); // Default speed
         Set(EntityStat.STAMINA, 100f); // Default stamina
         Set(EntityStat.STRENGTH, 10f); // Default strength
-        Set(EntityStat.JUMP_HEIGHT, 5f); // Default jump height
+        Set(EntityStat.JUMP_HEIGHT, 0.5f); // Default jump height
         Set(EntityStat.INVENTORY_SLOTS, 0f); // Default inventory slots
 
     }

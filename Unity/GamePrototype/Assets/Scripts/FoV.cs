@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 using Unity.VisualScripting;
+using StarterAssets;
 
 
 public enum AnimationState { Idle, Walk, Jump, Attack, Damage }
@@ -97,6 +98,7 @@ public class FoV : Entity
         if (target != null)
         {
             currentBehaviourState = BehaviourState.Attacking;
+            Move(target.transform.position);
             AttackTarget(target);
         }
         else
@@ -125,6 +127,11 @@ private void EvaluateOtherBehaviors()
     else if (currentBehaviourState != BehaviourState.Attacking)
     {
         currentBehaviourState = BehaviourState.Wandering;
+        wanderTimer = 3.0f;
+    }
+    else if (currentBehaviourState == BehaviourState.Attacking)
+    {
+        wanderTimer = 0.0f;
     }
 }
     private void CheckHealthStatus()
@@ -358,8 +365,12 @@ private void EvaluateOtherBehaviors()
         
         float closestDistanceSqr = Mathf.Infinity;
 
-        foreach (GameObject entity in agitatedBy)
+        foreach (GameObject entity in agitatedBy )
         {
+            if (entity == null){
+                agitatedBy.Remove(entity);
+                continue;
+            }
             float distanceSqr = (entity.transform.position - transform.position).sqrMagnitude;
             if (distanceSqr < closestDistanceSqr)
             {
@@ -390,25 +401,39 @@ private void EvaluateOtherBehaviors()
             
             // Perform the attack
             //Debug.Log("Attacking the target!");
-            target.GetComponent<FoV>().TakeDamage(attackDamage, transform.position);
-            if(target.GetComponent<FoV>().mHealth <= 0)
+            try
             {
-                try
+                target.GetComponent<FoV>().TakeDamage(attackDamage, transform.position);
+                if(target.GetComponent<FoV>().mHealth <= 0)
                 {
-                    agitatedBy.Remove(target);
+                    try
+                    {
+                        agitatedBy.Remove(target);
+                    }
+                    catch
+                    {
+                        //Debug.Log("Target not found in list");
+                    }
+                    GameObject.Destroy(target);
+                    closestFood = null;
+                    targetFood = null;
+                    mHunger = 100f;
+                    currentBehaviourState = BehaviourState.Wandering;
+
+                }
+                target.GetComponent<FoV>().Agitate(gameObject);
+            }
+            catch
+            {
+                try{
+                    target.GetComponent<ThirdPersonController>().TakeDamage(attackDamage, transform.position);
                 }
                 catch
                 {
                     //Debug.Log("Target not found in list");
                 }
-                GameObject.Destroy(target);
-                closestFood = null;
-                targetFood = null;
-                mHunger = 100f;
-                currentBehaviourState = BehaviourState.Wandering;
-
             }
-            target.GetComponent<FoV>().Agitate(gameObject);
+            
             // animator.SetTrigger("Attack");
         }
         else

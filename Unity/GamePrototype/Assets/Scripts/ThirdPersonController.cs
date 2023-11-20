@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 #endif
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
@@ -12,11 +14,15 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
     [RequireComponent(typeof(PlayerInput))]
 #endif
-    public class ThirdPersonController : MonoBehaviour
+    public class ThirdPersonController :  MonoBehaviour
     {
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
         public float MoveSpeed = 2.0f;
+
+        [Header("Player Health Bar")]
+        public HealthBarScript healthBar;
+
 
         [Tooltip("Sprint speed of the character in m/s")]
         public float SprintSpeed = 5.335f;
@@ -80,12 +86,14 @@ namespace StarterAssets
         private float _cinemachineTargetPitch;
 
         // player
+        public float mHealth = 100f;
         private float _speed;
         private float _animationBlend;
         private float _targetRotation = 0.0f;
         private float _rotationVelocity;
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
+        public Image damageScreenOverlay;
 
         // timeout deltatime
         private float _jumpTimeoutDelta;
@@ -104,7 +112,7 @@ namespace StarterAssets
         private Animator _animator;
         private CharacterController _controller;
         private StarterAssetsInputs _input;
-        private GameObject _mainCamera;
+        public GameObject _mainCamera;
         private static ThirdPersonController _singleton;
         public static ThirdPersonController sSingleton {get{ return _singleton; } private set{ _singleton = value; }}
 
@@ -154,6 +162,7 @@ namespace StarterAssets
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
             sSingleton = this;
+            healthBar.SetMaxHealth(mHealth);
 /*            if (Database.Instance.isLoggedIn)
             {
                 Vector3 position = Database.Instance.getPosition();
@@ -433,8 +442,40 @@ namespace StarterAssets
             transform.rotation = newRotation;
         }
 
+        public void TakeDamage(float attackDamage, Vector3 position)
+        {
+            mHealth -= attackDamage;
+            healthBar.SetHealth(mHealth);
+            //indicate the player has taken damage
+            StartCoroutine(CameraShake(0.15f, 0.4f)); 
+            StartCoroutine(FlashScreen(new Color(1, 0, 0, 0.5f), 0.2f)); // Red flash
 
+           
+        }
+        public IEnumerator FlashScreen(Color flashColor, float duration)
+        {
+            damageScreenOverlay.color = flashColor;
+            yield return new WaitForSeconds(duration);
+            damageScreenOverlay.color = Color.clear; // Reset to transparent
+            AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
+        }
+        public IEnumerator CameraShake(float duration, float magnitude)
+        {
+            Vector3 originalPosition = _mainCamera.transform.localPosition;
+            float elapsed = 0.0f;
 
+            while (elapsed < duration)
+            {
+                float x = Random.Range(-1f, 1f) * magnitude;
+                float y = Random.Range(-1f, 1f) * magnitude;
 
+                _mainCamera.transform.localPosition = new Vector3(x, y, originalPosition.z);
+                elapsed += Time.deltaTime;
+
+                yield return null;
+            }
+
+            _mainCamera.transform.localPosition = originalPosition;
+        }
     }
 }
