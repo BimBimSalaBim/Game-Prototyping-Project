@@ -182,8 +182,8 @@ private void EvaluateOtherBehaviors()
         // Logic to chase the food if it has been found
         navMeshAgent.SetDestination(targetFood.position);
         currentAnimationState = AnimationState.Walk;
-        // Debug.Log("Distance to food: " + Vector3.Distance(transform.position, targetFood.position));
-        // Debug.Log("Attack range: " + attackRange);
+        // //Debug.Log("Distance to food: " + Vector3.Distance(transform.position, targetFood.position));
+        // //Debug.Log("Attack range: " + attackRange);
         if (Vector3.Distance(transform.position, targetFood.position) <= attackRange)
         {
             // Initiate attack
@@ -326,7 +326,7 @@ private void EvaluateOtherBehaviors()
         }
         else
         {
-            Debug.LogError("GenericAnimal or CollectibleItem not found!");
+            //Debug.Log("GenericAnimal or CollectibleItem not found!");
         }
     }
 
@@ -389,7 +389,7 @@ private void EvaluateOtherBehaviors()
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * movementSpeed);
             
             // Perform the attack
-            Debug.Log("Attacking the target!");
+            //Debug.Log("Attacking the target!");
             target.GetComponent<FoV>().TakeDamage(attackDamage, transform.position);
             if(target.GetComponent<FoV>().mHealth <= 0)
             {
@@ -399,7 +399,7 @@ private void EvaluateOtherBehaviors()
                 }
                 catch
                 {
-                    Debug.Log("Target not found in list");
+                    //Debug.Log("Target not found in list");
                 }
                 GameObject.Destroy(target);
                 closestFood = null;
@@ -480,8 +480,8 @@ private void EvaluateOtherBehaviors()
             // get distance to closest food and check if it is within the chase distance
             float distanceToFood = Vector3.Distance(transform.position, closestFood.position);
             closestTarget = closestFood.gameObject;
-            Debug.Log("Distance to food: " + distanceToFood);
-            Debug.Log("Attack range: " + attackRange);
+            //Debug.Log("Distance to food: " + distanceToFood);
+            //Debug.Log("Attack range: " + attackRange);
             if(distanceToFood <= attackRange)
             {
                 // Initiate attack
@@ -495,13 +495,13 @@ private void EvaluateOtherBehaviors()
             targetFood = closestFood; // Update the target food
             navMeshAgent.SetDestination(targetFood.position);
             currentAnimationState = AnimationState.Walk;
-            Debug.Log("Food found, heading towards it.");
+            //Debug.Log("Food found, heading towards it.");
         }
         else
         {
             // If no food found, ensure the entity continues wandering
             MoveRandomly();
-            Debug.Log("No food found, continuing to wander.");
+            //Debug.Log("No food found, continuing to wander.");
         }
     }
 
