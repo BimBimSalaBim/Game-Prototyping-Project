@@ -207,7 +207,7 @@ namespace StarterAssets {
             GameObject inventory = GameObject.Find("Inventory");
             if (inventory != null) {
                 openInventory = !openInventory;
-                inventory.transform.GetChild(0).gameObject.SetActive(openInventory);
+                inventory.transform.GetChild(1).gameObject.SetActive(openInventory);
                 cursorInputForLook = !openInventory;
                 SetCursorState(!openInventory);
                 UnityEngine.Cursor.visible = openInventory;
