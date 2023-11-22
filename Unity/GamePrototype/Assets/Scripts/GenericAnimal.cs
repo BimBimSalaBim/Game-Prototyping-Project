@@ -4,7 +4,6 @@ using UnityEngine;
 using static Interactor;
 using System.Collections;
 using Unity.VisualScripting;
-using static UnityEditor.Progress;
 
 
 public class GenericAnimal : MonoBehaviour, IAnimal {

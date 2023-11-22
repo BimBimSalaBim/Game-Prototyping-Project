@@ -64,6 +64,12 @@ public class menucontroller : MonoBehaviour
             }
         }
     }
+
+    public void Exit()
+    {
+        Debug.Log("Button Press: Exit");
+        Application.Quit();
+    }
     public void login()
     {
         loginAsync();
