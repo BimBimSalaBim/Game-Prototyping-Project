@@ -19,6 +19,17 @@ public class CollectibleItem : MonoBehaviour {
 
     public IEnumerator MoveAndCollect() {
         Destroy(collider);
+        var isChild = false;
+        if (GetComponentInParent<FoV>() != null) {
+            var parent = transform.parent.gameObject;
+            isChild = true;
+            Destroy(GetComponentInParent<FoV>());
+            foreach(Transform child in parent.transform) {
+                if (child != transform) {
+                    Destroy(child.gameObject);
+                }
+            }
+        }
         var oldPosition = transform.position;
         transform.position += Vector3.up;
         while (Vector3.Distance(transform.position, player.position) > collectDistance) {
@@ -29,6 +40,9 @@ public class CollectibleItem : MonoBehaviour {
         }
 
         Destroy(gameObject);
+        if (isChild) {
+            Destroy(transform.parent.gameObject);
+        }
         Debug.Log(InventoryManager.instance.AddItem(item));
     }
 }
