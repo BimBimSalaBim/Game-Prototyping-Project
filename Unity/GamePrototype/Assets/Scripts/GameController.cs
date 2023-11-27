@@ -42,7 +42,7 @@ public class GameController : MonoBehaviour
                     player = GameObject.Find("PlayerArmature");
                 }
                 this.isSaving = true;
-                clone = InstantiateSavingIcon();
+                // clone = InstantiateSavingIcon();
                 StartCoroutine(SaveGame());
             }
         }

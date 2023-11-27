@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 8900000, guid: 619e305f5165a9946b7f72464e44ca4a, type: 3}
   m_Sun: {fileID: 2114283754330233425}
-  m_IndirectSpecularColor: {r: 4273.313, g: 2974.2502, b: 2492.0278, a: 1}
+  m_IndirectSpecularColor: {r: 4314.656, g: 2977.1643, b: 2429.7698, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -23497,7 +23497,7 @@ PrefabInstance:
     - target: {fileID: 5299545887631870546, guid: 51578c35b9841453aadded98e38a7b06,
         type: 3}
       propertyPath: spawnInterval
-      value: 35
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -28154,7 +28154,7 @@ PrefabInstance:
     - target: {fileID: 6542057615988778014, guid: 1d7fc0d6b413e4af4b6f5fbc9631f599,
         type: 3}
       propertyPath: spawnInterval
-      value: 35
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 8187755105027947047, guid: 1d7fc0d6b413e4af4b6f5fbc9631f599,
         type: 3}
@@ -32042,7 +32042,7 @@ PrefabInstance:
     - target: {fileID: 2205212521333812576, guid: 42d2d2dae044f4ab4ae239f308ca1332,
         type: 3}
       propertyPath: spawnInterval
-      value: 35
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 4879492460061105332, guid: 42d2d2dae044f4ab4ae239f308ca1332,
         type: 3}
@@ -41356,7 +41356,7 @@ PrefabInstance:
     - target: {fileID: 2434142849898168553, guid: c1390c3badf9640e68d55d18e878a2a5,
         type: 3}
       propertyPath: spawnInterval
-      value: 35
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 5446485837042631619, guid: c1390c3badf9640e68d55d18e878a2a5,
         type: 3}
@@ -68667,6 +68667,14 @@ PrefabInstance:
       propertyPath: animator
       value: 
       objectReference: {fileID: 1882160434}
+    - target: {fileID: 1361187516, guid: 5c84e80aa2e051f46a399ff3c2e01df5, type: 3}
+      propertyPath: attackDamage
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1361187516, guid: 5c84e80aa2e051f46a399ff3c2e01df5, type: 3}
+      propertyPath: attackCooldown
+      value: 4.39
+      objectReference: {fileID: 0}
     - target: {fileID: 1812429604184036072, guid: 5c84e80aa2e051f46a399ff3c2e01df5,
         type: 3}
       propertyPath: m_Name
@@ -92963,7 +92971,7 @@ PrefabInstance:
     - target: {fileID: 6542057615988778014, guid: 1d7fc0d6b413e4af4b6f5fbc9631f599,
         type: 3}
       propertyPath: spawnInterval
-      value: 35
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 8187755105027947047, guid: 1d7fc0d6b413e4af4b6f5fbc9631f599,
         type: 3}
@@ -93328,17 +93336,17 @@ PrefabInstance:
     - target: {fileID: 5533858094644039002, guid: fbff7ef7a55987b4b842f0190e01c546,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 17.2
+      value: 18.15
       objectReference: {fileID: 0}
     - target: {fileID: 5533858094644039002, guid: fbff7ef7a55987b4b842f0190e01c546,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.7
+      value: 0.62
       objectReference: {fileID: 0}
     - target: {fileID: 5533858094644039002, guid: fbff7ef7a55987b4b842f0190e01c546,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -29.4
+      value: -8.33
       objectReference: {fileID: 0}
     - target: {fileID: 5533858094644039002, guid: fbff7ef7a55987b4b842f0190e01c546,
         type: 3}
@@ -93446,7 +93454,7 @@ PrefabInstance:
     - target: {fileID: 2434142849898168553, guid: c1390c3badf9640e68d55d18e878a2a5,
         type: 3}
       propertyPath: spawnInterval
-      value: 35
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 5446485837042631619, guid: c1390c3badf9640e68d55d18e878a2a5,
         type: 3}
@@ -93524,7 +93532,7 @@ PrefabInstance:
     - target: {fileID: 5299545887631870546, guid: 51578c35b9841453aadded98e38a7b06,
         type: 3}
       propertyPath: spawnInterval
-      value: 35
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -93876,7 +93884,7 @@ PrefabInstance:
     - target: {fileID: 2205212521333812576, guid: 42d2d2dae044f4ab4ae239f308ca1332,
         type: 3}
       propertyPath: spawnInterval
-      value: 35
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 4879492460061105332, guid: 42d2d2dae044f4ab4ae239f308ca1332,
         type: 3}
