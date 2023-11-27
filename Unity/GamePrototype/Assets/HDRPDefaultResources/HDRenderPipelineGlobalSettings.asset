@@ -101,8 +101,11 @@ MonoBehaviour:
   apvScenesData:
     m_ObsoleteSerializedBakingSets: []
     serializedBounds: []
-    serializedHasVolumes: []
-    bakingSets: []
+    serializedHasVolumes:
+    - sceneGUID: ce830bfaaedeba44a98614a31a8071bc
+      hasProbeVolumes: 0
+    bakingSets:
+    - {fileID: 11400000, guid: 681dbf1ea3b0e4139be0e58b4ce5ac59, type: 2}
     m_LightingScenario: Default
   m_Version: 8
   m_ShaderVariantLogLevel: 0
