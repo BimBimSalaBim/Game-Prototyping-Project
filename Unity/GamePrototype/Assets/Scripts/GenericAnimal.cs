@@ -57,8 +57,10 @@ public class GenericAnimal : MonoBehaviour, IAnimal {
         if (statsEnabled) {
 
             //find the PlayerArmature and set the rotation of canvas to face the player
-            GameObject MainCamera = GameObject.Find("MainCamera");
-            canvas.transform.LookAt(MainCamera.transform);
+            if (canvas != null) {
+                GameObject MainCamera = GameObject.Find("MainCamera");
+                canvas.transform.LookAt(MainCamera.transform);
+            }
         } else if(canvas != null) {
             canvas.SetActive(false);
         }
