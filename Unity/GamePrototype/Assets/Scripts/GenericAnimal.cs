@@ -124,11 +124,28 @@ public class GenericAnimal : MonoBehaviour, IAnimal {
                     "\nStrength: " + entity.mStrength +
                     "\nHunger: " + entity.mHunger +
                     "\nInventory Slots: " + entity.mInventory_Slots;
-
         canvas.SetActive(true);
         statsEnabled = true;
+        StartCoroutine(UpdateTest(text));
 
     }
+
+     IEnumerator UpdateTest(TMPro.TextMeshProUGUI text){
+        while (statsEnabled != false){
+        Debug.Log("Updating stats");
+        
+        yield return new WaitForSeconds(1);
+        text.text = "Creature Name: " + fov.GetCreatureType() +
+                            "\nHealth: " + entity.mHealth +
+                            "\nMax Health: " + entity.mMaxHealth +
+                            "\nSpeed: " + entity.mSpeed +
+                            "\nJump Height: " + entity.mJumpHeight +
+                            "\nStamina: " + entity.mStamina +
+                            "\nStrength: " + entity.mStrength +
+                            "\nHunger: " + entity.mHunger +
+                            "\nInventory Slots: " + entity.mInventory_Slots;
+        }
+     }
 
 
 
