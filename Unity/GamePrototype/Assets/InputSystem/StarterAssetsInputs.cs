@@ -25,6 +25,8 @@ namespace StarterAssets {
 
         [Header("PauseMenu")]
         public GameObject pauseMenu;
+        [Header("DeathMenu")]
+        public GameObject deathMenu;
         private PlayerInput input;
         public event Action OnDeletePressed;
 
@@ -268,6 +270,17 @@ namespace StarterAssets {
 
         public void PauseInput() {
             pauseMenu.SetActive(true);
+            Time.timeScale = 0f;
+            AudioListener.pause = true;
+            SetCursorState(false);
+            UnityEngine.Cursor.visible = true;
+            cursorInputForLook = false;
+            if (input != null) {
+                input.SwitchCurrentActionMap("Menu");
+            }
+        }
+        public void DeathInput() {
+            deathMenu.SetActive(true);
             Time.timeScale = 0f;
             AudioListener.pause = true;
             SetCursorState(false);

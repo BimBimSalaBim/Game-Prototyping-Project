@@ -331,7 +331,7 @@ private void EvaluateOtherBehaviors()
         // Logic to flee from the damage source
         agitatedColor = fleeingColor;
         Vector3 fleeDirection = transform.position + damageSourcePosition;
-        foreach (GameObject entity in agitatedBy) { agitatedBy.Remove(entity); }
+        try{foreach (GameObject entity in agitatedBy) { agitatedBy.Remove(entity); }}catch{Debug.Log("Target not found in list");}
         closestFood = null;
         targetFood = null;
         closestTarget = null;

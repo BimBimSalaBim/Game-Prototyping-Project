@@ -444,6 +444,11 @@ namespace StarterAssets
 
         public void TakeDamage(float attackDamage, Vector3 position)
         {
+            if (mHealth <= 0)
+            {
+                _input.DeathInput();
+                return;
+            }
             mHealth -= attackDamage;
             healthBar.SetHealth(mHealth);
             //indicate the player has taken damage
