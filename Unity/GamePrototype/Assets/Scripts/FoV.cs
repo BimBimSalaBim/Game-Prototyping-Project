@@ -123,6 +123,19 @@ public class FoV : Entity
 
     if (agitatedBy.Count > 0 && currentBehaviourState != BehaviourState.Fleeing)
     {
+        // //get game controller
+        // GameObject gameController = GameObject.Find("GameController");
+        // //add audio source
+        // AudioSource audioSource = gameController.GetComponent<AudioSource>();
+        // if(audioSource.clip.name != "action")
+        // {
+        //     //set audio clip
+        //     audioSource.loop = true;
+        //     audioSource.clip = Resources.Load<AudioClip>("Music/action");
+        //     //play audio
+        //     audioSource.Play();
+        // }
+
         GameObject target = ChooseAttackTarget();
         if (target != null)
         {
