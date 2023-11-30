@@ -131,10 +131,11 @@ public class GenericAnimal : MonoBehaviour, IAnimal {
     }
 
      IEnumerator UpdateTest(TMPro.TextMeshProUGUI text){
+        float elapsedTime = 0f;
         while (statsEnabled != false){
         Debug.Log("Updating stats");
         
-        yield return new WaitForSeconds(1);
+        
         text.text = "Creature Name: " + fov.GetCreatureType() +
                             "\nHealth: " + entity.mHealth +
                             "\nMax Health: " + entity.mMaxHealth +
@@ -144,6 +145,17 @@ public class GenericAnimal : MonoBehaviour, IAnimal {
                             "\nStrength: " + entity.mStrength +
                             "\nHunger: " + entity.mHunger +
                             "\nInventory Slots: " + entity.mInventory_Slots;
+        yield return new WaitForSeconds(1);
+        elapsedTime += 1f; // Increment the timer
+        // Check if 5 seconds have passed
+        if (elapsedTime >= 5f) {
+            // Perform your action here after 5 seconds
+            canvas.SetActive(false);
+            statsEnabled = false;
+            // Reset the timer if you want this to happen every 5 seconds
+            elapsedTime = 0f;
+            break;
+        }
         }
      }
 

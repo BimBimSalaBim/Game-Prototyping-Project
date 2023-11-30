@@ -163,11 +163,11 @@ namespace StarterAssets
             _fallTimeoutDelta = FallTimeout;
             sSingleton = this;
             healthBar.SetMaxHealth(mHealth);
-/*            if (Database.Instance.isLoggedIn)
+            if (Database.Instance.isLoggedIn)
             {
                 Vector3 position = Database.Instance.getPosition();
                 transform.position = position;
-            }*/
+            }
 
         }
 

@@ -73,9 +73,31 @@ public class FoV : Entity
         CheckHungerStatus();
         CheckAgitationStatus();
         ManageAnimationState();
-        mHunger -= Time.deltaTime ;
-        Hunger = mHunger;
+        Hunger -= Time.deltaTime;
         health = mHealth;
+
+        if (currentBehaviourState == BehaviourState.Attacking && closestTarget != null)
+        {
+            float distanceToTarget = Vector3.Distance(transform.position, closestTarget.transform.position);
+            bool isTargetInViewDistance = distanceToTarget <= ViewDistance;
+
+            if (isTargetInViewDistance)
+            {
+                if (distanceToTarget <= attackRange)
+                {
+                    StopAgent(); // Stop moving if within attack range
+                }
+                else
+                {
+                    Move(closestTarget.transform.position); // Move towards the target if it's out of attack range
+                }
+            }
+            else
+            {
+                // Target is out of view distance, consider switching to another behavior
+                currentBehaviourState = BehaviourState.Wandering;
+            }
+        }
     }
     #endregion
 
@@ -90,9 +112,16 @@ public class FoV : Entity
    private void CheckAgitationStatus()
 {
     // Update agitation indicator color based on whether the creature is agitated
-    agitationIndicator.color = agitatedBy.Count > 0 ? agitatedColor : calmColor;
+    if(BehaviourState.Fleeing == currentBehaviourState)
+    {
+        agitationIndicator.color = fleeingColor;
+    }
+    else{
 
-    if (agitatedBy.Count > 0)
+    agitationIndicator.color = agitatedBy.Count > 0 ? agitatedColor : calmColor;
+    }
+
+    if (agitatedBy.Count > 0 && currentBehaviourState != BehaviourState.Fleeing)
     {
         GameObject target = ChooseAttackTarget();
         if (target != null)
@@ -137,7 +166,7 @@ private void EvaluateOtherBehaviors()
     private void CheckHealthStatus()
     {
         // Handle the entity's behavior when health is below a certain threshold
-        if (mHealth < healthThresholdForFleeing && agitatedBy.Count > 0)
+        if (mHealth < healthThresholdForFleeing && currentBehaviourState == BehaviourState.Fleeing)
         {
             FleeFromDamageSource();
         }
@@ -287,8 +316,12 @@ private void EvaluateOtherBehaviors()
     private void FleeFromDamageSource()
     {
         // Logic to flee from the damage source
-        agitatedColor= fleeingColor;
-        Vector3 fleeDirection = transform.position - damageSourcePosition;
+        agitatedColor = fleeingColor;
+        Vector3 fleeDirection = transform.position + damageSourcePosition;
+        foreach (GameObject entity in agitatedBy) { agitatedBy.Remove(entity); }
+        closestFood = null;
+        targetFood = null;
+        closestTarget = null;
         fleeDirection.y = 0;
         Vector3 fleePosition = transform.position + fleeDirection.normalized * safeDistance;
         navMeshAgent.speed = movementSpeed;
@@ -298,10 +331,13 @@ private void EvaluateOtherBehaviors()
             Move(fleePosition);
         }
 
-        if (Vector3.Distance(transform.position, damageSourcePosition) >= safeDistance)
-        {
-            currentBehaviourState = BehaviourState.Idle;
-        }
+        StartCoroutine(FleeForDuration(5f)); // Flee for 5 seconds
+    }
+
+    private IEnumerator FleeForDuration(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        currentBehaviourState = BehaviourState.Wandering; // After 5 seconds, start wandering
     }
     #endregion
 
@@ -389,7 +425,10 @@ private void EvaluateOtherBehaviors()
     }
     private void AttackTarget(GameObject target)
     {
-        if (attackTimer <= 0)
+        float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
+        bool isTargetInViewDistance = distanceToTarget <= ViewDistance;
+
+        if (distanceToTarget <= attackRange && isTargetInViewDistance && attackTimer <= 0)
         {
             // Reset the attack timer
             attackTimer = attackCooldown;
@@ -435,6 +474,7 @@ private void EvaluateOtherBehaviors()
             }
             
             // animator.SetTrigger("Attack");
+            attackTimer = attackCooldown;
         }
         else
         {
@@ -535,7 +575,8 @@ private void EvaluateOtherBehaviors()
     {
         // Logic to move the entity to a target position
         navMeshAgent.SetDestination(targetPosition);
-        navMeshAgent.speed = movementSpeed;
+        navMeshAgent.isStopped = false;
+        navMeshAgent.updateRotation = true;
         currentAnimationState = AnimationState.Walk;
     }
 

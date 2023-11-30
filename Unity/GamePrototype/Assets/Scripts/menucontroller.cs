@@ -91,6 +91,10 @@ public class menucontroller : MonoBehaviour
 
         SceneManager.LoadScene("Prototype_scene");
         }
+        else{
+            Debug.Log("Login failed: Invalid credentials.");
+            return;
+        }
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

@@ -25,7 +25,7 @@ RenderSettings:
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 4
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 8900000, guid: 619e305f5165a9946b7f72464e44ca4a, type: 3}
   m_Sun: {fileID: 2114283754330233425}
-  m_IndirectSpecularColor: {r: 4328.875, g: 2974.3381, b: 2404.6877, a: 1}
+  m_IndirectSpecularColor: {r: 4326.3364, g: 2954.0413, b: 2278.1213, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -81445,7 +81445,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InteractorSource: {fileID: 700051398}
-  InteractRange: 2.5
+  InteractRange: 0.82
+  SphereRadius: 1.35
+  CastHeight: -0.64
 --- !u!20 &1908910200 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 8944336655422409496, guid: f6d148d888ffbf54b9afe9936dfaec1f,
@@ -93937,7 +93939,7 @@ PrefabInstance:
     - target: {fileID: 8380300890920501256, guid: b85241ff2af4adf42bc8fe08e5ec4483,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8380300890920501256, guid: b85241ff2af4adf42bc8fe08e5ec4483,
         type: 3}
@@ -93947,7 +93949,7 @@ PrefabInstance:
     - target: {fileID: 8380300890920501256, guid: b85241ff2af4adf42bc8fe08e5ec4483,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8380300890920501256, guid: b85241ff2af4adf42bc8fe08e5ec4483,
         type: 3}
@@ -93957,7 +93959,7 @@ PrefabInstance:
     - target: {fileID: 8380300890920501256, guid: b85241ff2af4adf42bc8fe08e5ec4483,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 19.15
+      value: 19.149994
       objectReference: {fileID: 0}
     - target: {fileID: 8380300890920501256, guid: b85241ff2af4adf42bc8fe08e5ec4483,
         type: 3}
@@ -93997,12 +93999,12 @@ PrefabInstance:
     - target: {fileID: 8380300890920501256, guid: b85241ff2af4adf42bc8fe08e5ec4483,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.00012207031
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8380300890920501256, guid: b85241ff2af4adf42bc8fe08e5ec4483,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 478
+      value: -51
       objectReference: {fileID: 0}
     - target: {fileID: 8380300890920501256, guid: b85241ff2af4adf42bc8fe08e5ec4483,
         type: 3}

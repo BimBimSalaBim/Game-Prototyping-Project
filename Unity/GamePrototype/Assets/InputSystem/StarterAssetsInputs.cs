@@ -173,21 +173,28 @@ namespace StarterAssets {
                     closestWoodField.GetComponent<WoodMiinerController>().SpawnWood();
                     Debug.Log("Tool in use to make wood!");
                 }
-                if (equiqmentController != null && closestTree != null && closestTree.GetComponent<TreeCutDown>()._isPlayerInRange == true)
-                {
-                    if (InventoryManager.instance.CheckSelectedItem().Item2 != ItemType.Tool || InventoryManager.instance.CheckSelectedItem().Item3 != ActionType.Cut)
+                try{
+                    if (equiqmentController != null && closestTree != null && closestTree.GetComponent<TreeCutDown>()._isPlayerInRange == true)
                     {
-                        Debug.Log("Cutting Down Tree");
-                        Debug.Log(InventoryManager.instance.CheckSelectedItem().Item3);
+                        if (InventoryManager.instance.CheckSelectedItem().Item2 != ItemType.Tool || InventoryManager.instance.CheckSelectedItem().Item3 != ActionType.Cut)
+                        {
+                            Debug.Log("Cutting Down Tree");
+                            Debug.Log(InventoryManager.instance.CheckSelectedItem().Item3);
+                            return;
+                        }
+                        closestTree.GetComponent<TreeCutDown>().CutTree();
+                        Debug.Log("Tool in use!");
+                    }
+                    else
+                    {
                         return;
                     }
-                    closestTree.GetComponent<TreeCutDown>().CutTree();
-                    Debug.Log("Tool in use!");
                 }
-                else
+                catch (Exception e)
                 {
-                    return;
+                    Debug.Log("No Tree");
                 }
+                
             }
         }
         public void OnSecondaryClick() {
