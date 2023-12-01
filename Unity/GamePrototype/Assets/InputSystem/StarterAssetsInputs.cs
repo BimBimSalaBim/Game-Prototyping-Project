@@ -109,7 +109,8 @@ namespace StarterAssets {
         public void OnPrimaryClick() {
             GameObject player = GameObject.FindWithTag("Player");
             GameObject gameObject = GameObject.Find("MainCamera");
-            if (interactMenuOpen) {
+            Debug.Log(openInventory);
+            if (interactMenuOpen || openInventory) {
                 return;
             }
             if (gameObject != null) {

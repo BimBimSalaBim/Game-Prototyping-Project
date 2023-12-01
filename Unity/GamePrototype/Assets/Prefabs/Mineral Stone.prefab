@@ -207,6 +207,7 @@ MonoBehaviour:
   _value: 0
   _isReadyToPickUp: 0
   _targetPosition: {x: 24, y: -0.8, z: 9}
+  item: {fileID: 11400000, guid: 1faf5e6e5fe53c449a80a73ae2c9f5d6, type: 2}
 --- !u!64 &9175797749303691506
 MeshCollider:
   m_ObjectHideFlags: 0

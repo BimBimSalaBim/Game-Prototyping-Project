@@ -160,6 +160,7 @@ MonoBehaviour:
   _value: 0
   _isReadyToPickUp: 0
   _targetPosition: {x: 0, y: 0, z: 0}
+  item: {fileID: 11400000, guid: 27c758351f11df94ea2f7da9059102e7, type: 2}
 --- !u!135 &1440588852115652814
 SphereCollider:
   m_ObjectHideFlags: 0

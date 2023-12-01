@@ -7,6 +7,7 @@ public class WoodResource : MonoBehaviour
     public int _value;
     public bool _isReadyToPickUp = false;
     public Vector3 _targetPosition;
+    public Item item;
     //public GameObject _inventoryLocation;
     // Start is called before the first frame update
     void Start()
@@ -24,6 +25,7 @@ public class WoodResource : MonoBehaviour
     {
         MoveToTargetPosition();
         Debug.Log("Ship to Inventory");
+        InventoryManager.instance.AddItem(item);
     }
 
     public void MoveToTargetPosition()

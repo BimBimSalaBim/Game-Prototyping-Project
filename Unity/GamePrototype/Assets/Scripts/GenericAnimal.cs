@@ -189,12 +189,18 @@ public class GenericAnimal : MonoBehaviour, IAnimal {
     }
 
     public void PrimaryInteract() {
-        Debug.Log("Oww");
-        fov.TakeDamage(10, transform.position);
-        fov.Agitate(GameObject.Find("PlayerArmature"));
-        if (entity.mHealth <= 0) {
-            Debug.Log("Dead");
-            StartCoroutine(collectibleItem.MoveAndCollect());
+        try {
+            Debug.Log("Oww");
+            fov.TakeDamage(10, transform.position);
+            fov.Agitate(GameObject.Find("PlayerArmature"));
+            if (entity.mHealth <= 0) {
+                Debug.Log("Dead");
+                StartCoroutine(collectibleItem.MoveAndCollect());
+            }
         }
+        catch {
+            Debug.Log("Creature already dead");
+        }
+        
     }
 }
