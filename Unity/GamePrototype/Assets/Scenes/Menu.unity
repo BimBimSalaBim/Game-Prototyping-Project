@@ -1489,6 +1489,7 @@ GameObject:
   - component: {fileID: 873563069}
   - component: {fileID: 873563070}
   - component: {fileID: 873563071}
+  - component: {fileID: 873563072}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -1621,6 +1622,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &873563072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873563068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45ca9eb6e4b234898aab97336f09e53c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 873563071}
+  battleClip: {fileID: 8300000, guid: 649486405a3594635a618be060f2a153, type: 3}
+  natureClip: {fileID: 8300000, guid: 2ae0306a5434e417bacf3b0264ef4f7b, type: 3}
 --- !u!1 &999409906
 GameObject:
   m_ObjectHideFlags: 0
