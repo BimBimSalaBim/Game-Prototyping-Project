@@ -57,6 +57,10 @@ public class FoV : Entity
     public float health;
     public GameObject closestTarget;
     public Transform closestFood = null;
+    // private GameObject gameController;
+    // private AudioSource audioSource ;
+     private AudioManager audioManager;
+     private bool isAttackingPlayer = false;
     #endregion
 
     #region Unity Methods
@@ -65,6 +69,10 @@ public class FoV : Entity
         StartCoroutine(FindTargetsWithDelay());
         SetInitialBehaviorState();
         agitationIndicator = GetComponentInChildren<Image>();
+        // GameObject gameController = GameObject.Find("GameController");
+            //add audio source
+        // AudioSource audioSource = gameController.GetComponent<AudioSource>();
+        audioManager = FindFirstObjectByType<AudioManager>();
     }
 
     void Update()
@@ -98,6 +106,33 @@ public class FoV : Entity
                 currentBehaviourState = BehaviourState.Wandering;
             }
         }
+        if (currentBehaviourState == BehaviourState.Attacking && closestTarget != null)
+        {
+            // Existing attack logic...
+
+            // Check if the target is the player
+            if (closestTarget.tag == "Player")
+            {
+                // Notify AudioManager when starting to attack the player
+                if (!isAttackingPlayer)
+                {
+                    audioManager.StartAttack();
+                    isAttackingPlayer = true;
+                }
+            }
+            else if (isAttackingPlayer)
+            {
+                // Notify AudioManager when no longer attacking the player
+                audioManager.StopAttack();
+                isAttackingPlayer = false;
+            }
+        }
+        else if (isAttackingPlayer)
+        {
+            // Ensure to notify AudioManager when the creature stops attacking
+            audioManager.StopAttack();
+            isAttackingPlayer = false;
+        }
     }
     #endregion
 
@@ -124,14 +159,14 @@ public class FoV : Entity
     if (agitatedBy.Count > 0 && currentBehaviourState != BehaviourState.Fleeing)
     {
         // //get game controller
-        // GameObject gameController = GameObject.Find("GameController");
-        // //add audio source
-        // AudioSource audioSource = gameController.GetComponent<AudioSource>();
-        // if(audioSource.clip.name != "action")
+        GameObject gameController = GameObject.Find("GameController");
+        //add audio source
+        AudioSource audioSource = gameController.GetComponent<AudioSource>();
+        // if(audioSource.clip.name != "battle")
         // {
         //     //set audio clip
         //     audioSource.loop = true;
-        //     audioSource.clip = Resources.Load<AudioClip>("Music/action");
+        //     audioSource.clip = Resources.Load<AudioClip>("Music/battle");
         //     //play audio
         //     audioSource.Play();
         // }
@@ -140,11 +175,33 @@ public class FoV : Entity
         if (target != null)
         {
             currentBehaviourState = BehaviourState.Attacking;
+            // if(target.tag == "Player")
+            // {
+            //     if(audioSource.clip.name != "battle")
+            //     {
+            //         //set audio clip
+            //         audioSource.loop = true;
+            //         audioSource.clip = Resources.Load<AudioClip>("Music/battle");
+            //         //play audio
+            //         audioSource.Play();
+            //     }
+            // }
             Move(target.transform.position);
             AttackTarget(target);
         }
         else
         {
+            // if(targetFood.tag =="Player")
+            // {
+                // if(audioSource.clip.name == "battle")
+                // {
+                //     //set audio clip
+                //     audioSource.loop = true;
+                //     audioSource.clip = Resources.Load<AudioClip>("Music/nature");
+                //     //play audio
+                //     audioSource.Play();
+                // }
+            // }
             // Consider other behaviors if no valid target for attack
             EvaluateOtherBehaviors();
         }
@@ -231,13 +288,17 @@ private void EvaluateOtherBehaviors()
         // Logic to chase the food if it has been found
         navMeshAgent.SetDestination(targetFood.position);
         currentAnimationState = AnimationState.Walk;
+
         // //Debug.Log("Distance to food: " + Vector3.Distance(transform.position, targetFood.position));
         // //Debug.Log("Attack range: " + attackRange);
         if (Vector3.Distance(transform.position, targetFood.position) <= attackRange)
         {
             // Initiate attack
             currentBehaviourState = BehaviourState.Attacking;
+            Debug.Log("Attacking food"+ targetFood.tag);
+            
         }
+        
     }
 
     private void Wander()
